@@ -95,7 +95,7 @@ weight: 20200109
 <div class="clearfix"></div><br/>
 
 ### Explosions In The Sky
-#### This World Is Not A Cold Dead Place
+#### 《This World Is Not A Cold Dead Place》
 <img src="http://p2.music.126.net/eHACx3CmoV4FEG4hvuog5A==/710284511552010.jpg?param=150y150" class="musiccover"></img>
 
 - 《First Breath After Coma》
@@ -359,6 +359,8 @@ weight: 20200109
 ## 纯音乐 / 钢琴曲
 ### the tumbled sea
 #### 《songs by the tumbled sea》
+<img src="http://p1.music.126.net/HU-oKS4YftUM26gwZ8puGA==/109951163403578122.jpg?param=150y150" class="musiccover"></img>
+
 - 《97202》
 - 《Walking》
 - 👍《emily's song》
@@ -373,7 +375,11 @@ weight: 20200109
 - 《the people you never knew about》
 - 《untitled for piano and violins》
 - 《untitled for piano》
+<div class="clearfix"></div><br/>
+
 #### 《melody/summer》
+<img src="http://p1.music.126.net/PHUbxy53vtWvIApxVV1pWw==/2946691184922936.jpg?param=150y150" class="musiccover"></img>
+
 - 《summer ii》
 - 《summer v》
 - 《summer iii》
@@ -385,6 +391,8 @@ weight: 20200109
 - 《\\\\》
 - 《melody iv》
 - 《summer vi》
+<div class="clearfix"></div><br/>
+
 ### Goldmund
 ### Ólafur Arnalds
 ### Soulostar
@@ -401,6 +409,8 @@ weight: 20200109
 ## 其他
 ### Nao'ymt
 #### 《矢的直明 2014》
+<img src="http://p2.music.126.net/qmreN0T_FiiaE2O4F_AsKA==/3238061746944282.jpg?param=150y150" class="musiccover"></img>
+
 - 《Complicated》
 - 《Cold》
 - 《All Disappear》
@@ -422,8 +432,12 @@ weight: 20200109
 - 《Monster》
 - 《Reminiscence》
 - 《One Day We Will Be Together Again》
+<div class="clearfix"></div><br/>
+
 ### Matryoshka
 #### 《Laideronnette》
+<img src="http://p2.music.126.net/GPfR7PyHcb6_2NkFqrWhhA==/2518981139257695.jpg?param=150y150" class="musiccover"></img>
+
 - 《Monotonous Purgatory》
 - 《Noctambulist》
 - 👍《Sacred Play Secret Place》
@@ -434,8 +448,12 @@ weight: 20200109
 - 《Oblivion》
 - 《Niedola》
 - 《Gentle Afternoon》
+<div class="clearfix"></div><br/>
+
 ### Baq5
 #### 《FILE CORRUPTED》
+<img src="http://p1.music.126.net/cJk7AOhpdVVUtE_4H8WtoA==/3418381655358490.jpg?param=150y150" class="musiccover"></img>
+
 - 《when it rains》
 - 《eternal groove》
 - 《ridiciously long soundcloud song title》
@@ -449,3 +467,4 @@ weight: 20200109
 - 👍《the incredible food groove》
 - 《when i'm with you》
 - 《stay gold》
+<div class="clearfix"></div><br/>
