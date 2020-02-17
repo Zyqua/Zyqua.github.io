@@ -2,31 +2,31 @@ title: musicalcollection
 date: 2020-01-09
 weight: 20200109
 <!--more-->
-本人的两大爱好，一是敲代码二是听音乐。这篇文章用来清点两年来发掘到的所有好的音乐。所有音乐按照音乐派系-作者-专辑的树形结构分类，相同父亲的节点按照我自己的喜爱程度从大到小排序(只是大致顺序)。每张专辑会有一个曲目列表，前面有❤表示这首单曲在"我喜欢的音乐"歌单里。
+本人的两大爱好，一是敲代码二是听音乐。这篇文章用来清点两年来发掘到的所有好的音乐。所有音乐按照音乐派系-作者-专辑的树形结构分类，相同父亲的节点按照我自己的喜爱程度从大到小排序(只是大致顺序)。每张专辑会有一个曲目列表，前面有👍表示这首单曲在"我喜欢的音乐"歌单里。
 
 长篇大论，细节有待补充。
 ## 后摇滚 PostRock / 器乐摇滚 InstrumentalRock
 ### Godspeed You! Black Emperor
 #### 《Lift Your Skinny Fists Like Antennas to Heaven》
-- ❤《Storm》
-- ❤《Static》
-- ❤《Sleep》
+- 👍《Storm》
+- 👍《Static》
+- 👍《Sleep》
 - 《Antennas To Heaven》
 #### 《Slow Riot For New Zero Kanada》
 - 《Moya》
-- ❤《BBF3》
+- 👍《BBF3》
 #### 《Allelujah! Don't Bend! Ascend!》
-- ❤《Mladic》
+- 👍《Mladic》
 - 《Their Helicopters Sing》
-- ❤《We Drift Like Worried Fire》
+- 👍《We Drift Like Worried Fire》
 - 《Strung Like Lights At Thee Printemps Erable》
 #### 《Asunder, Sweet and Other Distress》
 - 《Peasantry or 'Light!Inside of Light!'》
 - 《Lambs' Breath》
 - 《Asunder, Sweet》
-- ❤《Piss Crowns Are Trebled》
+- 👍《Piss Crowns Are Trebled》
 #### 《Yanqui U.X.O.》
-- ❤《09-15-00》
+- 👍《09-15-00》
 - 《09-15-00(cont.)》
 - 《Rockets fall on Rocket Falls》
 - 《************=redeemer》
@@ -34,19 +34,19 @@ weight: 20200109
 #### 《F♯ A♯ ∞》
 - 《The Dead Flag Blues》
 - 《East Hastings》
-- ❤《Providence》
+- 👍《Providence》
 ### Yndi Halda
 #### 《Enjoy Eternal Bliss》
-- ❤《Dash And Blast》
-- ❤《We Flood Empty Lakes》
-- ❤《A Song For Starlit Beaches》
-- ❤《Illuminate My Heart, My Darling!》
+- 👍《Dash And Blast》
+- 👍《We Flood Empty Lakes》
+- 👍《A Song For Starlit Beaches》
+- 👍《Illuminate My Heart, My Darling!》
 ### MONO
 #### 《Hymn to the Immortal Wind》
-- ❤《Ashes In The Snow》
+- 👍《Ashes In The Snow》
 - 《Burial At Sea》
 - 《Silent Flight, Sleeping Down》
-- ❤《Pure As Snow (Trails of the Winter Storm)》
+- 👍《Pure As Snow (Trails of the Winter Storm)》
 - 《Follow The Map》
 - 《The Battle To Heaven》
 - 《Everlasting Light》
@@ -54,29 +54,29 @@ weight: 20200109
 #### 《Give Me Beauty... Or Give Me Death!》
 - 《Ett》
 - 《Hello Scotland》
-- ❤《Final Touch / Hidden Agenda》
+- 👍《Final Touch / Hidden Agenda》
 - 《He Came, He Stayed, He fell》
 - 《Tomorrow My Friend...》
 - 《We'll Meet in the End》
 ### Explosions In The Sky
 #### This World Is Not A Cold Dead Place
 - 《First Breath After Coma》
-- ❤《The Only Moment We Were Alone》
-- ❤《Six Days At The Bottom Of The Ocean》
+- 👍《The Only Moment We Were Alone》
+- 👍《Six Days At The Bottom Of The Ocean》
 - 《Memorial》
-- ❤《Your Hand In Mine》
+- 👍《Your Hand In Mine》
 ### The Seven Mile Journey
 ### Industries Of The Blind
 #### 《Chapter One: Had We Known Better》
-- ❤《I just wanted to make you something beautiful》
+- 👍《I just wanted to make you something beautiful》
 - 《Waiting and waltzing in airport terminals》
-- ❤《The light weren't that bright, but our eyes were so tired》
+- 👍《The light weren't that bright, but our eyes were so tired》
 ### Sleepmakeswaves
 #### 《In Today Already Walks Tomorrow》
-- ❤《i will write peace on your wings and you will fly over the world》
+- 👍《i will write peace on your wings and you will fly over the world》
 - 《exits to nowhere》
-- ❤《one day you will teach me to let go of my fears》
-- ❤《so that the children will always shout her name》
+- 👍《one day you will teach me to let go of my fears》
+- 👍《so that the children will always shout her name》
 - 《It's Dark, It's Cold, It's Winter》
 - 《what we cannot speak of, must be passed over in silence》
 ### Pg.Lost
@@ -85,14 +85,14 @@ weight: 20200109
 - 《Jura》
 - 《Heart of Hearts》
 - 《Still Alright》
-- ❤《Crystalline》
+- 👍《Crystalline》
 - 《Gomez》
 ### Overhead, The Albatross
 #### 《Mr. Dog》
 - 《Pigonometry》
-- ❤《Flubirds》
+- 👍《Flubirds》
 #### 《Learning To Growl》
-- ❤《Indie Rose》
+- 👍《Indie Rose》
 - 《Telekinetic Forest Guard》
 - 《Theme For A Promise》
 - 《Daeku》
@@ -106,9 +106,9 @@ weight: 20200109
 - 《I'll Be Here》
 - 《When the Earth Explodes》
 - 《And When There's Nothing Left》
-- ❤《All I See Is》
+- 👍《All I See Is》
 - 《...》
-- ❤《It Starts with a Beginning》
+- 👍《It Starts with a Beginning》
 - 《Collections Create》
 - 《What's Left Behind》
 - 《We Resonate》
@@ -143,7 +143,7 @@ weight: 20200109
 - 《To make it all worth while (Chaplin's last dance)》
 ### The Ascent of Everest
 #### 《How Lonely Sits the City》
-- ❤《Alas, Alas! The Breath of Life!》
+- 👍《Alas, Alas! The Breath of Life!》
 - 《As the City Burned We Trembled for We Saw the Making of Their Undoing in Our Own Hearts》
 - 《Molotov》
 - 《A Threnody for the Victims of Nov 2nd》
@@ -159,7 +159,7 @@ weight: 20200109
 - 《Eight Flew Over, One Was Destroyed》
 - 《She Came Home for Christmas》
 - 《Shespider》
-- ❤《Comforting Sounds》
+- 👍《Comforting Sounds》
 ### Dorena
 #### 《About Everything And More》
 - 《The Morning Bus》
@@ -175,7 +175,7 @@ weight: 20200109
 - 《Silent State Optimizer》
 - 《The Man With The Hammer》
 - 《Ziipfe》
-- ❤《Inspiral》
+- 👍《Inspiral》
 - 《I Was Reversed》
 - 《Totem & Tabu》
 ### This Will Destroy You
@@ -193,7 +193,7 @@ weight: 20200109
 - 《So Murmuredthe Wide Seas》
 - 《Aether》
 - 《I Am the Sun》
-- ❤《The Heart of the Mountain》
+- 👍《The Heart of the Mountain》
 - 《I Have Never Seen the Light》
 - 《The Heart of the Mountain (Piano Cover By heklAa)》
 ### I Spell it Natrue
@@ -221,7 +221,7 @@ weight: 20200109
 - 《Sustantivo》
 - 《You Go Up, I Go Down》
 - 《Depth of Field》
-- ❤《Rumi's Nation》
+- 👍《Rumi's Nation》
 ### Samsara
 #### 《Samsara》
 - 《F Sharp》
@@ -233,7 +233,7 @@ weight: 20200109
 - 《Who We Were》
 - 《The Days of Snow》
 - 《Life in Slow Motion》
-- ❤《Searchlights》
+- 👍《Searchlights》
 - 《Miles Away, She Sleeps》
 - 《Goodbye》
 - 《Astronauts》
@@ -245,13 +245,13 @@ weight: 20200109
 #### 《songs by the tumbled sea》
 - 《97202》
 - 《Walking》
-- ❤《emily's song》
+- 👍《emily's song》
 - 《children building this rainman out of snow》
 - 《A song for staying in.》
 - 《a growing recognition of the genius of birds.》
 - 《sleeps》
 - 《may》
-- ❤《we're turning into regular people》
+- 👍《we're turning into regular people》
 - 《doves》
 - 《a love song》
 - 《the people you never knew about》
@@ -289,11 +289,11 @@ weight: 20200109
 - 《Cold》
 - 《All Disappear》
 - 《Sunrise》
-- ❤《One Day We Will Be Together》
+- 👍《One Day We Will Be Together》
 - 《Wandering》
 - 《Beautiful》
 - 《Scenario》
-- ❤《Frequency》
+- 👍《Frequency》
 - 《Spring Reminds Me of You》
 - 《Firefiles》
 - 《14.428》
@@ -310,7 +310,7 @@ weight: 20200109
 #### 《Laideronnette》
 - 《Monotonous Purgatory》
 - 《Noctambulist》
-- ❤《Sacred Play Secret Place》
+- 👍《Sacred Play Secret Place》
 - 《Instant Immortal》
 - 《Cut All Trees》
 - 《Butterflysoup》
@@ -330,6 +330,6 @@ weight: 20200109
 - 《dreamcast》
 - 《flying to space》
 - 《日本のタイトルwhatever》
-- ❤《the incredible food groove》
+- 👍《the incredible food groove》
 - 《when i'm with you》
 - 《stay gold》
