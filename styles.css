@@ -1,0 +1,35 @@
+* {
+    margin:0px;
+    padding:0px;
+    font-size:14px;
+    font-family: Consolas, serif;
+    color:black;
+}
+.clearfix {
+    clear:both;
+    width:0px;
+    height:0px;
+}
+.body {
+    margin:0 20%;
+    line-height:20px;
+}
+.title {
+    text-align:center;
+    margin:15px 0;
+}
+.menu {
+    list-style-type:none;
+}
+.menu li {
+    text-align:center;
+}
+.menu li a {
+    text-decoration:none;
+}
+.link {
+    text-decoration:none;
+}
+li {
+    list-style-type:none;
+}
