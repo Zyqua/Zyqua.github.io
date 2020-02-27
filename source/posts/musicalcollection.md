@@ -13,7 +13,7 @@ weight: 20200109
 - 👍《Storm》
 - 👍《Static》
 - 👍《Sleep》
-- 《Antennas To Heaven》
+- 👍《Antennas To Heaven》
 <div class="clearfix"></div><br/>
 
 #### 《Slow Riot For New Zero Kanada》
@@ -125,6 +125,19 @@ weight: 20200109
 - 👍《so that the children will always shout her name》
 - 《It's Dark, It's Cold, It's Winter》
 - 《what we cannot speak of, must be passed over in silence》
+<div class="clearfix"></div><br/>
+
+### Soul
+#### 《Strawberry》
+<img src="http://p2.music.126.net/Mv1-aBQI-VdFInMkqUqhwQ==/2483796767170021.jpg?param=150y150" class="musiccover"></img>
+
+- 《Strawberry》
+- 《Little Prince》
+- 《Accident By The Sea》
+- 《I've Given All And I'm Now Nothing》
+- 《Narnia》
+- 《The Less The Better》
+- 《Summer Ends》
 <div class="clearfix"></div><br/>
 
 ### Pg.Lost

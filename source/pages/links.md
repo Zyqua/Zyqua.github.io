@@ -7,3 +7,6 @@
 - [extmool](https://extmool.github.io/)
 - [Ender](http://ender.yishugou.shop/)
 - [liuzhe](https://blog.liuzhe.site/)
+- [shq](https://qwqshq.gitee.io/)
+- [RainAir](https://blog.aor.sd.cn/)
+- [Logey](https://oi.logey.cn/)
