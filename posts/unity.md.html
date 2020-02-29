@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+        <html>
+            <head>
+                <meta charset="utf-8"/>
+                <title>blog</title>
+                <link rel="stylesheet" type="text/css" href="../styles.css"/>
+                <link rel="stylesheet" type="text/css" href="../markdownStyles.css"/>
+                <script type="text/x-mathjax-config">
+                    MathJax.Hub.Config({
+                        extensions: ["tex2jax.js"],
+                        jax: ["input/TeX", "output/HTML-CSS"],
+                        tex2jax: {
+                        inlineMath: [ ['$','$'] ],
+                        displayMath: [ ['$$','$$'] ],
+                        processEscapes: true
+                        },
+                        "HTML-CSS": { availableFonts: ["TeX"] }
+                    });
+                </script>
+                <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+            </head>
+            <body>
+                <div class="body">
+                <p class="title">zyque.github.io</p><p>Unity 四大类。
+<img src="../source/images/核心类图.png"/></p>
+<h3 id="script-脚本-不属于四大类">Script 脚本 (不属于四大类)</h3>
+<p>继承关系：Object -&gt; Component -&gt; Behaviour -&gt; MonoBehaviour
+因此，脚本具有<code>Component</code>类的所有方法，在写脚本时可以直接用。</p>
+<h3 id="component-组件">Component 组件</h3>
+<p><code>Component</code>类提供了<strong>查找组件</strong>的功能。</p>
+<p>继承关系：Object -&gt; Component</p>
+<h4 id="gameobject-属性">gameObject 属性</h4>
+<p>当前物体的对象。</p>
+<h4 id="tag-属性">tag 属性</h4>
+<p>可以在组件的引用中直接访问游戏对象的<code>tag</code>。</p>
+<h4 id="transform-属性">transform 属性</h4>
+<p>可以在组件的引用中直接访问游戏对象的<code>transform</code>。是<code>Transform</code>类的对象引用。</p>
+<h4 id="getcomponenttype-方法">GetComponent<type>() 方法</h4>
+<p>返回当前物体中<code>type</code>类型组件的引用，如果没有则返回空。</p>
+<h4 id="getcomponentstype-方法">GetComponents<type>() 方法</h4>
+<p>返回当前物体中所有<code>type</code>类型组件的引用(<code>type</code>类型的数组)，如果没有则返回空。</p>
+<p>*要找当前物体所有的组件，可以写<code>GetComponents&lt;Component&gt;()</code>。</p>
+<h4 id="getcomponentinchildrentype-方法">GetComponentInChildren<type>() 方法</h4>
+<p>返回当前物体及其后代物体中<strong>第一个</strong>找到的<code>type</code>类型组件的引用(内部使用<code>dfs</code>实现)，如果没有则返回空。</p>
+<h4 id="getcomponentsinchildrentype-方法">GetComponentsInChildren<type>() 方法</h4>
+<p>返回当前物体及其后代物体中所有<code>type</code>类型组件的引用(<code>type</code>类型的数组)，如果没有则返回空。</p>
+<h4 id="getcomponentinparenttype-方法">GetComponentInParent<type>() 方法</h4>
+<p>返回当前物体及其先 辈物体中<code>type</code>类型组件的引用，如果没有则返回空。</p>
+<h4 id="getcomponentsinparenttype-方法">GetComponentsInParent<type>() 方法</h4>
+<p>返回当前物体及其先 辈物体中所有<code>type</code>类型组件的引用(<code>type</code>类型的数组)，如果没有则返回空。</p>
+<h4 id="comparetagstring-方法">CompareTag(string) 方法</h4>
+<p>比较当前物体的<code>Tag</code>是否与<code>string</code>相同。</p>
+<h3 id="transform-变换">Transform 变换</h3>
+<p><code>Transform</code>类提供了<strong>查找变换组件/改变位置、角度、缩放</strong>的功能</p>
+<p>继承关系：Object -&gt; Component -&gt; Transform</p>
+<h4 id="foreach">foreach</h4>
+<p>使用<code>foreach</code>语句可以遍历当前物体所有子物体的变换组件。</p>
+<h4 id="childcount-属性">childCount 属性</h4>
+<p>当前物体的子物体个数。</p>
+<h4 id="position-属性">position 属性</h4>
+<p>物体在世界坐标系的坐标，属于<code>Vector3</code>(三维向量)类。</p>
+<p>示例：设置当前物体的坐标为<code>(0, 0, 10)</code>。</p>
+<p><code>transform.position = new Vector3(0, 0, 10);</code></p>
+<p>以下几个<code>Vector3</code>类型的属性修改方法与此相同。</p>
+<h4 id="localposition-属性">localPosition 属性</h4>
+<p>物体相对于父物体中心点的坐标。在<code>Inspector</code>面板中看到的坐标实质上是<code>localPosition</code>，而非<code>position</code>。</p>
+<h4 id="rotation-属性">rotation 属性</h4>
+<p>物体在世界坐标系的旋转角度，属于<code>Vector3</code>类。</p>
+<h4 id="localrotation-属性">localRotation 属性</h4>
+<p>物体相对于父物体的旋转角度。在<code>Inspector</code>面板中看到的坐标实质上是<code>localRotation</code>，而非<code>rotation</code>。</p>
+<h4 id="localscale-属性">localScale 属性</h4>
+<p>物体相对于父物体的缩放比例，属于<code>Vector3</code>类。在<code>Inspector</code>面板中看到的坐标实质上是<code>localScale</code>。</p>
+<h4 id="lossyscale-属性">lossyScale 属性</h4>
+<p>物体相对于原模型的缩放比例。<strong>只读。</strong></p>
+<h4 id="translatefloat-float-float-方法">Translate(float, float, float) 方法</h4>
+<p>物体向三个方向分别移动指定距离。默认沿自身坐标轴移动，如果沿世界坐标轴移动可以写<code>Translate(float, float, float, Space.World)</code>。</p>
+<h4 id="rotatefloat-float-float-方法">Rotate(float, float, float) 方法</h4>
+<p>物体沿三个坐标轴分别顺时针旋转指定角度。默认沿自身坐标轴旋转，如果沿世界坐标轴旋转可以写<code>Rotate(float, float, float, Space.World)</code>。</p>
+<h4 id="rotatearoundvector3-point-voctor3-axis-float-angle-方法">RotateAround(Vector3 point, Voctor3 axis, float angle) 方法</h4>
+<p>物体绕<code>point</code>点，沿<code>axis</code>轴顺时针旋转<code>angle</code>度。</p>
+<p>例如：<code>RotateAround(Vector3.zero, Vector3.up, 1);</code>绕原点沿y轴顺时针旋转1度。</p>
+<h4 id="root-属性">root 属性</h4>
+<p>根物体的变换组件。</p>
+<h4 id="parent-属性">parent 属性</h4>
+<p>父物体的变换组件。<strong>只读。</strong></p>
+<h4 id="setparenttransform-parent-bool-worldpositionstays-方法">SetParent(Transform parent, bool worldPositionStays) 方法</h4>
+<p>设置物体的父物体为指定变换组件的所属物体。<code>worldPositionStays</code>不填则默认为<code>true</code>。如果为<code>true</code>，则物体的<code>position</code>保持不变，<code>localPosition</code>可能会相应地改变，否则物体的<code>localPosition</code>保持不变，<code>position</code>可能改变。</p>
+<h4 id="findstring-name-方法">Find(string name) 方法</h4>
+<p>根据名称查找子物体的变换组件。<code>name</code>参数类似路径，比如要找孙子可以写<code>Find(&quot;name/name&quot;)</code>。(不建议拿来找孙子)</p>
+<h4 id="getchildint-index-方法">GetChild(int index) 方法</h4>
+<p>根据索引获取子物体的变换组件。</p>
+<h4 id="detachchildren-方法">DetachChildren() 方法</h4>
+<p>与所有子物体断绝父子关系。</p>
+<p>*如果要和父物体断绝父子关系，使用<code>SetParent(null)</code>。</p>
+<h3 id="gameobject-游戏对象物体">GameObject 游戏对象(物体)</h3>
+<p>继承关系：Object -&gt; GameObject</p>
+<h4 id="activeinhierarchy-属性">activeInHierarchy 属性</h4>
+<p>物体实际是否激活。</p>
+<h4 id="activeself-属性">activeSelf 属性</h4>
+<p>物体自身是否激活。<strong>只读。</strong></p>
+<h4 id="setactivebool-方法">SetActive(bool) 方法</h4>
+<p>激活/停用物体。</p>
+<h4 id="layer-属性">layer 属性</h4>
+<p>物体所在的层。</p>
+<h4 id="tag-属性-1">tag 属性</h4>
+<p>物体的标签。</p>
+<h4 id="transform-属性-1">transform 属性</h4>
+<p>物体的变换组件。</p>
+<h4 id="gameobject-构造方法">GameObject() 构造方法</h4>
+<p><code>new</code> 出来一个物体。</p>
+<h4 id="addcomponenttype-方法">AddComponent<type>() 方法</h4>
+<p>给物体添加一个<code>type</code>类型的组件，并返回这个组件。</p>
+<p>组件不能<code>new</code>出来，要想创建新组件只能通过这个方法。</p>
+<p>示例：创建一个红色点光源物体。</p>
+<pre><code>GameObject lightObject = new GameObject();
+Light light = lightObject.AddComponent&lt;Light&gt;();
+light.color = Color.red;
+light.type = LightType.Point;
+</code></pre><h4 id="getcomponenttype-方法-1">GetComponent<type>() 方法</h4>
+<p>此方法以及<code>GetComponents&lt;type&gt;()</code>、<code>GetComponentInChildren&lt;type&gt;()</code>等方法和<code>Component</code>类中的方法功能相同。</p>
+<h4 id="findstring-name-方法-1">Find(string name) 方法</h4>
+<p>在所有物体中根据名称查找指定物体。性能消耗很大，不建议使用。</p>
+<h4 id="findobjectwithtagstring-name-方法">FindObjectWithTag(string name) 方法</h4>
+<p>根据标签查找一个带有指定标签的物体。</p>
+<h4 id="findobjectswithtagstring-name-方法">FindObjectsWithTag(string name) 方法</h4>
+<p>根据标签查找所有带有指定标签的物体。返回<code>GameObject</code>数组。</p>
+<h3 id="object-对象">Object 对象</h3>
+<h4 id="name-属性">name 属性</h4>
+<p>对象的名称。</p>
+<h4 id="destroyobject-方法">Destroy(Object) 方法</h4>
+<p>删除指定<code>Object</code>。</p>
+<h4 id="dontdestroyonloadobject-方法">DontDestroyOnLoad(Object) 方法</h4>
+<p>在加载新场景时使指定对象不被清除。</p>
+<h4 id="findobjectoftypetype-方法">FindObjectOfType<type>() 方法</h4>
+<p>在场景中查找一个<code>type</code>类型的对象。</p>
+<h4 id="findobjectsoftypetype-方法">FindObjectsOfType<type>() 方法</h4>
+<p>在场景中查找所有<code>type</code>类型的对象，返回<code>type</code>类型的数组。</p>
+<a href="../posts.html" class="link" style="display:block; text-align:center;">return</a>
+</div>
+</body>
+</html>
