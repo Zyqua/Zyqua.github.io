@@ -113,6 +113,8 @@ Unity 四大类。
 *如果要和父物体断绝父子关系，使用`SetParent(null)`。
 
 ### GameObject 游戏对象(物体)
+`GameObject`类提供了**操作游戏对象**的功能。
+
 继承关系：Object -> GameObject
 
 #### activeInHierarchy 属性
@@ -156,7 +158,7 @@ light.type = LightType.Point;
 #### Find(string name) 方法
 在所有物体中根据名称查找指定物体。性能消耗很大，不建议使用。
 
-#### FindObjectWithTag(string name) 方法
+#### FindWithTag(string name) 方法
 根据标签查找一个带有指定标签的物体。
 
 #### FindObjectsWithTag(string name) 方法

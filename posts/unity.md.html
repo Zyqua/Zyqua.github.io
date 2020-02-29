@@ -93,6 +93,7 @@
 <p>与所有子物体断绝父子关系。</p>
 <p>*如果要和父物体断绝父子关系，使用<code>SetParent(null)</code>。</p>
 <h3 id="gameobject-游戏对象物体">GameObject 游戏对象(物体)</h3>
+<p><code>GameObject</code>类提供了<strong>操作游戏对象</strong>的功能。</p>
 <p>继承关系：Object -&gt; GameObject</p>
 <h4 id="activeinhierarchy-属性">activeInHierarchy 属性</h4>
 <p>物体实际是否激活。</p>
@@ -120,7 +121,7 @@ light.type = LightType.Point;
 <p>此方法以及<code>GetComponents&lt;type&gt;()</code>、<code>GetComponentInChildren&lt;type&gt;()</code>等方法和<code>Component</code>类中的方法功能相同。</p>
 <h4 id="findstring-name-方法-1">Find(string name) 方法</h4>
 <p>在所有物体中根据名称查找指定物体。性能消耗很大，不建议使用。</p>
-<h4 id="findobjectwithtagstring-name-方法">FindObjectWithTag(string name) 方法</h4>
+<h4 id="findwithtagstring-name-方法">FindWithTag(string name) 方法</h4>
 <p>根据标签查找一个带有指定标签的物体。</p>
 <h4 id="findobjectswithtagstring-name-方法">FindObjectsWithTag(string name) 方法</h4>
 <p>根据标签查找所有带有指定标签的物体。返回<code>GameObject</code>数组。</p>
