@@ -155,27 +155,27 @@ light.type = LightType.Point;
 #### GetComponent<type>() 方法
 此方法以及`GetComponents<type>()`、`GetComponentInChildren<type>()`等方法和`Component`类中的方法功能相同。
 
-#### Find(string name) 方法
+#### Find(string name) 静态方法
 在所有物体中根据名称查找指定物体。性能消耗很大，不建议使用。
 
-#### FindWithTag(string name) 方法
+#### FindWithTag(string name) 静态方法
 根据标签查找一个带有指定标签的物体。
 
-#### FindObjectsWithTag(string name) 方法
+#### FindObjectsWithTag(string name) 静态方法
 根据标签查找所有带有指定标签的物体。返回`GameObject`数组。
 
 ### Object 对象
 #### name 属性
 对象的名称。
 
-#### Destroy(Object) 方法
+#### Destroy(Object) 静态方法
 删除指定`Object`。
 
-#### DontDestroyOnLoad(Object) 方法
+#### DontDestroyOnLoad(Object) 静态方法
 在加载新场景时使指定对象不被清除。
 
-#### FindObjectOfType<type>() 方法
+#### FindObjectOfType<type>() 静态方法
 在场景中查找一个`type`类型的对象。
 
-#### FindObjectsOfType<type>() 方法
+#### FindObjectsOfType<type>() 静态方法
 在场景中查找所有`type`类型的对象，返回`type`类型的数组。

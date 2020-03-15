@@ -90,7 +90,7 @@ weight: 20200109
 - 《Hello Scotland》
 - 👍《Final Touch / Hidden Agenda》
 - 《He Came, He Stayed, He fell》
-- 《Tomorrow My Friend...》
+- 👍《Tomorrow My Friend...》
 - 《We'll Meet in the End》
 <div class="clearfix"></div><br/>
 
@@ -137,7 +137,26 @@ weight: 20200109
 - 《I've Given All And I'm Now Nothing》
 - 《Narnia》
 - 《The Less The Better》
-- 《Summer Ends》
+- 👍《Summer Ends》
+<div class="clearfix"></div><br/>
+
+### Lights & Motion
+#### 《Reanimation》
+<img src="http://p2.music.126.net/da3skyhYCE1nhi6kLum3NA==/2571757697399885.jpg?param=150y150" class="musiccover"></img>
+
+- 《Requiem》
+- 《Home》
+- 《Aerials》
+- 《Drift》
+- 👍《The March》
+- 《Victory Rose》
+- 《Epilogue》
+- 《Fractured》
+- 《Texas》
+- 《Faded Fluorescence》
+- 《Departure》
+- 《Reanimation》
+- 《Dream Away》
 <div class="clearfix"></div><br/>
 
 ### Pg.Lost
@@ -480,4 +499,37 @@ weight: 20200109
 - 👍《the incredible food groove》
 - 《when i'm with you》
 - 《stay gold》
+<div class="clearfix"></div><br/>
+
+### 《恋×シンアイ彼女 Complete Sound Track》
+《恋×シンアイ彼女》官方OST。
+
+<img src="http://p2.music.126.net/AaynSYXHCr8R0ByIqZvQMg==/2946691226122260.jpg?param=150y150" class="musiccover"></img>
+
+- 水月陵《恋×シンアイ彼女 メインテーマ》
+- Duca《記憶×ハジマリ》
+- 水月陵《風の止まり木》
+- 水月陵《名付けられた月曜日》
+- 水月陵《半目野良猫》
+- 水月陵《はしゃぎきれない少年》
+- 水月陵《ENJOYが反射してる》
+- 水月陵《さりげなくホップステップ》
+- 水月陵《風の迷い路》
+- 水月陵《手をつないだら》
+- 水月陵《flower》
+- 水月陵《とけかけの小豆アイス》
+- 水月陵《ここにいるよ?》
+- yuiko《東の空から始まる世界》
+- 水月陵《壇上のBlue eyes》
+- 水月陵《小雨降る日の優しさ》
+- 水月陵《虹かかる空の恋しさ》
+- 水月陵《君は無音の中で》
+- 水月陵《We are alone》
+- 水月陵《忘れられたものたちへ》
+- 水月陵《alpha》
+- 水月陵《僕らが友達だった時代》
+- 水月陵《恋をしたら》
+- 水月陵《After the rain》
+- yuiko《GLORIOUS DAYS》
+- 水月陵《flower -piano arrangement-》
 <div class="clearfix"></div><br/>

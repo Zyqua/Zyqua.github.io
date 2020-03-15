@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+        <html>
+            <head>
+                <meta charset="utf-8"/>
+                <title>blog</title>
+                <link rel="stylesheet" type="text/css" href="../styles.css"/>
+                <link rel="stylesheet" type="text/css" href="../markdownStyles.css"/>
+                <script type="text/x-mathjax-config">
+                    MathJax.Hub.Config({
+                        extensions: ["tex2jax.js"],
+                        jax: ["input/TeX", "output/HTML-CSS"],
+                        tex2jax: {
+                        inlineMath: [ ['$','$'] ],
+                        displayMath: [ ['$$','$$'] ],
+                        processEscapes: true
+                        },
+                        "HTML-CSS": { availableFonts: ["TeX"] }
+                    });
+                </script>
+                <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+            </head>
+            <body>
+                <div class="body">
+                <p class="title">zyque.github.io</p><p>$$\sum_{d|n}\mu(d)=[n=1]$$</p>
+<p>$$I(n)=1$$</p>
+<p>$$id(n)=n$$</p>
+<p>$$(f*g)(n)=\sum_{d|n}f(d)g(\frac{n}{d})$$</p>
+<p>$$\mu*I=\varepsilon$$</p>
+<p>$$(\mu*I)(n)=\sum_{d|n}\mu(d)=[n=1]=\varepsilon(n)$$</p>
+<p>$$\varphi*I=id$$</p>
+<p>$$(\varphi*I)(n)=\sum_{d|n}\varphi(d)=n=id(n)$$</p>
+<p>$$\mu*id=\varphi$$</p>
+<p>$$(\mu*id)(n)=\sum_{d|n}\mu(d)\times\frac{n}{d}=n\times\frac{\varphi(n)}{n}=\varphi(n)$$</p>
+<hr>
+<p>$$\sum_{i=1}^{n}\sum_{j=1}^{n}\gcd(i,j)$$</p>
+<p>$$\sum_{i=1}^{n}\sum_{j=1}^{n}id(\gcd(i,j))$$</p>
+<p>$$\sum_{i=1}^{n}\sum_{j=1}^{n}\sum_{d|\gcd(i,j)}\varphi(d)$$</p>
+<p>$$\sum_{d=1}^{n}\sum_{i=1}^{\left\lfloor\frac{n}{d}\right\rfloor}\sum_{j=1}^{\left\lfloor\frac{n}{d}\right\rfloor}\varphi(d)$$</p>
+<p>$$\sum_{d=1}^{n}\varphi(d)\left\lfloor\frac{n}{d}\right\rfloor^2$$</p>
+<hr>
+<p>$$\sum_{i=1}^{n}\sum_{j=1}^{m}[\gcd(i,j)=1]$$</p>
+<p>$$\sum_{i=1}^{n}\sum_{j=1}^{m}\sum_{d|\gcd(i,j)}\mu(d)$$</p>
+<p>$$\sum_{d=1}^{\min(n,m)}\sum_{i=1}^{\left\lfloor\frac{n}{d}\right\rfloor}\sum_{j=1}^{\left\lfloor\frac{m}{d}\right\rfloor}\mu(d)$$</p>
+<p>$$\sum_{d=1}^{\min(n,m)}\mu(d)\left\lfloor\frac{n}{d}\right\rfloor\left\lfloor\frac{m}{d}\right\rfloor$$</p>
+<hr>
+<p>$$\sum_{x=1}^{a}\sum_{y=1}^{b}[\gcd(x,y)=d]$$</p>
+<p>$$\sum_{x=1}^{\left\lfloor\frac{a}{d}\right\rfloor}\sum_{y=1}^{\left\lfloor\frac{b}{d}\right\rfloor}\varepsilon(\gcd(x,y))$$</p>
+<p>$$\sum_{x=1}^{\left\lfloor\frac{a}{d}\right\rfloor}\sum_{y=1}^{\left\lfloor\frac{b}{d}\right\rfloor}\sum_{g|\gcd(x,y)}\mu(g)$$</p>
+<p>$$\sum_{g=1}^{\min(\left\lfloor\frac{a}{d}\right\rfloor,\left\lfloor\frac{b}{d}\right\rfloor)}\sum_{x=1}^{\left\lfloor\frac{a}{dg}\right\rfloor}\sum_{x=1}^{\left\lfloor\frac{b}{dg}\right\rfloor}\mu(g)$$</p>
+<p>$$\sum_{g=1}^{\min(\left\lfloor\frac{a}{d}\right\rfloor,\left\lfloor\frac{b}{d}\right\rfloor)}\left\lfloor\frac{a}{dg}\right\rfloor\left\lfloor\frac{b}{dg}\right\rfloor\mu(g)$$</p>
+<hr>
+<p>$$\sum_{i=1}^{n}\sum_{j=1}^{n}ij\gcd(i,j)$$</p>
+<p>$$\sum_{i=1}^{n}\sum_{j=1}^{n}ij\sum_{d|\gcd(i,j)}\varphi(d)$$</p>
+<p>$$\sum_{d=1}^{n}\varphi(d)d^2\sum_{i=1}^{\left\lfloor\frac{n}{d}\right\rfloor}i\sum_{j=1}^{\left\lfloor\frac{n}{d}\right\rfloor}j$$</p>
+<p>$$\sum_{d=1}^{n}\varphi(d)d^2\frac{\left\lfloor\frac{n}{d}\right\rfloor^2(\left\lfloor\frac{n}{d}\right\rfloor+1)^2}{4}$$</p>
+<a href="../posts.html" class="link" style="display:block; text-align:center;">return</a>
+</div>
+</body>
+</html>
