@@ -48,17 +48,13 @@ weight: 20200109
 - 《untitled for piano》
 <div class="clearfix"></div><br/>
 
-#### 《In Today Already Walks Tomorrow》
-作者: Sleepmakeswaves
+#### 《Slow Riot For New Zero Kanada》
+作者: Godspeed You! Black Emperor
 
-<img src="http://p1.music.126.net/Z-ihou2VFqbeLesPFKeGbg==/2533274790655230.jpg?param=150y150" class="musiccover"></img>
+<img src="http://p1.music.126.net/_cCKiV9dF5nz0gQnTAS1xw==/1790004930031783.jpg?param=150y150" class="musiccover"></img>
 
-- 👍《i will write peace on your wings and you will fly over the world》
-- 《exits to nowhere》
-- 👍《one day you will teach me to let go of my fears》
-- 👍《so that the children will always shout her name》
-- 《It's Dark, It's Cold, It's Winter》
-- 《what we cannot speak of, must be passed over in silence》
+- 《Moya》
+- 👍《BBF3》
 <div class="clearfix"></div><br/>
 
 #### 《Chapter One: Had We Known Better》
@@ -89,27 +85,6 @@ weight: 20200109
 - 《summer vi》
 <div class="clearfix"></div><br/>
 
-#### 《Palmless Prayer / Mass Murder Refrain》
-作者: MONO / world's end girlfriend
-
-<img src="http://p2.music.126.net/u4I5PI3mCckdzHCBQqanlw==/109951163472905109.jpg?param=150y150" class="musiccover"></img>
-
-- 《Trailer 1》
-- 《Trailer 2》
-- 《Trailer 3》
-- 《Trailer 4》
-- 👍《Trailer 5》
-<div class="clearfix"></div><br/>
-
-#### 《Slow Riot For New Zero Kanada》
-作者: Godspeed You! Black Emperor
-
-<img src="http://p1.music.126.net/_cCKiV9dF5nz0gQnTAS1xw==/1790004930031783.jpg?param=150y150" class="musiccover"></img>
-
-- 《Moya》
-- 👍《BBF3》
-<div class="clearfix"></div><br/>
-
 #### 《Allelujah! Don't Bend! Ascend!》
 作者: Godspeed You! Black Emperor
 
@@ -121,18 +96,28 @@ weight: 20200109
 - 《Strung Like Lights At Thee Printemps Erable》
 <div class="clearfix"></div><br/>
 
-#### 《Hymn to the Immortal Wind》
-作者: MONO
+#### 《Under Summer》
+作者: Yndi Halda
 
-<img src="http://p2.music.126.net/cioulQjNJ0Z8vP9TDfMJow==/833429813854422.jpg?param=150y150" class="musiccover"></img>
+<img src="http://p1.music.126.net/D11QYVk4fihryqRa2jwJBw==/109951163471238241.jpg?param=150y150" class="musiccover"></img>
 
-- 👍《Ashes In The Snow》
-- 《Burial At Sea》
-- 《Silent Flight, Sleeping Down》
-- 👍《Pure As Snow (Trails of the Winter Storm)》
-- 《Follow The Map》
-- 《The Battle To Heaven》
-- 《Everlasting Light》
+- 《Together Those Leaves》
+- 👍《Golden Threads from the Sun》
+- 《Helena》
+- 《This Very Flight》
+<div class="clearfix"></div><br/>
+
+#### 《In Today Already Walks Tomorrow》
+作者: Sleepmakeswaves
+
+<img src="http://p1.music.126.net/Z-ihou2VFqbeLesPFKeGbg==/2533274790655230.jpg?param=150y150" class="musiccover"></img>
+
+- 👍《i will write peace on your wings and you will fly over the world》
+- 《exits to nowhere》
+- 👍《one day you will teach me to let go of my fears》
+- 👍《so that the children will always shout her name》
+- 《It's Dark, It's Cold, It's Winter》
+- 《what we cannot speak of, must be passed over in silence》
 <div class="clearfix"></div><br/>
 
 #### 《Asunder, Sweet and Other Distress》
@@ -159,6 +144,20 @@ weight: 20200109
 - 《We'll Meet in the End》
 <div class="clearfix"></div><br/>
 
+#### 《Hymn to the Immortal Wind》
+作者: MONO
+
+<img src="http://p2.music.126.net/cioulQjNJ0Z8vP9TDfMJow==/833429813854422.jpg?param=150y150" class="musiccover"></img>
+
+- 👍《Ashes In The Snow》
+- 《Burial At Sea》
+- 《Silent Flight, Sleeping Down》
+- 👍《Pure As Snow (Trails of the Winter Storm)》
+- 《Follow The Map》
+- 《The Battle To Heaven》
+- 《Everlasting Light》
+<div class="clearfix"></div><br/>
+
 #### 《F♯ A♯ ∞》
 作者: Godspeed You! Black Emperor
 
@@ -167,20 +166,6 @@ weight: 20200109
 - 《The Dead Flag Blues》
 - 《East Hastings》
 - 👍《Providence》
-<div class="clearfix"></div><br/>
-
-#### 《Strawberry》
-作者: Soul
-
-<img src="http://p2.music.126.net/Mv1-aBQI-VdFInMkqUqhwQ==/2483796767170021.jpg?param=150y150" class="musiccover"></img>
-
-- 《Strawberry》
-- 《Little Prince》
-- 《Accident By The Sea》
-- 《I've Given All And I'm Now Nothing》
-- 《Narnia》
-- 《The Less The Better》
-- 👍《Summer Ends》
 <div class="clearfix"></div><br/>
 
 #### 《Hurtbreak Wonderland》
@@ -198,6 +183,44 @@ weight: 20200109
 - 《Bless Yourself Bleed》
 - 《Dance For Borderline Miscanthus》
 - 《River Was Filled With Stories》
+<div class="clearfix"></div><br/>
+
+#### 《How Lonely Sits the City》
+作者: The Ascent of Everest
+
+<img src="http://p2.music.126.net/u5QrM_xO98T5Up3sQdpmcg==/109951163500118997.jpg?param=150y150" class="musiccover"></img>
+
+- 👍《Alas, Alas! The Breath of Life!》
+- 《As the City Burned We Trembled for We Saw the Making of Their Undoing in Our Own Hearts》
+- 👍《Molotov》
+- 《A Threnody for the Victims of Nov 2nd》
+- 《If I Could Move Mountains》
+<div class="clearfix"></div><br/>
+
+#### 《Palmless Prayer / Mass Murder Refrain》
+作者: MONO / world's end girlfriend
+
+<img src="http://p2.music.126.net/u4I5PI3mCckdzHCBQqanlw==/109951163472905109.jpg?param=150y150" class="musiccover"></img>
+
+- 《Trailer 1》
+- 《Trailer 2》
+- 《Trailer 3》
+- 《Trailer 4》
+- 👍《Trailer 5》
+<div class="clearfix"></div><br/>
+
+#### 《Strawberry》
+作者: Soul
+
+<img src="http://p2.music.126.net/Mv1-aBQI-VdFInMkqUqhwQ==/2483796767170021.jpg?param=150y150" class="musiccover"></img>
+
+- 《Strawberry》
+- 《Little Prince》
+- 《Accident By The Sea》
+- 《I've Given All And I'm Now Nothing》
+- 《Narnia》
+- 《The Less The Better》
+- 👍《Summer Ends》
 <div class="clearfix"></div><br/>
 
 #### 《This World Is Not A Cold Dead Place》
@@ -284,6 +307,52 @@ weight: 20200109
 - 《Rockets fall on Rocket Falls》
 - 《************=redeemer》
 - 《************=redeemer(cont.)》
+<div class="clearfix"></div><br/>
+
+#### 《Eulogy for Evolution》
+作者: Ólafur Arnalds
+
+<img src="http://p1.music.126.net/UmeWt9qDVQCbGKffFuHmqg==/109951164434722332.jpg?param=150y150" class="musiccover"></img>
+
+- 《0040》
+- 《0048 / 0729》
+- 《0952》
+- 《1440》
+- 《1953》
+- 👍《3055》
+- 《3326》
+- 《3704 / 3837》
+<div class="clearfix"></div><br/>
+
+#### 《...And They Have Escaped the Weight of Darkness》
+作者: Ólafur Arnalds
+
+<img src="http://p2.music.126.net/2SxDD26Ax-o89_NJH_oCUA==/109951164435369171.jpg?param=150y150" class="musiccover"></img>
+
+- 《þÚ Ert Sólin》
+- 《þÚ Ert Jörðin》
+- 《Tunglið》
+- 《Loftið Verður Skyndilega Kalt》
+- 《Kjurrt》
+- 《Gleypa Okkur》
+- 👍《Hægt, Kemur Ljósið》
+- 《Undan Hulu》
+- 《þau Hafa Sloppið Undan þunga Myrkursins》
+- 《Endalaus I》
+- 《Hratt》
+- 《Endalaus II》
+<div class="clearfix"></div><br/>
+
+#### 《Atlas: Oceans》
+作者: Sleeping at Last
+
+<img src="http://p2.music.126.net/pKP-uoAUHA5wNwjfsK-cHQ==/5883486720419457.jpg?param=150y150" class="musiccover"></img>
+
+- 《Pacific》
+- 👍《Atlantic》
+- 《Indian》
+- 《Southern》
+- 《Arctic》
 <div class="clearfix"></div><br/>
 
 #### 《Reanimation》
@@ -386,18 +455,6 @@ weight: 20200109
 - 《To make it all worth while (Chaplin's last dance)》
 <div class="clearfix"></div><br/>
 
-#### 《How Lonely Sits the City》
-作者: The Ascent of Everest
-
-<img src="http://p2.music.126.net/u5QrM_xO98T5Up3sQdpmcg==/109951163500118997.jpg?param=150y150" class="musiccover"></img>
-
-- 👍《Alas, Alas! The Breath of Life!》
-- 《As the City Burned We Trembled for We Saw the Making of Their Undoing in Our Own Hearts》
-- 《Molotov》
-- 《A Threnody for the Victims of Nov 2nd》
-- 《If I Could Move Mountains》
-<div class="clearfix"></div><br/>
-
 #### 《About Everything And More》
 作者: Dorena
 
@@ -411,6 +468,84 @@ weight: 20200109
 - 《Stars In The Ceiling》
 - 《Never Alone, Alwangs Lonesome》
 - 《Let Us Live》
+<div class="clearfix"></div><br/>
+
+#### 《Sometimes》
+作者: Goldmund
+
+<img src="http://p1.music.126.net/WsXwopZZBokoUd7NG0G36w==/109951163470970521.jpg?param=150y150" class="musiccover"></img>
+
+- 《As Old Roads》
+- 《Sometimes》
+- 《Is As》
+- 《Signals No. 1》
+- 《Getting Lighter》
+- 《A Word I Give》
+- 《Angel》
+- 《Cascade》
+- 《Too Much Still》
+- 《Travelling》
+- 《In the Byre》
+- 《The Hidden Observer》
+- 《The Wind Wings》
+- 《To Be Fair and True》
+- 《Turncoat》
+- 《Vision》
+- 《Windmills》
+<div class="clearfix"></div><br/>
+
+#### 《Alina》
+作者: Arvo Pärt
+
+<img src="http://p1.music.126.net/0mS4egKWou09UQ5-5OZfnQ==/801543976692888.jpg?param=150y150" class="musiccover"></img>
+
+- 《Spiegel im Spiegel》
+- 《Für Alina》
+- 👍《Spiegel im Spiegel》
+- 《Für Alina》
+- 《Spiegel im Spiegel》
+<div class="clearfix"></div><br/>
+
+#### 《lovewell》
+作者: Soulostar
+
+<img src="http://p1.music.126.net/Qwdlx_359nJps2b1A8Mdpg==/5694370720322357.jpg?param=150y150" class="musiccover"></img>
+
+- 《A First Hello》
+- 《Lady Love》
+- 《Origami》
+- 《Sunset Flow》
+- 👍《Dreamstate》
+- 《In Time》
+- 👍《The Quiet Storm》
+- 《Castles (interlude)》
+- 《These Nights》
+- 《Perfection Within You》
+- 《Fighter》
+- 《Home in Heaven》
+- 《A Beautiful Farewell》
+- 《Love Well》
+<div class="clearfix"></div><br/>
+
+#### 《Otherworld》
+作者: Soulostar
+
+<img src="http://p1.music.126.net/LeucwtFfHIFeUxuDDgTyTA==/1760318116070865.jpg?param=150y150" class="musiccover"></img>
+
+- 《Staring Over》
+- 《The Calm》
+- 《Clock Hands》
+- 《Dreams of a Golden State》
+- 《Walk the Sky》
+- 👍《Rainy Day Reminiscence》
+- 《Solace》
+- 《Autumn Falls (Interlude)》
+- 《Electric Emotion》
+- 《Spaceship》
+- 《Otherworld (I.T.R.)》
+- 《Tell Me》
+- 《Life is Love》
+- 《Story of a Boy and a Girl》
 <div class="clearfix"></div><br/>
 
 #### 《The Stolen View》
@@ -518,19 +653,6 @@ weight: 20200109
 - 《And We Carved Our Names into the Trees》
 <div class="clearfix"></div><br/>
 
-### Goldmund
-### Ólafur Arnalds
-### Soulostar
-### Endless Melancholy
-### 渡辺俊幸
-#### 《優しい時間 オリジナル・サウンドトラック》
-### Ludovico Einaudi
-### Arvo Pärt
-### Enzalla
-### Helen Jane Long
-### Thomas Greenberg
-### Julien Marchal
-### Andrew Jasinski
 ## 其他
 不计入排序。
 ### Matryoshka
@@ -570,39 +692,4 @@ weight: 20200109
 - 👍《the incredible food groove》
 - 《when i'm with you》
 - 《stay gold》
-<div class="clearfix"></div><br/>
-
-### 《恋×シンアイ彼女 Complete Sound Track》
-作者: 水月陵
-
-《恋×シンアイ彼女》官方OST。
-
-<img src="http://p2.music.126.net/AaynSYXHCr8R0ByIqZvQMg==/2946691226122260.jpg?param=150y150" class="musiccover"></img>
-
-- 水月陵《恋×シンアイ彼女 メインテーマ》
-- Duca《記憶×ハジマリ》
-- 水月陵《風の止まり木》
-- 水月陵《名付けられた月曜日》
-- 水月陵《半目野良猫》
-- 水月陵《はしゃぎきれない少年》
-- 水月陵《ENJOYが反射してる》
-- 水月陵《さりげなくホップステップ》
-- 水月陵《風の迷い路》
-- 水月陵《手をつないだら》
-- 水月陵《flower》
-- 水月陵《とけかけの小豆アイス》
-- 水月陵《ここにいるよ?》
-- yuiko《東の空から始まる世界》
-- 水月陵《壇上のBlue eyes》
-- 水月陵《小雨降る日の優しさ》
-- 水月陵《虹かかる空の恋しさ》
-- 水月陵《君は無音の中で》
-- 水月陵《We are alone》
-- 水月陵《忘れられたものたちへ》
-- 水月陵《alpha》
-- 水月陵《僕らが友達だった時代》
-- 水月陵《恋をしたら》
-- 水月陵《After the rain》
-- yuiko《GLORIOUS DAYS》
-- 水月陵《flower -piano arrangement-》
 <div class="clearfix"></div><br/>
