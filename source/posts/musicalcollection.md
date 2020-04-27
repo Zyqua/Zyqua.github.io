@@ -157,6 +157,19 @@ weight: 20200109
 - 👍《Providence》
 <div class="clearfix"></div><br/>
 
+#### 《Unnoticable In A Tiny Town, Invisable In The City》
+作者: Youth Pictures of Florence Henderson
+
+<img src="http://p1.music.126.net/0pCCsH0PaMiT_AQoc8s3Iw==/6637751697685519.jpg?param=150y150" class="musiccover"></img>
+
+- 《Van Gogh Kept Painting Himself Because He Was The Only Model He Had》
+- 《Yet We Continue To Build There, The Structure》
+- 《How Odd To See These Lamps Still Burning》
+- 《I'Ve Got A Picture Of You Boss》
+- 《A List Not To Be Read At Your Wedding》
+- 👍《We May Be Remembered By What We Did When We Sat Down》
+<div class="clearfix"></div><br/>
+
 #### 《Give Me Beauty... Or Give Me Death!》
 作者: Ef
 
