@@ -16,38 +16,6 @@ weight: 20200109
 - 👍《Antennas To Heaven》
 <div class="clearfix"></div><br/>
 
-#### 《Enjoy Eternal Bliss》
-作者: Yndi Halda
-
-<img src="http://p2.music.126.net/y2a74MduRhl7s4ANPAn_cg==/109951163371785523.jpg?param=150y150" class="musiccover"></img>
-
-- 👍《Dash And Blast》
-- 👍《We Flood Empty Lakes》
-- 👍《A Song For Starlit Beaches》
-- 👍《Illuminate My Heart, My Darling!》
-<div class="clearfix"></div><br/>
-
-#### 《songs by the tumbled sea》
-作者: the tumbled sea
-
-<img src="http://p1.music.126.net/HU-oKS4YftUM26gwZ8puGA==/109951163403578122.jpg?param=150y150" class="musiccover"></img>
-
-- 《97202》
-- 《Walking》
-- 👍《emily's song》
-- 《children building this rainman out of snow》
-- 《A song for staying in.》
-- 《a growing recognition of the genius of birds.》
-- 《sleeps》
-- 《may》
-- 👍《we're turning into regular people》
-- 《doves》
-- 《a love song》
-- 《the people you never knew about》
-- 《untitled for piano and violins》
-- 《untitled for piano》
-<div class="clearfix"></div><br/>
-
 #### 《Slow Riot For New Zero Kanada》
 作者: Godspeed You! Black Emperor
 
@@ -57,32 +25,34 @@ weight: 20200109
 - 👍《BBF3》
 <div class="clearfix"></div><br/>
 
-#### 《Chapter One: Had We Known Better》
-作者: Industries Of The Blind
+#### 《F♯ A♯ ∞》
+作者: Godspeed You! Black Emperor
 
-<img src="http://p2.music.126.net/ccQHtuC6LkDDak3GFnFDsw==/717981092981109.jpg?param=150y150" class="musiccover"></img>
+<img src="http://p2.music.126.net/7Er5stEqNets7x2EV_5y3Q==/109951163484580625.jpg?param=150y150" class="musiccover"></img>
 
-- 👍《I just wanted to make you something beautiful》
-- 《Waiting and waltzing in airport terminals》
-- 👍《The light weren't that bright, but our eyes were so tired》
+- 👍《The Dead Flag Blues》
+- 👍《East Hastings》
+- 👍《Providence》
 <div class="clearfix"></div><br/>
 
-#### 《melody/summer》
-作者: the tumbled sea
+#### 《F#A#∞》[1995-1997]
+作者: Godspeed You! Black Emperor
 
-<img src="http://p1.music.126.net/PHUbxy53vtWvIApxVV1pWw==/2946691184922936.jpg?param=150y150" class="musiccover"></img>
+<img src="http://p1.music.126.net/OdnaPz3TE2L-IeTjgXG7ww==/3294136839164520.jpg?param=150y150" class="musiccover"></img>
 
-- 《summer ii》
-- 《summer v》
-- 《summer iii》
-- 《summer iv》
-- 《melody i》
-- 《melody ii》
-- 《melody iii》
-- 《Ø》
-- 《\\\\》
-- 《melody iv》
-- 《summer vi》
+- 《Nervous, Sad, Poor...》
+- 《Bleak, Uncertain, Beautiful...》
+<div class="clearfix"></div><br/>
+
+#### 《Enjoy Eternal Bliss》
+作者: Yndi Halda
+
+<img src="http://p2.music.126.net/y2a74MduRhl7s4ANPAn_cg==/109951163371785523.jpg?param=150y150" class="musiccover"></img>
+
+- 👍《Dash And Blast》
+- 👍《We Flood Empty Lakes》
+- 👍《A Song For Starlit Beaches》
+- 👍《Illuminate My Heart, My Darling!》
 <div class="clearfix"></div><br/>
 
 #### 《Allelujah! Don't Bend! Ascend!》
@@ -119,6 +89,39 @@ weight: 20200109
 - 👍《Piss Crowns Are Trebled》
 <div class="clearfix"></div><br/>
 
+#### 《Unnoticable In A Tiny Town, Invisable In The City》
+作者: Youth Pictures of Florence Henderson
+
+<img src="http://p1.music.126.net/0pCCsH0PaMiT_AQoc8s3Iw==/6637751697685519.jpg?param=150y150" class="musiccover"></img>
+
+- 《Van Gogh Kept Painting Himself Because He Was The Only Model He Had》
+- 《Yet We Continue To Build There, The Structure》
+- 《How Odd To See These Lamps Still Burning》
+- 👍《I'Ve Got A Picture Of You Boss》
+- 👍《A List Not To Be Read At Your Wedding》
+- 👍《We May Be Remembered By What We Did When We Sat Down》
+<div class="clearfix"></div><br/>
+
+#### 《Luciferian Towers》
+作者: Godspeed You! Black Emperor
+
+<img src="http://p2.music.126.net/o3gqGY-DwuFc6vzzFz1Zyw==/109951163471299711.jpg?param=150y150" class="musiccover"></img>
+
+- 《Undoing a Luciferian Towers》
+- 《Bosses Hang》
+- 《Fam/Famine》
+- 《Anthem For No State》
+<div class="clearfix"></div><br/>
+
+#### 《Tiny Silver Hammers》
+作者: Godspeed You! Black Emperor
+
+<img src="http://p2.music.126.net/OkuLK99DPPspmk0SaUQCgg==/1693247906787910.jpg?param=150y150" class="musiccover"></img>
+
+- 《Tiny Silver Hammers (Part 1)》
+- 《Tiny Silver Hammers (Part 2)》
+<div class="clearfix"></div><br/>
+
 #### 《Hurtbreak Wonderland》
 作者: world's end girlfriend
 
@@ -147,27 +150,26 @@ weight: 20200109
 - 《This Very Flight》
 <div class="clearfix"></div><br/>
 
-#### 《F♯ A♯ ∞》
+#### 《Yanqui U.X.O.》
 作者: Godspeed You! Black Emperor
 
-<img src="http://p2.music.126.net/7Er5stEqNets7x2EV_5y3Q==/109951163484580625.jpg?param=150y150" class="musiccover"></img>
+<img src="http://p1.music.126.net/vkAtLMfyi7q1siJLVL9PaQ==/109951163500918707.jpg?param=150y150" class="musiccover"></img>
 
-- 《The Dead Flag Blues》
-- 《East Hastings》
-- 👍《Providence》
+- 👍《09-15-00》
+- 《09-15-00(cont.)》
+- 《Rockets fall on Rocket Falls》
+- 《\*\*\*\*\*\*\*\*\*\*\*\*=redeemer》
+- 《\*\*\*\*\*\*\*\*\*\*\*\*=redeemer(cont.)》
 <div class="clearfix"></div><br/>
 
-#### 《Unnoticable In A Tiny Town, Invisable In The City》
-作者: Youth Pictures of Florence Henderson
+#### 《Chapter One: Had We Known Better》
+作者: Industries Of The Blind
 
-<img src="http://p1.music.126.net/0pCCsH0PaMiT_AQoc8s3Iw==/6637751697685519.jpg?param=150y150" class="musiccover"></img>
+<img src="http://p2.music.126.net/ccQHtuC6LkDDak3GFnFDsw==/717981092981109.jpg?param=150y150" class="musiccover"></img>
 
-- 《Van Gogh Kept Painting Himself Because He Was The Only Model He Had》
-- 《Yet We Continue To Build There, The Structure》
-- 《How Odd To See These Lamps Still Burning》
-- 《I'Ve Got A Picture Of You Boss》
-- 《A List Not To Be Read At Your Wedding》
-- 👍《We May Be Remembered By What We Did When We Sat Down》
+- 👍《I just wanted to make you something beautiful》
+- 《Waiting and waltzing in airport terminals》
+- 👍《The light weren't that bright, but our eyes were so tired》
 <div class="clearfix"></div><br/>
 
 #### 《Give Me Beauty... Or Give Me Death!》
@@ -195,6 +197,45 @@ weight: 20200109
 - 《Follow The Map》
 - 《The Battle To Heaven》
 - 《Everlasting Light》
+<div class="clearfix"></div><br/>
+
+#### 《songs by the tumbled sea》
+作者: the tumbled sea
+
+<img src="http://p1.music.126.net/HU-oKS4YftUM26gwZ8puGA==/109951163403578122.jpg?param=150y150" class="musiccover"></img>
+
+- 《97202》
+- 《Walking》
+- 👍《emily's song》
+- 《children building this rainman out of snow》
+- 《A song for staying in.》
+- 《a growing recognition of the genius of birds.》
+- 《sleeps》
+- 《may》
+- 👍《we're turning into regular people》
+- 《doves》
+- 《a love song》
+- 《the people you never knew about》
+- 《untitled for piano and violins》
+- 《untitled for piano》
+<div class="clearfix"></div><br/>
+
+#### 《melody/summer》
+作者: the tumbled sea
+
+<img src="http://p1.music.126.net/PHUbxy53vtWvIApxVV1pWw==/2946691184922936.jpg?param=150y150" class="musiccover"></img>
+
+- 《summer ii》
+- 《summer v》
+- 《summer iii》
+- 《summer iv》
+- 《melody i》
+- 《melody ii》
+- 《melody iii》
+- 《Ø》
+- 《\\\\》
+- 《melody iv》
+- 《summer vi》
 <div class="clearfix"></div><br/>
 
 #### 《In Today Already Walks Tomorrow》
@@ -319,18 +360,6 @@ weight: 20200109
 - 《Monster》
 - 《Reminiscence》
 - 《One Day We Will Be Together Again》
-<div class="clearfix"></div><br/>
-
-#### 《Yanqui U.X.O.》
-作者: Godspeed You! Black Emperor
-
-<img src="http://p1.music.126.net/vkAtLMfyi7q1siJLVL9PaQ==/109951163500918707.jpg?param=150y150" class="musiccover"></img>
-
-- 👍《09-15-00》
-- 《09-15-00(cont.)》
-- 《Rockets fall on Rocket Falls》
-- 《************=redeemer》
-- 《************=redeemer(cont.)》
 <div class="clearfix"></div><br/>
 
 #### 《Eulogy for Evolution》
