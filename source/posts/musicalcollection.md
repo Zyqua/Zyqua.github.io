@@ -108,18 +108,9 @@ weight: 20200109
 <img src="http://p2.music.126.net/o3gqGY-DwuFc6vzzFz1Zyw==/109951163471299711.jpg?param=150y150" class="musiccover"></img>
 
 - 《Undoing a Luciferian Towers》
-- 《Bosses Hang》
+- 👍《Bosses Hang》
 - 《Fam/Famine》
-- 《Anthem For No State》
-<div class="clearfix"></div><br/>
-
-#### 《Tiny Silver Hammers》
-作者: Godspeed You! Black Emperor
-
-<img src="http://p2.music.126.net/OkuLK99DPPspmk0SaUQCgg==/1693247906787910.jpg?param=150y150" class="musiccover"></img>
-
-- 《Tiny Silver Hammers (Part 1)》
-- 《Tiny Silver Hammers (Part 2)》
+- 👍《Anthem For No State》
 <div class="clearfix"></div><br/>
 
 #### 《Hurtbreak Wonderland》
@@ -139,6 +130,27 @@ weight: 20200109
 - 《River Was Filled With Stories》
 <div class="clearfix"></div><br/>
 
+#### 《Yanqui U.X.O.》
+作者: Godspeed You! Black Emperor
+
+<img src="http://p1.music.126.net/vkAtLMfyi7q1siJLVL9PaQ==/109951163500918707.jpg?param=150y150" class="musiccover"></img>
+
+- 👍《09-15-00》
+- 《09-15-00(cont.)》
+- 《Rockets fall on Rocket Falls》
+- 👍《\*\*\*\*\*\*\*\*\*\*\*\*=redeemer》
+- 《\*\*\*\*\*\*\*\*\*\*\*\*=redeemer(cont.)》
+<div class="clearfix"></div><br/>
+
+#### 《Tiny Silver Hammers》
+作者: Godspeed You! Black Emperor
+
+<img src="http://p2.music.126.net/OkuLK99DPPspmk0SaUQCgg==/1693247906787910.jpg?param=150y150" class="musiccover"></img>
+
+- 《Tiny Silver Hammers (Part 1)》
+- 《Tiny Silver Hammers (Part 2)》
+<div class="clearfix"></div><br/>
+
 #### 《Under Summer》
 作者: Yndi Halda
 
@@ -148,18 +160,6 @@ weight: 20200109
 - 👍《Golden Threads from the Sun》
 - 《Helena》
 - 《This Very Flight》
-<div class="clearfix"></div><br/>
-
-#### 《Yanqui U.X.O.》
-作者: Godspeed You! Black Emperor
-
-<img src="http://p1.music.126.net/vkAtLMfyi7q1siJLVL9PaQ==/109951163500918707.jpg?param=150y150" class="musiccover"></img>
-
-- 👍《09-15-00》
-- 《09-15-00(cont.)》
-- 《Rockets fall on Rocket Falls》
-- 《\*\*\*\*\*\*\*\*\*\*\*\*=redeemer》
-- 《\*\*\*\*\*\*\*\*\*\*\*\*=redeemer(cont.)》
 <div class="clearfix"></div><br/>
 
 #### 《Chapter One: Had We Known Better》
