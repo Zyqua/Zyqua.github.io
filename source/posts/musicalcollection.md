@@ -78,15 +78,15 @@ weight: 20200109
 - 👍《If I Could Move Mountains》
 <div class="clearfix"></div><br/>
 
-#### 《Asunder, Sweet and Other Distress》
+#### 《Luciferian Towers》
 作者: Godspeed You! Black Emperor
 
-<img src="http://p2.music.126.net/wiajzksvZ3BsTURwjabiIQ==/7726268208954958.jpg?param=150y150" class="musiccover"></img>
+<img src="http://p2.music.126.net/o3gqGY-DwuFc6vzzFz1Zyw==/109951163471299711.jpg?param=150y150" class="musiccover"></img>
 
-- 《Peasantry or 'Light!Inside of Light!'》
-- 《Lambs' Breath》
-- 《Asunder, Sweet》
-- 👍《Piss Crowns Are Trebled》
+- 《Undoing a Luciferian Towers》
+- 👍《Bosses Hang》
+- 《Fam/Famine》
+- 👍《Anthem For No State》
 <div class="clearfix"></div><br/>
 
 #### 《Unnoticable In A Tiny Town, Invisable In The City》
@@ -100,17 +100,6 @@ weight: 20200109
 - 👍《I'Ve Got A Picture Of You Boss》
 - 👍《A List Not To Be Read At Your Wedding》
 - 👍《We May Be Remembered By What We Did When We Sat Down》
-<div class="clearfix"></div><br/>
-
-#### 《Luciferian Towers》
-作者: Godspeed You! Black Emperor
-
-<img src="http://p2.music.126.net/o3gqGY-DwuFc6vzzFz1Zyw==/109951163471299711.jpg?param=150y150" class="musiccover"></img>
-
-- 《Undoing a Luciferian Towers》
-- 👍《Bosses Hang》
-- 《Fam/Famine》
-- 👍《Anthem For No State》
 <div class="clearfix"></div><br/>
 
 #### 《Hurtbreak Wonderland》
@@ -128,6 +117,17 @@ weight: 20200109
 - 《Bless Yourself Bleed》
 - 《Dance For Borderline Miscanthus》
 - 《River Was Filled With Stories》
+<div class="clearfix"></div><br/>
+
+#### 《Asunder, Sweet and Other Distress》
+作者: Godspeed You! Black Emperor
+
+<img src="http://p2.music.126.net/wiajzksvZ3BsTURwjabiIQ==/7726268208954958.jpg?param=150y150" class="musiccover"></img>
+
+- 《Peasantry or 'Light!Inside of Light!'》
+- 《Lambs' Breath》
+- 《Asunder, Sweet》
+- 👍《Piss Crowns Are Trebled》
 <div class="clearfix"></div><br/>
 
 #### 《Yanqui U.X.O.》
