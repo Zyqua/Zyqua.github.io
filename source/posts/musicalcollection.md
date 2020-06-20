@@ -78,6 +78,23 @@ weight: 20200109
 - 👍《If I Could Move Mountains》
 <div class="clearfix"></div><br/>
 
+#### 《Hurtbreak Wonderland》
+作者: world's end girlfriend
+
+<img src="http://p2.music.126.net/myiA41agEubVTkrf2cdiVA==/731175232493552.jpg?param=150y150" class="musiccover"></img>
+
+- 《Wandering》
+- 👍《Birthday Resistance》
+- 👍《100 Years Of Choke》
+- 《Grass Ark》
+- 《Ghost Of A Horse Under The Chandelier》
+- 《The Octuple Personnality And Eleven Crows》
+- 《Breath Or Castle Ballad》
+- 👍《Bless Yourself Bleed》
+- 《Dance For Borderline Miscanthus》
+- 《River Was Filled With Stories》
+<div class="clearfix"></div><br/>
+
 #### 《Luciferian Towers》
 作者: Godspeed You! Black Emperor
 
@@ -100,23 +117,6 @@ weight: 20200109
 - 👍《I'Ve Got A Picture Of You Boss》
 - 👍《A List Not To Be Read At Your Wedding》
 - 👍《We May Be Remembered By What We Did When We Sat Down》
-<div class="clearfix"></div><br/>
-
-#### 《Hurtbreak Wonderland》
-作者: world's end girlfriend
-
-<img src="http://p2.music.126.net/myiA41agEubVTkrf2cdiVA==/731175232493552.jpg?param=150y150" class="musiccover"></img>
-
-- 《Wandering》
-- 《Birthday Resistance》
-- 👍《100 Years Of Choke》
-- 《Grass Ark》
-- 《Ghost Of A Horse Under The Chandelier》
-- 《The Octuple Personnality And Eleven Crows》
-- 《Breath Or Castle Ballad》
-- 《Bless Yourself Bleed》
-- 《Dance For Borderline Miscanthus》
-- 《River Was Filled With Stories》
 <div class="clearfix"></div><br/>
 
 #### 《Asunder, Sweet and Other Distress》
