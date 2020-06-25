@@ -220,3 +220,90 @@ int main() {
     return 0;
 }
 ```
+
+### 2020-06-24
+今天应该学分治。不过分治好像没有值得专门复习的地方，和递归一样是比较散的知识点，所以就直接去学贪心了。
+
+#### [NOIP2012]国王游戏
+https://www.luogu.com.cn/problem/P1080
+
+设目前考虑的两个大臣分别是$i$和$j$且$i+1=j$，$m=\prod_{k=0}^{i-1}a_k$，则两人的奖赏分别为$\dfrac{m}{b_i}$和$\dfrac{ma_i}{b_j}$。交换两人的位置后，两人的奖赏分别为$\dfrac{ma_j}{b_i}$和$\dfrac{m}{b_j}$。邻项交换排序的思路是，若交换前的答案比交换后的答案更优，则不需要交换。
+
+交换前的答案优于交换后的答案，也就是$\max\left(\dfrac{m}{b_i},\dfrac{ma_i}{b_j}\right)<\max\left(\dfrac{ma_j}{b_i},\dfrac{m}{b_j}\right)$。化简后可以得到$\max(b_j,a_ib_i)<\max(a_jb_j,b_i)$。在满足这个条件时不需要交换，即返回$\texttt{true}$(因为快排是按照从小到大的顺序排的，$\texttt{true}$即表示$i<j$，也就是无需交换)。
+
+```cpp
+#include<cstdio>
+#include<algorithm>
+using namespace std;
+
+int n, l[10010], r[10010], a[10010], mul[10010], ans;
+
+void swap(int &a, int &b) {
+	int t = a;
+	a = b;
+	b = t;
+}
+int max(int a, int b) { return a > b ? a : b; }
+bool cmp(int a, int b) { return l[a] * r[a] < l[b] * r[b]; }
+
+int main() {
+	scanf("%d", &n);
+	for (int i = 0; i <= n; i++) scanf("%d%d", &l[i], &r[i]), a[i] = i;
+	sort(a + 1, a + n + 1, cmp);
+	mul[0] = l[0];
+	for (int i = 1; i <= n; i++) mul[i] = mul[i - 1] * l[a[i]];
+	for (int i = 1; i <= n; i++) ans = max(ans, mul[i - 1] / r[a[i]]);
+	printf("%d\n", ans);
+	return 0;
+}
+```
+
+### 2020-06-25
+~~太困了直接从晚上7点多睡到第二天4点半，第二天早晨补回来的~~
+
+#### 液体滴落
+https://www.luogu.com.cn/problem/P1766
+
+这次是从luogu的题单里找的题，但是这题好像和贪心也没什么关系。
+
+会求一次函数解析式就行了($k=\dfrac{y_1-y_2}{x_1-x_2}$,$b=y_1-kx_1$)。唯一要注意的是精度问题，线段的端点纵坐标要存下来，不要用解析式算。
+
+```cpp
+#include<cstdio>
+
+int n, sx, sy, lx[10010], rx[10010], ly[10010], ry[10010];
+double k[10010], b[10010];
+const double eps = 1e-6;
+
+inline int min(int a, int b) { return a < b ? a : b; }
+inline int max(int a, int b) { return a > b ? a : b; }
+
+int main() {
+    scanf("%d%d", &n, &sx);
+    sy = 0x3fffffff;
+    for (int i = 1; i <= n; i++) {
+        int x1, y1, x2, y2;
+        scanf("%d%d%d%d", &x1, &y1, &x2, &y2);
+        if (x1 < x2) lx[i] = x1, ly[i] = y1, rx[i] = x2, ry[i] = y2;
+        else lx[i] = x2, ly[i] = y2, rx[i] = x1, ry[i] = y1;
+        k[i] = (double)(y1 - y2) / (x1 - x2), b[i] = y1 - k[i] * x1;
+    }
+    for (; ; ){
+        int maxi = 0;
+        double maxy = -0x3fffffff;
+        for (int i = 1; i <= n; i++) {
+            if (sx <= lx[i] || rx[i] <= sx) continue;
+            double y = k[i] * sx + b[i];
+            if (maxy < y && y <= sy) {
+                maxy = y;
+                maxi = i;
+            }
+        }
+        if (!maxi) break;
+        if (k[maxi] > 0) sx = lx[maxi], sy = ly[maxi];
+        else sx = rx[maxi], sy = ry[maxi];
+    }
+    printf("%d\n", sx);
+    return 0;
+}
+```
