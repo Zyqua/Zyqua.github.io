@@ -217,7 +217,10 @@ int main() {
 <h4 id="noip2012国王游戏">[NOIP2012]国王游戏</h4>
 <p><a href="https://www.luogu.com.cn/problem/P1080">https://www.luogu.com.cn/problem/P1080</a></p>
 <p>设目前考虑的两个大臣分别是$i$和$j$且$i+1=j$，$m=\prod_{k=0}^{i-1}a_k$，则两人的奖赏分别为$\dfrac{m}{b_i}$和$\dfrac{ma_i}{b_j}$。交换两人的位置后，两人的奖赏分别为$\dfrac{ma_j}{b_i}$和$\dfrac{m}{b_j}$。邻项交换排序的思路是，若交换前的答案比交换后的答案更优，则不需要交换。</p>
-<p>交换前的答案优于交换后的答案，也就是$\max\left(\dfrac{m}{b_i},\dfrac{ma_i}{b_j}\right)&lt;\max\left(\dfrac{ma_j}{b_i},\dfrac{m}{b_j}\right)$。化简后可以得到$\max(b_j,a_ib_i)&lt;\max(a_jb_j,b_i)$。在满足这个条件时不需要交换，即返回$\texttt{true}$(因为快排是按照从小到大的顺序排的，$\texttt{true}$即表示$i&lt;j$，也就是无需交换)。</p>
+<p>交换前的答案优于交换后的答案，也就是$\max\left(\dfrac{m}{b_i},\dfrac{ma_i}{b_j}\right)&lt;\max\left(\dfrac{ma_j}{b_i},\dfrac{m}{b_j}\right)$。化简后可以得到$\max(b_j,a_ib_i)&lt;\max(a_jb_j,b_i)$。因为$b_j&lt;a_jb_j,b_i&lt;a_ib_i$，所以相当于$a_ib_i&lt;a_jb_j$。在满足这个条件时不需要交换，即返回$\texttt{true}$(因为快排是按照从小到大的顺序排的，$\texttt{true}$即表示$i&lt;j$，也就是无需交换)。</p>
+<p>相邻的两项满足$a_ib_i&lt;a_jb_j$时是最优答案，因为序列中所有相邻的两项都满足这个条件，所以序列是按照$a_ib_i$排序的，所以对于这个条件任意两项都成立。</p>
+<p>对于此题中的一个推理$\max(a,c)&lt;\max(b,d)\Rightarrow a&lt;b(c&lt;b,d&lt;a)$，是因为：如果$a&lt;b$，那么又因为$c&lt;b$，$\max(a,c)&lt;\max(b,d)$一定成立；如果$a\ge b$，又因为$d&lt;a$，$\max(a,c)&lt;\max(b,d)$一定不成立。</p>
+<p>上面两段是做这题时主要的疑惑，全部题解中都只字未提，找到$rqy$以前的课件看了看发现对于这两点讲得很详细。</p>
 <pre><code class="language-cpp">#include&lt;cstdio&gt;
 #include&lt;algorithm&gt;
 using namespace std;
