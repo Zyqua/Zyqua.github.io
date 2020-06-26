@@ -307,3 +307,173 @@ int main() {
     return 0;
 }
 ```
+
+### 2020-06-26
+#### 正妹吃月饼
+https://www.luogu.com.cn/problem/P2431
+
+贪心，因为吃大的不如把所有比它小的都吃掉更优，所以以$a$对应的方案为初始方案从小到大枚举月饼，如果没吃过且能吃则吃掉。
+
+用二进制写会方便一些。
+
+```cpp
+#include<cstdio>
+
+int ans;
+long long a, b;
+
+int main() {
+    scanf("%lld%lld", &a, &b);
+    for (long long c = 1; c <= b; c <<= 1)
+        if (!(a & c) && (a | c) <= b) a |= c;
+    for (long long c = 1; c <= a; c <<= 1)
+        if (a & c) ans++;
+    printf("%d\n", ans);
+    return 0;
+}
+```
+#### 魔法
+https://www.luogu.com.cn/problem/P3619
+
+~~天若有情天亦老，我为长者续一秒~~
+
+贪心，先把$b$大于等于$0$的任务按照$t$从小到大的顺序完成，剩下$b$小于$0$的，再次使用邻项交换法：若在完成任务$i$后还可以完成任务$j$($i+1=j$)，而完成任务$j$后不能完成任务$i$，则当前顺序更优，不需要交换。相当于$\begin{cases}t+b_i>t_j\\\\t+b_j<t_i\end{cases}$，也就是$t_j-b_i<t_i-b_j$。
+
+注意判完成任务后$t$不能小于等于$0$。
+
+```cpp
+#include<cstdio>
+#include<algorithm>
+
+int z, n, t, ans;
+struct task {
+    int t, b;
+    bool operator < (const task &a) const {
+        if (b >= 0 || a.b >= 0) return t < a.t;
+        else return a.t - b < t - a.b;
+    }
+}tasks[100100];
+
+int main() {
+    scanf("%d", &z);
+    while (z--) {
+        scanf("%d%d", &n, &t);
+        ans = 0;
+        for (int i = 1; i <= n; i++) scanf("%d%d", &tasks[i].t, &tasks[i].b);
+        std::sort(tasks + 1, tasks + n + 1);
+        for (int i = 1; i <= n; i++)
+            if (t > tasks[i].t && t + tasks[i].b > 0) t += tasks[i].b, ans++;
+        if (ans == n) printf("+1s\n");
+        else printf("-1s\n");
+    }
+    return 0;
+}
+```
+
+#### 修改
+https://www.luogu.com.cn/problem/P6155
+
+从小到大枚举当前处理到的$a_{cur}$修改若干次后最小是几。处理时间更晚的在乘$b_i$时的权值会更小，所以用栈存放待分配数值的$a_{cur}$，将当前值$i$分配给栈顶的元素。
+
+获取栈顶元素时，一定要确保栈不是空的。
+
+```cpp
+#include<cstdio>
+#include<algorithm>
+#include<stack>
+
+const int MAXN = 1000100;
+unsigned long long ans;
+int n, a[MAXN], b[MAXN], cnt[MAXN], cur;
+std::stack<int> stk;
+
+inline int read() {
+    register int ans = 0;
+    register char c = getchar();
+    while (c == ' ' || c == '\n' || c == '\r') c = getchar();
+    while ('0' <= c && c <= '9') {
+        ans = (ans << 3) + (ans << 1) + c - '0';
+        c = getchar();
+    }
+    return ans;
+}
+bool cmp(int a, int b) { return a > b; }
+
+int main() {
+    n = read();
+    for (int i = 1; i <= n; i++) a[i] = read();
+    for (int i = 1; i <= n; i++) b[i] = read();
+    std::sort(a + 1, a + n + 1);
+    cur = 1;
+    for (int i = 1; cur <= n || !stk.empty(); i++) {
+        if (stk.empty()) i = a[cur];
+        while (a[cur] == i) stk.push(cur++);
+        cnt[stk.top()] = i - a[stk.top()];
+        stk.pop();
+    }
+    std::sort(b + 1, b + n + 1);
+    std::sort(cnt + 1, cnt + n + 1, cmp);
+    for (int i = 1; i <= n; i++)
+        ans += (unsigned long long)cnt[i] * b[i];
+    printf("%llu\n", ans);
+    return 0;
+}
+```
+
+#### 序列排序
+https://www.luogu.com.cn/problem/P2127
+
+把序列排序后，从原序列的元素到排序后此元素上的元素连一条有向边，就得到了一张由若干个简单环组成的有向图。对于一个环，环内调整最优的方案是用环内最小的元素来和其他所有元素换一遍，另一种可能的最优方案是把全图的最小元素和环内最小元素交换，然后用换来的最小元素和环内其他元素调整一遍，然后再换回去。前者的代价是$\sum_{1\le x\le n,x\not=minx}(w_x+w_{minx})$即$\sum_{1\le x\le n}w_x+(n-2)w_{minx}$，后者的代价是$\sum_{1\le x\le n,x\not=minx}(w_x+w_{whminx})+2\times(w_{minx}+w_{whminx})$即$\sum_{1\le x\le n}w_x+(n+1)w_{whminx}+w_{minx}$，对于每个环对两者取$\min$，然后相加即为答案。
+
+注意开$\texttt{long long}$。
+
+```cpp
+#include<cstdio>
+#include<algorithm>
+#include<cstring>
+
+const int MAXN = 100100;
+int n, a[MAXN], b[MAXN], whminw, minw[MAXN], num[MAXN], scccnt;
+long long sumw[MAXN], ans;
+bool vis[MAXN];
+struct edge { int to, next; };
+struct graph {
+    int ecnt, head[MAXN], w[MAXN];
+    edge edges[MAXN];
+
+    inline void addedge(int u, int v) {
+        edges[++ecnt].to = v;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+}g;
+
+inline long long min(long long a, long long b) { return a < b ? a : b; }
+void dfs(int x) {
+    if (vis[x]) return;
+    vis[x] = true;
+    minw[scccnt] = min(minw[scccnt], g.w[x]);
+    num[scccnt]++;
+    sumw[scccnt] += g.w[x];
+    for (int i = g.head[x]; i; i = g.edges[i].next) {
+        int &t = g.edges[i].to;
+        dfs(t);
+    }
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++) scanf("%d", &a[i]), b[i] = a[i];
+    std::sort(b + 1, b + n + 1);
+    for (int i = 1; i <= n; i++) a[i] = std::lower_bound(b + 1, b + n + 1, a[i]) - b;
+    for (int i = 1; i <= n; i++) g.addedge(a[i], a[a[i]]), g.w[a[i]] = b[a[i]];
+    memset(minw, 0x3f, sizeof minw);
+    for (int i = 1; i <= n; i++)
+        if (!vis[i]) scccnt++, dfs(i);
+    whminw = b[1];
+    for (int i = 1; i <= scccnt; i++)
+        ans += min((long long)sumw[i] + (long long)(num[i] - 2) * minw[i], (long long)sumw[i] + (long long)(num[i] + 1) * whminw + minw[i]);
+    printf("%lld\n", ans);
+    return 0;
+}
+```
