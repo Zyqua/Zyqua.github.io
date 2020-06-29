@@ -40,8 +40,42 @@
 </ol>
 <p>默认序列是非降序列，若序列为下降序列，把$2$和$3$倒过来即可。</p>
 <p>这样，二分的思路就十分清晰明了了。另外，某些题比如这题中要求的是最接近于$v$的数而不是大于等于$v$的最小的数，这种情况可以二分求出大于等于$v$的最小的数后，在$l$与$l-1$之间取舍。</p>
-<p>再来看这题，很容易看出来检验值关于$w$是单调的，然后$w=0$时$y$最大，$w &gt; maxw$时$y$最小，二分边界也就确定了。$y$的值可以用前缀和以$O(n+m)$复杂度求出。总复杂度$O((n+m)log\max{w_i})$</p>
+<p>再来看这题，很容易看出来检验值关于$w$是单调的，然后$w=0$时$y$最大，$w &gt; maxw$时$y$最小，二分边界也就确定了。$y$的值可以用前缀和以$O(n+m)$复杂度求出。总复杂度$O((n+m)log\max{w_i})$。</p>
+<p>还有就是，一定要仔细检查变量类型，第一次写完时很多地方忘了加$\texttt{long long}$。</p>
 <p>相同难度下一写二分题就感觉这么得心应手，贪心题一直都对我很难啊。有时间还得继续加强练习。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+const int MAXN = 200100;
+int n, m, w[MAXN], v[MAXN], l[MAXN], r[MAXN], maxw;
+long long s, wsum[MAXN], vsum[MAXN];
+
+inline long long min(long long a, long long b) { return a &lt; b ? a : b; }
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+inline long long abs(long long x) { return x &gt; 0 ? x : -x; }
+long long y(long long wx) {
+    long long ans = 0;
+    for (int i = 1; i &lt;= n; i++) {
+        wsum[i] = wsum[i - 1] + (w[i] &gt;= wx ? 1 : 0);
+        vsum[i] = vsum[i - 1] + (w[i] &gt;= wx ? v[i] : 0);
+    }
+    for (int i = 1; i &lt;= m; i++)
+        ans += (wsum[r[i]] - wsum[l[i] - 1]) * (vsum[r[i]] - vsum[l[i] - 1]);
+    return ans;
+}
+
+int main() {
+    scanf(&quot;%d%d%lld&quot;, &amp;n, &amp;m, &amp;s);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d%d&quot;, &amp;w[i], &amp;v[i]), maxw = max(maxw, w[i]);
+    for (int i = 1; i &lt;= m; i++) scanf(&quot;%d%d&quot;, &amp;l[i], &amp;r[i]);
+    long long lx = 1, rx = maxw + 1;
+    while (lx &lt; rx) {
+        long long mid = lx + (rx - lx) / 2;
+        if (y(mid) &lt;= s) rx = mid;
+        else lx = mid + 1;
+    }
+    printf(&quot;%lld\n&quot;, min(abs(y(lx) - s), abs(y(lx - 1) - s)));
+    return 0;
+}</code></pre>
 <a href="../posts.html" class="link" style="display:block; text-align:center;">return</a>
 </div>
 </body>

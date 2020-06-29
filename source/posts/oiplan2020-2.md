@@ -29,6 +29,44 @@ https://www.luogu.com.cn/problem/P1314
 
 这样，二分的思路就十分清晰明了了。另外，某些题比如这题中要求的是最接近于$v$的数而不是大于等于$v$的最小的数，这种情况可以二分求出大于等于$v$的最小的数后，在$l$与$l-1$之间取舍。
 
-再来看这题，很容易看出来检验值关于$w$是单调的，然后$w=0$时$y$最大，$w > maxw$时$y$最小，二分边界也就确定了。$y$的值可以用前缀和以$O(n+m)$复杂度求出。总复杂度$O((n+m)log\max\{w_i\})$
+再来看这题，很容易看出来检验值关于$w$是单调的，然后$w=0$时$y$最大，$w > maxw$时$y$最小，二分边界也就确定了。$y$的值可以用前缀和以$O(n+m)$复杂度求出。总复杂度$O((n+m)log\max\{w_i\})$。
+
+还有就是，一定要仔细检查变量类型，第一次写完时很多地方忘了加$\texttt{long long}$。
 
 相同难度下一写二分题就感觉这么得心应手，贪心题一直都对我很难啊。有时间还得继续加强练习。
+
+```cpp
+#include<cstdio>
+
+const int MAXN = 200100;
+int n, m, w[MAXN], v[MAXN], l[MAXN], r[MAXN], maxw;
+long long s, wsum[MAXN], vsum[MAXN];
+
+inline long long min(long long a, long long b) { return a < b ? a : b; }
+inline int max(int a, int b) { return a > b ? a : b; }
+inline long long abs(long long x) { return x > 0 ? x : -x; }
+long long y(long long wx) {
+    long long ans = 0;
+    for (int i = 1; i <= n; i++) {
+        wsum[i] = wsum[i - 1] + (w[i] >= wx ? 1 : 0);
+        vsum[i] = vsum[i - 1] + (w[i] >= wx ? v[i] : 0);
+    }
+    for (int i = 1; i <= m; i++)
+        ans += (wsum[r[i]] - wsum[l[i] - 1]) * (vsum[r[i]] - vsum[l[i] - 1]);
+    return ans;
+}
+
+int main() {
+    scanf("%d%d%lld", &n, &m, &s);
+    for (int i = 1; i <= n; i++) scanf("%d%d", &w[i], &v[i]), maxw = max(maxw, w[i]);
+    for (int i = 1; i <= m; i++) scanf("%d%d", &l[i], &r[i]);
+    long long lx = 1, rx = maxw + 1;
+    while (lx < rx) {
+        long long mid = lx + (rx - lx) / 2;
+        if (y(mid) <= s) rx = mid;
+        else lx = mid + 1;
+    }
+    printf("%lld\n", min(abs(y(lx) - s), abs(y(lx - 1) - s)));
+    return 0;
+}
+```
