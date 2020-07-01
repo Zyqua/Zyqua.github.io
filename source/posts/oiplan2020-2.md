@@ -70,3 +70,93 @@ int main() {
     return 0;
 }
 ```
+
+### 2020-06-30
+今晚太困了就早睡觉了，因为我每次刷题加上写总结至少得搞到$0$点以后，有时候$1$点或者最晚$2$点，然后$6$点半就得起来去学文化课，有点顶不住。
+
+### 2020-07-01
+#### [SHOI2015]自动刷题机
+https://www.luogu.com.cn/problem/P4343
+
+这题也是二分。感觉难度标得偏高了，我感觉绿题封顶，或者黄题。前天那题也是，绿题更合理一些。不过蓝题以下的luogu不管，我说了也没用。
+
+显然$n$越大切的题少，然后直接做两次二分即可。
+
+不过做这题时我看错了输出格式，无解的情况应该输出一个$-1$，我写成了输出两行每行一个$-1$，半个小时才调了出来，太菜了。
+
+```cpp
+#include<cstdio>
+
+int l, x[100100];
+long long k;
+
+inline int check(long long n) {
+    long long y = 0;
+    int cnt = 0;
+    for (int i = 1; i <= l; i++) {
+        y += x[i];
+        if (y < 0) y = 0;
+        else if (y >= n) y = 0, cnt++;
+    }
+    return cnt;
+}
+
+int main() {
+    scanf("%d%lld", &l, &k);
+    for (int i = 1; i <= l; i++) scanf("%d", &x[i]);
+    long long lx = 1, rx = 0x3fffffffffffffff;
+    while (lx < rx) {
+        long long mid = lx + (rx - lx >> 1);
+        if (check(mid) <= k) rx = mid;
+        else lx = mid + 1;
+    }
+    if (check(lx) ^ k) printf("-1\n");
+    else {
+        printf("%lld ", lx);
+        lx = 1, rx = 0x3fffffffffffffff;
+        while (lx < rx) {
+            long long mid = lx + (rx - lx >> 1);
+            if (check(mid) < k) rx = mid;
+            else lx = mid + 1;
+        }
+        printf("%lld\n", lx - 1);
+    }
+    return 0;
+}
+```
+
+#### kotori的设备
+https://www.luogu.com.cn/problem/P3743
+
+实数范围内的二分。注意精度，$\texttt{eps}$以后用$1^{-6}$，用$1^{-8}$某些点会超时。
+
+```cpp
+#include<cstdio>
+
+int n, p, a[100100], b[100100];
+long long suma;
+const double eps = 1e-6;
+
+bool check(double t) {
+    double sum = 0;
+    for (int i = 1; i <= n; i++)
+        if (b[i] < a[i] * t) sum += a[i] * t - b[i];
+    return sum <= t * p;
+}
+
+int main() {
+    scanf("%d%d", &n, &p);
+    for (int i = 1; i <= n; i++) scanf("%d%d", &a[i], &b[i]), suma += a[i];
+    if (suma <= p) printf("-1\n");
+    else {
+        double l = eps, r = 1e10;
+        while (r - l > eps) {
+            double mid = l + (r - l) / 2;
+            if (check(mid)) l = mid + eps;
+            else r = mid;
+        }
+        printf("%lf\n", l);
+    }
+    return 0;
+}
+```
