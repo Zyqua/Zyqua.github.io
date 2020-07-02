@@ -160,3 +160,38 @@ int main() {
     return 0;
 }
 ```
+
+### 2020-07-02
+因为文化课的缘故，今天时间不多，就只刷道水题吧。
+
+#### [HNOI2003]激光炸弹
+https://www.luogu.com.cn/problem/P2280
+
+直接二维前缀和，黄题还差不多。注意特判$m$大于$a$或$b$的情况。
+
+```cpp
+#include<cstdio>
+
+int n, m, sum[5010][5010], ans, a, b;
+
+inline int min(int a, int b) { return a < b ? a : b; }
+inline int max(int a, int b) { return a > b ? a : b; }
+
+int main() {
+    scanf("%d%d", &n, &m);
+    for (int i = 1; i <= n; i++) {
+        int x, y, v;
+        scanf("%d%d%d", &x, &y, &v);
+        x++, y++;
+        sum[x][y] += v;
+        a = max(a, x), b = max(b, y);
+    }
+    for (int i = 1; i <= a; i++)
+        for (int j = 1; j <= b; j++) sum[i][j] += sum[i - 1][j] + sum[i][j - 1] - sum[i - 1][j - 1];
+    for (int i = min(m, a); i <= a; i++)
+        for (int j = min(m, a); j <= b; j++) 
+            ans = max(ans, sum[i][j] - sum[max(i - m, 0)][j] - sum[i][max(j - m, 0)] + sum[max(i - m, 0)][max(j - m, 0)]);
+    printf("%d\n", ans);
+    return 0;
+}
+```

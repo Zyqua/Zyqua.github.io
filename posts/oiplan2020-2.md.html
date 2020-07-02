@@ -153,6 +153,35 @@ int main() {
     }
     return 0;
 }</code></pre>
+<h3 id="2020-07-02">2020-07-02</h3>
+<p>因为文化课的缘故，今天时间不多，就只刷道水题吧。</p>
+<h4 id="hnoi2003激光炸弹">[HNOI2003]激光炸弹</h4>
+<p><a href="https://www.luogu.com.cn/problem/P2280">https://www.luogu.com.cn/problem/P2280</a></p>
+<p>直接二维前缀和，黄题还差不多。注意特判$m$大于$a$或$b$的情况。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int n, m, sum[5010][5010], ans, a, b;
+
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt;= n; i++) {
+        int x, y, v;
+        scanf(&quot;%d%d%d&quot;, &amp;x, &amp;y, &amp;v);
+        x++, y++;
+        sum[x][y] += v;
+        a = max(a, x), b = max(b, y);
+    }
+    for (int i = 1; i &lt;= a; i++)
+        for (int j = 1; j &lt;= b; j++) sum[i][j] += sum[i - 1][j] + sum[i][j - 1] - sum[i - 1][j - 1];
+    for (int i = min(m, a); i &lt;= a; i++)
+        for (int j = min(m, a); j &lt;= b; j++) 
+            ans = max(ans, sum[i][j] - sum[max(i - m, 0)][j] - sum[i][max(j - m, 0)] + sum[max(i - m, 0)][max(j - m, 0)]);
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
 <a href="../posts.html" class="link" style="display:block; text-align:center;">return</a>
 </div>
 </body>
