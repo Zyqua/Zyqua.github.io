@@ -78,6 +78,34 @@ weight: 20200109
 - 👍《If I Could Move Mountains》
 <div class="clearfix"></div><br/>
 
+#### 《矢的直明 2014》
+作者: Nao'ymt
+
+<img src="http://p2.music.126.net/qmreN0T_FiiaE2O4F_AsKA==/3238061746944282.jpg?param=150y150" class="musiccover"></img>
+
+- 《Complicated》
+- 《Cold》
+- 《All Disappear》
+- 《Sunrise》
+- 👍《One Day We Will Be Together》
+- 《Wandering》
+- 《Beautiful》
+- 《Scenario》
+- 👍《Frequency》
+- 《Spring Reminds Me of You》
+- 《Firefiles》
+- 《14.428》
+- 《Someday I Will Die》
+- 《Udumbara》
+- 《August Rain》
+- 《Hourglass》
+- 《Irreplaceable》
+- 《Paper World》
+- 《Monster》
+- 《Reminiscence》
+- 《One Day We Will Be Together Again》
+<div class="clearfix"></div><br/>
+
 #### 《Hurtbreak Wonderland》
 作者: world's end girlfriend
 
@@ -140,6 +168,25 @@ weight: 20200109
 - 《Rockets fall on Rocket Falls》
 - 👍《\*\*\*\*\*\*\*\*\*\*\*\*=redeemer》
 - 《\*\*\*\*\*\*\*\*\*\*\*\*=redeemer(cont.)》
+<div class="clearfix"></div><br/>
+
+#### 《Grace》
+作者: Hakura Nakamura
+
+<img src="http://p2.music.126.net/sM0gbClGYFr4r6NXy_77_Q==/857619069688801.jpg?param=150y150" class="musiccover"></img>
+- 《Every Day》
+- 《Arne》
+- 《Opus》
+- 《Ralgo》
+- 《Elm》
+- 《Luz》
+- 《Lang》
+- 《Cielo》
+- 《Elm\2》
+- 《Sign》
+- 《Lamp》
+- 《Grace》
+- 《Cadenza》
 <div class="clearfix"></div><br/>
 
 #### 《Tiny Silver Hammers》
@@ -251,6 +298,23 @@ weight: 20200109
 - 《what we cannot speak of, must be passed over in silence》
 <div class="clearfix"></div><br/>
 
+#### 《Plains of the Purple Buffalo》
+作者: \*shels
+
+<img src="http://p1.music.126.net/VOSwwdbJKQj0cZENKdRk2Q==/787250325529135.jpg?param=150y150" class="musiccover"></img>
+
+- 《Journey to the Plains》
+- 《Plains of the Purple Buffalo (Part 1)》
+- 《Plains of the Purple Buffalo (Part 2)》
+- 《Searching for Zihuatanejo》
+- 《Vision Quest》
+- 《Atoll》
+- 《Butterfiles on Luci's Way》
+- 《Crown of Eagle Feathers》
+- 《Bastien's Angels》
+- 《Conqueror》
+<div class="clearfix"></div><br/>
+
 #### 《Palmless Prayer / Mass Murder Refrain》
 作者: MONO / world's end girlfriend
 
@@ -300,23 +364,6 @@ weight: 20200109
 - 👍《Your Hand In Mine》
 <div class="clearfix"></div><br/>
 
-#### 《Plains of the Purple Buffalo》
-作者: \*shels
-
-<img src="http://p1.music.126.net/VOSwwdbJKQj0cZENKdRk2Q==/787250325529135.jpg?param=150y150" class="musiccover"></img>
-
-- 《Journey to the Plains》
-- 《Plains of the Purple Buffalo (Part 1)》
-- 《Plains of the Purple Buffalo (Part 2)》
-- 《Searching for Zihuatanejo》
-- 《Vision Quest》
-- 《Atoll》
-- 《Butterfiles on Luci's Way》
-- 《Crown of Eagle Feathers》
-- 《Bastien's Angels》
-- 《Conqueror》
-<div class="clearfix"></div><br/>
-
 #### 《Frengers》
 作者: Mew
 
@@ -332,34 +379,6 @@ weight: 20200109
 - 《She Came Home for Christmas》
 - 《Shespider》
 - 👍《Comforting Sounds》
-<div class="clearfix"></div><br/>
-
-#### 《矢的直明 2014》
-作者: Nao'ymt
-
-<img src="http://p2.music.126.net/qmreN0T_FiiaE2O4F_AsKA==/3238061746944282.jpg?param=150y150" class="musiccover"></img>
-
-- 《Complicated》
-- 《Cold》
-- 《All Disappear》
-- 《Sunrise》
-- 👍《One Day We Will Be Together》
-- 《Wandering》
-- 《Beautiful》
-- 《Scenario》
-- 👍《Frequency》
-- 《Spring Reminds Me of You》
-- 《Firefiles》
-- 《14.428》
-- 《Someday I Will Die》
-- 《Udumbara》
-- 《August Rain》
-- 《Hourglass》
-- 《Irreplaceable》
-- 《Paper World》
-- 《Monster》
-- 《Reminiscence》
-- 《One Day We Will Be Together Again》
 <div class="clearfix"></div><br/>
 
 #### 《Eulogy for Evolution》
