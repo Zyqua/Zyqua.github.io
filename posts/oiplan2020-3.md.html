@@ -695,10 +695,10 @@ int main() {
 <p>这时比赛因为评测机不稳定，导致一堆提交的代码评测不过来，就$\texttt{Unrated}$了。再加上$\texttt C$题机翻不太准看不懂，我就去睡觉了。</p>
 <h4 id="usaco08jantelephone-lines-s">[USACO08JAN]Telephone Lines S</h4>
 <p><a href="https://www.luogu.com.cn/problem/P1948">https://www.luogu.com.cn/problem/P1948</a></p>
-<p>这题其实有两种解法，一种就是十分熟悉的分层图最短路，复杂度$O(k(n+m)log(nk))$，虽然很套路但也能过。</p>
+<p>这题其实有两种解法，一种就是十分熟悉的分层图最短路，虽然很套路但也能过。</p>
 <p>另一种是二分答案，随着权值最大的边的权值增大，要置为$0$的边(即权值大于限制)的数量也越来越少，那么就可以二分了，判断时把权值大于限制的边的权值看作$1$，小于等于的看作$0$，然后跑一遍最短路，如果最短路小于等于$k$那么可行。</p>
 <p>值得一提的是，这次求的是边权只有$0$或$1$的最短路，常规做法是$\texttt{Dijkstra}$，但也可以用复杂度更优的双端队列$\texttt{BFS}$。在$\texttt{Dijkstra}$中，用堆来保存待扩展的节点，目的是使每次取出的点最小；而在$\texttt{BFS}$中，队列中只有两种大小，两种大小的差为$1$，且更靠近队头的更小。本质都是为了满足单调性。使用双端队列维护，如果扩展到的节点大小增量为$0$(即经过的边权为$0$)，那么可以把新节点放在队头，否则大小增量为$1$，就把新节点放在队尾，显然这样依然满足单调性，而又省掉了堆的一个$log$和建分层图的$k$，复杂度更优。</p>
-<p>在本题中，使用$Dijkstra$求最短路的总复杂度是$O(k(n+m)lognklog\max l)$，使用双端队列$\texttt{BFS}$的总复杂度是$O((n+m)log\max l)$。</p>
+<p>在本题中，使用$Dijkstra$求最短路的总复杂度是$O(k(n+m)log(nk))$，使用双端队列$\texttt{BFS}$的总复杂度是$O((n+m)log\max l)$。</p>
 <pre><code class="language-cpp">#include&lt;cstdio&gt;
 #include&lt;cstring&gt;
 #include&lt;queue&gt;
