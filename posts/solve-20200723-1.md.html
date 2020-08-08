@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+        <html>
+            <head>
+                <meta charset="utf-8"/>
+                <title>n-kw && n-c by others</title>
+                <link rel="stylesheet" type="text/css" href="../styles.css"/>
+                <link rel="stylesheet" type="text/css" href="../markdownStyles.css"/>
+                <script type="text/x-mathjax-config">
+                    MathJax.Hub.Config({
+                        extensions: ["tex2jax.js"],
+                        jax: ["input/TeX", "output/HTML-CSS"],
+                        tex2jax: {
+                        inlineMath: [ ['$','$'] ],
+                        displayMath: [ ['$$','$$'] ],
+                        processEscapes: true
+                        },
+                        "HTML-CSS": { availableFonts: ["TeX"] }
+                    });
+                </script>
+                <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+            </head>
+            <body>
+                <div class="body">
+                <p class="title">striving & singing</p><p>如果知道每个点的权值，可以直接树形$\texttt{DP}$求得最大点权和，复杂度$O(nk)$。</p>
+<p>求一个点的权值，可以以这个点为根$\texttt{DFS}$，复杂度是$O(n)$的，如果每个点都这样求复杂度为$O(n^2)$，不行。可以用另一种方法，先以某个点为根求出到其他点的距离和相同最远距离数量，然后换根，以当前根节点的答案推出子节点的答案并递归下去，再回溯回来，这样的换根操作一共需要做$2(n-1)$次，是$O(n)$的，如果能以$O(n)$以下复杂度完成换根操作，则求权值的总复杂度低于$O(n^2)$，可以获得比暴力更优的复杂度。</p>
+<p>首先考虑朴素的换根做法，从根节点向某个子节点走，那么子节点对应的子树的距离都减一，其他节点都加一，然后直接遍历所有节点并加减距离，复杂度$O(n)$。</p>
+<p>以任意节点为根，做一遍$\texttt{DFS}$，给每个节点标上$\texttt{DFS}$序。我们知道一个子树内的节点的$\texttt{DFS}$序是一个连续的区间，那么可以直接用线段树维护当前节点到其他节点的距离和相同最远距离数量，每次换根复杂度$O(\log_2n)$。求权值的复杂度为$O(n\log_2 n)$，总复杂度$O(nk+n\log_2n)，$可以通过本题。</p>
+<a href="../posts.html" class="link" style="display:block; text-align:center;">return</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+        <html>
+            <head>
+                <meta charset="utf-8"/>
+                <title>n-kw && n-c by others</title>
+                <link rel="stylesheet" type="text/css" href="../styles.css"/>
+                <link rel="stylesheet" type="text/css" href="../markdownStyles.css"/>
+                <script type="text/x-mathjax-config">
+                    MathJax.Hub.Config({
+                        extensions: ["tex2jax.js"],
+                        jax: ["input/TeX", "output/HTML-CSS"],
+                        tex2jax: {
+                        inlineMath: [ ['$','$'] ],
+                        displayMath: [ ['$$','$$'] ],
+                        processEscapes: true
+                        },
+                        "HTML-CSS": { availableFonts: ["TeX"] }
+                    });
+                </script>
+                <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+            </head>
+            <body>
+                <div class="body">
+                <p class="title">striving & singing</p><h3 id="2020-07-20">2020-07-20</h3>
+<p>今天尝试去证明昨天做的树网的核那题的结论，把证明过程都写在上一篇里面了。</p>
+<h4 id="sdoi2011消防">[SDOI2011]消防</h4>
+<p><a href="https://www.luogu.com.cn/problem/P2491">https://www.luogu.com.cn/problem/P2491</a></p>
+<p>这题和树网的核那题有区别吗？</p>
+<p>不过重新写一遍熟悉一下双指针也好，因为有些细节需要小心。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;vector&gt;
+
+const int MAXN = 300100;
+int n, s, back[MAXN], maxnode, maxdis, diaecc, ans = 0x3fffffff;
+bool indiameter[MAXN];
+struct edge { int to, next, w; };
+struct graph {
+    int ecnt = 1, head[MAXN];
+    edge edges[MAXN &lt;&lt; 1];
+    inline void addedge(int u, int v, int w) {
+        edges[++ecnt].to = v;
+        edges[ecnt].w = w;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+}g;
+std::vector&lt;int&gt; diameter;
+struct tools {
+    static inline int max(int a, int b) { return a &gt; b ? a : b; }
+    static inline int min(int a, int b) { return a &lt; b ? a : b; }
+};
+
+void dfs1(int x, int lst, int dis) {
+    if (maxdis &lt; dis) {
+        maxdis = dis;
+        maxnode = x;
+    }
+    for (int i = g.head[x]; i; i = g.edges[i].next) {
+        if (i == (lst ^ 1)) continue;
+        int &amp;t = g.edges[i].to;
+        back[t] = i ^ 1;
+        dfs1(t, i, dis + g.edges[i].w);
+    }
+}
+void dfs2(int x) {
+    if (!x) return;
+    indiameter[x] = true;
+    diameter.push_back(g.edges[back[x]].w);
+    dfs2(g.edges[back[x]].to);
+}
+void dfs3(int x, int lst, int dis) {
+    if (indiameter[x]) dis = 0;
+    diaecc = tools::max(diaecc, dis);
+    for (int i = g.head[x]; i; i = g.edges[i].next) {
+        if (i == (lst ^ 1)) continue;
+        int &amp;t = g.edges[i].to;
+        dfs3(t, i, dis + g.edges[i].w);
+    }
+}
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;s);
+    for (int i = 1; i &lt; n; i++) {
+        int u, v, w;
+        scanf(&quot;%d%d%d&quot;, &amp;u, &amp;v, &amp;w);
+        g.addedge(u, v, w), g.addedge(v, u, w);
+    }
+    dfs1(1, 0, 0);
+    memset(back, 0, sizeof(int) * (n + 1));
+    maxdis = 0;
+    dfs1(maxnode, 0, 0);
+    dfs2(maxnode);
+    dfs3(maxnode, 0, 0);
+    int l = 0, r = 0, ldis = 0, rdis = maxdis, len = 0;
+    while (r + 1 &lt;= (int)diameter.size() - 1 &amp;&amp; len + diameter[r] &lt;= s) rdis -= diameter[r], len += diameter[r], r++;
+    while (l &lt;= (int)diameter.size() - 1) {
+        ans = tools::min(ans, tools::max(diaecc, tools::max(ldis, rdis)));
+        ldis += diameter[l], len -= diameter[l], l++;
+        while (r + 1 &lt;= (int)diameter.size() - 1 &amp;&amp; len + diameter[r] &lt;= s) rdis -= diameter[r], len += diameter[r], r++;
+    }
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<a href="../posts.html" class="link" style="display:block; text-align:center;">return</a>
+</div>
+</body>
+</html>
