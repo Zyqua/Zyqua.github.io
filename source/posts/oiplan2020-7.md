@@ -125,6 +125,10 @@ https://www.luogu.com.cn/problem/P2680
 另外，$\texttt{wqy}$还讲了一些卡常的技巧。二分左边界可以写成最长链减最大边，右边界可以写成最长链，这样就把二分范围从$3e8$降到了$1e3$。然后在树上差分计算子树和时，可以用$\texttt{bfs}$代替$\texttt{dfs}$，这样更快，还可以预先把树$\texttt{bfs}$一遍按照顺序存下节点，然后到时候直接遍历数组就可以，不用开队列，更快。
 
 实测普通正解做法总运行时间为$\texttt{3.16s}$，加入卡常技巧后为$\texttt{1.81s}$，快了接近一倍。
+
+总复杂度$O(n+m)logw$。
+
+另外记得$\texttt{cnt}$要及时清空。
 ```cpp
 #include<cstdio>
 #include<cstring>
@@ -281,5 +285,148 @@ int main() {
 	}
 	printf("%d\n", ans);
 	return 0;
+}
+```
+
+### 2020-08-09
+今天是$\texttt{ckw}$讲的线段树，虽然按照计划应该学数学但实在是没时间了，晚上还得打$\texttt{CF}$。
+#### 园丁的烦恼
+https://www.luogu.com.cn/problem/P2163
+
+先把坐标离散化，然后把一个点看作一次加点操作，一次查询通过二维前缀和分成共四次正查询操作和负查询操作，然后把所有操作按照纵坐标和操作种类排序，并用扫描线从小到大枚举纵坐标，用树状数组求得每次查询操作的答案。总复杂度$O((n+m)logn)$，但是常数很大需要吸氧才能过。因为坐标在$1e7$范围内所以可以开个桶代替$\texttt{std::lower_bound}$，降低常数，但不吸氧还是过不去。
+
+注意$\texttt{sx,sy}$要开到$1.5e6$，而不是$5e5$，然后还有离散化后两个坐标的最大值分别是$\texttt{lenx}$和$\texttt{leny}$而不是$\texttt{sx[lenx]}$和$\texttt{sy[leny]}$。
+
+另外发现$\texttt{C++}$的$\texttt{template}$真好用，可以大大减轻写代码的负担。
+
+```cpp
+#include<cstdio>
+#include<algorithm>
+
+int n, m, cur = 1, ans[500100];
+struct treearray {
+	int a[500100], len;
+	inline int lowbit(int x) { return x & (-x); }
+	inline void add(int x, int v) { for (; x <= len; x += lowbit(x)) a[x] += v; }
+	inline int sum(int x) {
+		register int ans = 0;
+		for (; x >= 1; x -= lowbit(x)) ans += a[x];
+		return ans;
+	}
+}ft;
+struct query {
+	int x, y, type, id;
+	query(int xv = 0, int yv = 0, int tv = 0, int iv = 0): x(xv), y(yv), type(tv), id(iv) {}
+};
+template<typename data, int len>
+struct array {
+	data a[len];
+	int cnt;
+	inline void push_back(data x) { a[++cnt] = x; }
+	data& operator [] (const int &idx) { return a[idx]; }
+};
+array<int, 1500100> sx, sy;
+array<query, 2500100> queries;
+
+bool cmp(const query &a, const query &b) {
+	if (a.y ^ b.y) return a.y < b.y;
+	return a.type < b.type;
+}
+
+int main() {
+	scanf("%d%d", &n, &m);
+	for (int i = 1; i <= n; i++) {
+		int x, y;
+		scanf("%d%d", &x, &y);
+		x++, y++;
+		sx.push_back(x), sy.push_back(y);
+		queries.push_back(query(x, y, 1, 0));
+	}
+	for (int i = 1; i <= m; i++) {
+		int a, b, c, d;
+		scanf("%d%d%d%d", &a, &b, &c, &d);
+		a++, b++, c++, d++;
+		queries.push_back(query(c, d, 2, i));
+		queries.push_back(query(a - 1, d, 3, i));
+		queries.push_back(query(c, b - 1, 3, i));
+		queries.push_back(query(a - 1, b - 1, 2, i));
+		sx.push_back(c), sx.push_back(a - 1);
+		sy.push_back(d), sy.push_back(b - 1);
+	}
+	std::sort(sx.a + 1, sx.a + sx.cnt + 1); std::sort(sy.a + 1, sy.a + sy.cnt + 1);
+	int lenx = std::unique(sx.a + 1, sx.a + sx.cnt + 1) - sx.a - 1, leny = std::unique(sy.a + 1, sy.a + sy.cnt + 1) - sy.a - 1;
+	for (int i = 1; i <= queries.cnt; i++) {
+		queries[i].x = std::lower_bound(sx.a + 1, sx.a + lenx + 1, queries[i].x) - sx.a;
+		queries[i].y = std::lower_bound(sy.a + 1, sy.a + leny + 1, queries[i].y) - sy.a;
+	}
+	std::sort(queries.a + 1, queries.a + queries.cnt + 1, cmp);
+	ft.len = lenx;
+	for (int y = 1; y <= leny; y++) {
+		for (; queries[cur].y <= y && cur <= queries.cnt; cur++) {
+			int x = queries[cur].x, opt = queries[cur].type;
+			if (opt == 1) ft.add(x, 1);
+			else if (opt == 2) ans[queries[cur].id] += ft.sum(x);
+			else if (opt == 3) ans[queries[cur].id] -= ft.sum(x);
+		}
+	}
+	for (int i = 1; i <= m; i++) printf("%d\n", ans[i]);
+	return 0;
+}
+```
+
+#### A. Suborrays
+http://codeforces.com/contest/1391/problem/A
+
+每次直接从小到大输出一个从$1$到$n$的序列即可。因为这样对于每个长度为$k$的区间，区间最大值至少为$k$，而区间按位或和大于等于区间最大值，所以满足条件。
+
+```cpp
+#include<cstdio>
+
+int t, n;
+
+int main() {
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+        for (int i = 1; i <= n; i++) printf("%d ", i);
+        printf("\n");
+    }
+    return 0;
+}
+```
+
+#### B. Fix You
+http://codeforces.com/contest/1391/problem/B
+
+还以为是$\texttt{DP}$，调了一个小时没调出来，最后发现只要考虑把边界上会让包裹丢失的点改一下就行了。
+
+```cpp
+#include<cstdio>
+#include<cstring>
+
+int t, n, m;
+char dir[110][110];
+
+inline char read() {
+    register char c = getchar();
+    while (!('A' <= c && c <= 'Z')) c = getchar();
+    return c;
+}
+
+int main() {
+    scanf("%d", &t);
+    while (t--) {
+        int ans = 0;
+        scanf("%d%d", &n, &m);
+        for (int i = 1; i <= n; i++)
+            for (int j = 1; j <= m; j++) dir[i][j] = read();
+        for (int i = 1; i <= n; i++)
+            for (int j = 1; j <= m; j++) {
+                if (i == n && dir[i][j] == 'D') ans++;
+                if (j == m && dir[i][j] == 'R') ans++;
+            }
+        printf("%d\n", ans);
+    }
+    return 0;
 }
 ```
