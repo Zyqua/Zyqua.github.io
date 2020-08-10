@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+        <html>
+            <head>
+                <meta charset="utf-8"/>
+                <title>n-kw && n-c by others</title>
+                <link rel="stylesheet" type="text/css" href="../styles.css"/>
+                <link rel="stylesheet" type="text/css" href="../markdownStyles.css"/>
+                <script type="text/x-mathjax-config">
+                    MathJax.Hub.Config({
+                        extensions: ["tex2jax.js"],
+                        jax: ["input/TeX", "output/HTML-CSS"],
+                        tex2jax: {
+                        inlineMath: [ ['$','$'] ],
+                        displayMath: [ ['$$','$$'] ],
+                        processEscapes: true
+                        },
+                        "HTML-CSS": { availableFonts: ["TeX"] }
+                    });
+                </script>
+                <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+            </head>
+            <body>
+                <div class="body">
+                <p class="title">striving & singing</p><h3 id="2020-08-10">2020-08-10</h3>
+<p>今天上午讲了网络流。加上最大流模板一天A了五题，爽。</p>
+<h4 id="【模板】网络最大流">【模板】网络最大流</h4>
+<p><a href="https://www.luogu.com.cn/problem/P3376">https://www.luogu.com.cn/problem/P3376</a></p>
+<p>最大流模板。错误有犯了不知道多少次的<code>ecnt</code>没有初始化为$1$，然后题面数据范围有错误，容量也得开<code>long long</code>，还有$\texttt{dfs}$中漏掉了当前弧优化的判断<code>flow</code>是否为空。还有一个错误就是关于当前弧优化，我一开始写的是：</p>
+<pre><code class="language-cpp">for (; g.now[x] &amp;&amp; flow; g.now[x] = g.edges[g.now[x]].next) {
+    int &amp;i = g.now[x];</code></pre>
+<p>然而正确的写法是：</p>
+<pre><code class="language-cpp">for (int i = g.now[x]; i &amp;&amp; flow; i = g.edges[i].next) {
+    g.now[x] = i;</code></pre>
+<p>这两种写法看起来区别不大，但仔细思考会发现第一种写法只会让每条边遍历到一次，而末尾的边可能仍然有残量还可以增广，但这样就会在增广后跳过这条边，跳到下一条边去，然后这条仍有残量的边就得等到下次$\texttt{dfs}$再增广了。而第二种写法在末尾的边仍有残量时不会跳到下一条边，而是会继续留在这条边直到这条边不能再增广。显然第一种写法效率要低。实际上在$\texttt{luogu}$的测试点中$\texttt{TLE}$了。</p>
+<p>还有就是$\texttt{bfs}$中找到增广路后要立即返回，否则也可能被卡然后$\texttt{TLE}$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;queue&gt;
+
+const long long INF = 0x7fffffffffffffff;
+int n, m, s, t;
+long long maxflow;
+struct edge { int to, next; long long cap, flow; };
+struct graph {
+    int ecnt = 1, head[210], dep[210], now[210];
+    edge edges[10010];
+    inline void addedge(int u, int v, long long cap) {
+        edges[++ecnt].to = v;
+        edges[ecnt].cap = cap;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+}g;
+std::queue&lt;int&gt; q;
+
+inline long long min(long long a, long long b) { return a &lt; b ? a : b; }
+inline bool bfs() {
+    while (!q.empty()) q.pop();
+    memset(g.dep, 0, sizeof g.dep);
+    g.dep[s] = 1;
+    g.now[s] = g.head[s];
+    q.push(s);
+    while (!q.empty()) {
+        int x = q.front();
+        q.pop();
+        for (int i = g.head[x]; i; i = g.edges[i].next) {
+            if (g.edges[i].flow &gt;= g.edges[i].cap || g.dep[g.edges[i].to]) continue;
+            int &amp;v = g.edges[i].to;
+            g.dep[v] = g.dep[x] + 1;
+            g.now[v] = g.head[v];
+            if (v == t) return true;
+            q.push(v);
+        }
+    }
+    return false;
+}
+long long dfs(int x, long long flow) {
+    if (x == t) return flow;
+    long long ans = 0, f = 0;
+    for (int i = g.now[x]; i &amp;&amp; flow; i = g.edges[i].next) {
+        g.now[x] = i;
+        if (g.edges[i].flow &gt;= g.edges[i].cap || (g.dep[x] + 1 ^ g.dep[g.edges[i].to])) continue;
+        int &amp;v = g.edges[i].to;
+        f = dfs(v, min(flow, g.edges[i].cap - g.edges[i].flow));
+        if (!f) g.dep[v] = 0;
+        g.edges[i].flow += f; g.edges[i ^ 1].flow -= f;
+        ans += f; flow -= f;
+    }
+    return ans;
+}
+inline void dinic() { while (bfs()) maxflow += dfs(s, INF); }
+
+int main() {
+    scanf(&quot;%d%d%d%d&quot;, &amp;n, &amp;m, &amp;s, &amp;t);
+    for (int i = 1; i &lt;= m; i++) {
+        int u, v; long long w;
+        scanf(&quot;%d%d%lld&quot;, &amp;u, &amp;v, &amp;w);
+        g.addedge(u, v, w); g.addedge(v, u, 0);
+    }
+    dinic();
+    printf(&quot;%lld\n&quot;, maxflow);
+    return 0;
+}</code></pre>
+<h4 id="飞行员配对方案问题">飞行员配对方案问题</h4>
+<p><a href="https://www.luogu.com.cn/problem/P2756">https://www.luogu.com.cn/problem/P2756</a></p>
+<p>显然这就是个二分图最大匹配。从源点向外籍飞行员连边，从外籍飞行员向能匹配的英国飞行员连边，从英国飞行员向汇点连边，容量全部为$1$，然后求最大流。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;queue&gt;
+
+const int INF = 0x7fffffff;
+int n, m, s, t, maxflow;
+struct edge { int to, next, cap, flow; };
+struct graph {
+    int ecnt = 1, head[110], dep[110], now[110];
+    edge edges[20010];
+    inline void addedge(int u, int v, int cap) {
+        edges[++ecnt].to = v;
+        edges[ecnt].cap = cap;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+}g;
+std::queue&lt;int&gt; q;
+
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+inline bool bfs() {
+    while (!q.empty()) q.pop();
+    memset(g.dep, 0, sizeof g.dep);
+    g.dep[s] = 1;
+    g.now[s] = g.head[s];
+    q.push(s);
+    while (!q.empty()) {
+        int x = q.front();
+        q.pop();
+        for (int i = g.head[x]; i; i = g.edges[i].next) {
+            if (g.edges[i].flow &gt;= g.edges[i].cap || g.dep[g.edges[i].to]) continue;
+            int &amp;v = g.edges[i].to;
+            g.dep[v] = g.dep[x] + 1;
+            g.now[v] = g.head[v];
+            if (v == t) return true;
+            q.push(v);
+        }
+    }
+    return false;
+}
+int dfs(int x, int flow) {
+    if (x == t) return flow;
+    int ans = 0, f = 0;
+    for (int i = g.now[x]; i &amp;&amp; flow; i = g.edges[i].next) {
+        g.now[x] = i;
+        if (g.edges[i].flow &gt;= g.edges[i].cap || (g.dep[x] + 1 ^ g.dep[g.edges[i].to])) continue;
+        int &amp;v = g.edges[i].to;
+        f = dfs(v, min(flow, g.edges[i].cap - g.edges[i].flow));
+        if (!f) g.dep[v] = 0;
+        g.edges[i].flow += f; g.edges[i ^ 1].flow -= f;
+        ans += f; flow -= f;
+    }
+    return ans;
+}
+inline void dinic() { while (bfs()) maxflow += dfs(s, INF); }
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;m, &amp;n);
+    s = n + 1, t = n + 2;
+    for (; ; ) {
+        int u, v;
+        scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+        if (u == -1 &amp;&amp; v == -1) break;
+        g.addedge(u, v, 1); g.addedge(v, u, 0);
+    }
+    for (int x = 1; x &lt;= m; x++) { g.addedge(s, x, 1); g.addedge(x, s, 0); }
+    for (int x = m + 1; x &lt;= n; x++) { g.addedge(x, t, 1); g.addedge(t, x, 0); }
+    dinic();
+    printf(&quot;%d\n&quot;, maxflow);
+    for (int x = 1; x &lt;= m; x++)
+        for (int i = g.head[x]; i; i = g.edges[i].next) {
+            int &amp;v = g.edges[i].to;
+            if (1 &lt;= v &amp;&amp; v &lt;= n &amp;&amp; g.edges[i].flow) printf(&quot;%d %d\n&quot;, x, v);
+        }
+    return 0;
+}</code></pre>
+<h4 id="usaco07opendining-g">[USACO07OPEN]Dining G</h4>
+<p><a href="https://www.luogu.com.cn/problem/P2891">https://www.luogu.com.cn/problem/P2891</a></p>
+<p>这个算是二分图最大匹配的变种，从源点向食物连边，从食物向能匹配的牛连边，从牛向能匹配的饮料连边，从饮料向汇点连边，容量全是$1$，然后因为每个牛只能匹配一次所以每个牛的容量也是$1$，但是点没有容量，所以可以把点拆为一个入点和一个出点，从入点向出点连容量为$1$的边，从而作为容量为$1$的点。建完图求最大流即可。</p>
+<p>注意算好点的个数，第一次交算错了点数$\texttt{WA}$了。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;queue&gt;
+
+const int INF = 0x7fffffff;
+int n, a, b, s, t, maxflow;
+struct edge { int to, next, cap, flow; };
+struct graph {
+    int ecnt = 1, head[410], dep[410], now[410];
+    edge edges[200100];
+    inline void addedge(int u, int v, int cap) {
+        edges[++ecnt].to = v;
+        edges[ecnt].cap = cap;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+}g;
+std::queue&lt;int&gt; q;
+
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+inline bool bfs() {
+    while (!q.empty()) q.pop();
+    memset(g.dep, 0, sizeof g.dep);
+    g.dep[s] = 1;
+    g.now[s] = g.head[s];
+    q.push(s);
+    while (!q.empty()) {
+        int x = q.front();
+        q.pop();
+        for (int i = g.head[x]; i; i = g.edges[i].next) {
+            if (g.edges[i].flow &gt;= g.edges[i].cap || g.dep[g.edges[i].to]) continue;
+            int &amp;v = g.edges[i].to;
+            g.dep[v] = g.dep[x] + 1;
+            g.now[v] = g.head[v];
+            if (v == t) return true;
+            q.push(v);
+        }
+    }
+    return false;
+}
+int dfs(int x, int flow) {
+    if (x == t) return flow;
+    int ans = 0, f = 0;
+    for (int i = g.now[x]; i &amp;&amp; flow; i = g.edges[i].next) {
+        g.now[x] = i;
+        if (g.edges[i].flow &gt;= g.edges[i].cap || (g.dep[x] + 1 ^ g.dep[g.edges[i].to])) continue;
+        int &amp;v = g.edges[i].to;
+        f = dfs(v, min(flow, g.edges[i].cap - g.edges[i].flow));
+        if (!f) g.dep[v] = 0;
+        g.edges[i].flow += f; g.edges[i ^ 1].flow -= f;
+        ans += f; flow -= f;
+    }
+    return ans;
+}
+inline void dinic() { while (bfs()) maxflow += dfs(s, INF); }
+inline int cow1id(int x) { return x; }
+inline int cow2id(int x) { return n + a + b + x; }
+inline int foodid(int x) { return n + x; }
+inline int drinkid(int x) { return n + a + x; }
+
+int main() {
+    scanf(&quot;%d%d%d&quot;, &amp;n, &amp;a, &amp;b);
+    s = n + a + b + n + 1, t = n + a + b + n + 2;
+    for (int i = 1; i &lt;= n; i++) {
+        g.addedge(cow1id(i), cow2id(i), 1); g.addedge(cow2id(i), cow1id(i), 0);
+        int f, d;
+        scanf(&quot;%d%d&quot;, &amp;f, &amp;d);
+        for (int j = 1; j &lt;= f; j++) {
+            int x;
+            scanf(&quot;%d&quot;, &amp;x);
+            g.addedge(foodid(x), cow1id(i), 1); g.addedge(cow1id(i), foodid(x), 0);
+        }
+        for (int j = 1; j &lt;= d; j++) {
+            int x;
+            scanf(&quot;%d&quot;, &amp;x);
+            g.addedge(cow2id(i), drinkid(x), 1); g.addedge(drinkid(x), cow2id(i), 0);
+        }
+    }
+    for (int i = 1; i &lt;= a; i++) { g.addedge(s, foodid(i), 1); g.addedge(foodid(i), s, 0); }
+    for (int i = 1; i &lt;= b; i++) { g.addedge(drinkid(i), t, 1); g.addedge(t, drinkid(i), 0); }
+    dinic();
+    printf(&quot;%d\n&quot;, maxflow);
+    return 0;
+}</code></pre>
+<h4 id="假期的宿舍">假期的宿舍</h4>
+<p><a href="https://www.luogu.com.cn/problem/P2055">https://www.luogu.com.cn/problem/P2055</a></p>
+<p>就是人和床的二分图最大匹配。然后人是指需要床的人，可以分为有床(即在校学生)且不离校的人和没床的人，而离校的人不需要床，不用管。</p>
+<p>第一次交把<code>g.head[v]</code>写成了<code>g.head[x]</code>，不仔细看还真看不出来(毕竟我眼瞎)。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;queue&gt;
+
+const int INF = 0x7fffffff;
+int T, n, s, t, maxflow, cnt;
+bool havebed[55], gohome[55];
+struct edge { int to, next, cap, flow; };
+struct graph {
+    int ecnt = 1, head[110], dep[110], now[110];
+    edge edges[20010];
+    inline void addedge(int u, int v, int cap) {
+        edges[++ecnt].to = v;
+        edges[ecnt].cap = cap;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+    inline void clear() {
+        ecnt = 1; memset(edges, 0, sizeof edges);
+        memset(head, 0, sizeof head); memset(dep, 0, sizeof dep); memset(now, 0, sizeof now);
+    }
+}g;
+std::queue&lt;int&gt; q;
+
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+inline bool bfs() {
+    while (!q.empty()) q.pop();
+    memset(g.dep, 0, sizeof g.dep);
+    g.dep[s] = 1;
+    g.now[s] = g.head[s];
+    q.push(s);
+    while (!q.empty()) {
+        int x = q.front();
+        q.pop();
+        for (int i = g.head[x]; i; i = g.edges[i].next) {
+            if (g.edges[i].flow &gt;= g.edges[i].cap || g.dep[g.edges[i].to]) continue;
+            int &amp;v = g.edges[i].to;
+            g.dep[v] = g.dep[x] + 1;
+            g.now[v] = g.head[v];
+            if (v == t) return true;
+            q.push(v);
+        }
+    }
+    return false;
+}
+int dfs(int x, int flow) {
+    if (x == t) return flow;
+    int ans = 0, f = 0;
+    for (int i = g.now[x]; i &amp;&amp; flow; i = g.edges[i].next) {
+        g.now[x] = i;
+        if (g.edges[i].flow &gt;= g.edges[i].cap || (g.dep[x] + 1 ^ g.dep[g.edges[i].to])) continue;
+        int &amp;v = g.edges[i].to;
+        f = dfs(v, min(flow, g.edges[i].cap - g.edges[i].flow));
+        if (!f) g.dep[v] = 0;
+        g.edges[i].flow += f; g.edges[i ^ 1].flow -= f;
+        ans += f; flow -= f;
+    }
+    return ans;
+}
+inline void dinic() {
+    while (bfs())
+        maxflow += dfs(s, INF);
+}
+inline int personid(int x) { return x; }
+inline int bedid(int x) { return n + x; }
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;T);
+    while (T--) {
+        g.clear();
+        memset(havebed, 0, sizeof havebed); memset(gohome, 0, sizeof gohome); maxflow = 0; cnt = 0;
+        scanf(&quot;%d&quot;, &amp;n);
+        for (int i = 1; i &lt;= n; i++) {
+            int x; scanf(&quot;%d&quot;, &amp;x);
+            if (x) havebed[i] = true;
+        }
+        for (int i = 1; i &lt;= n; i++) {
+            int x; scanf(&quot;%d&quot;, &amp;x);
+            if (x) gohome[i] = true;
+        }
+        s = n + n + 1; t = n + n + 2;
+        for (int i = 1; i &lt;= n; i++) {
+            if ((havebed[i] &amp;&amp; !gohome[i]) || !havebed[i]) { g.addedge(s, personid(i), 1); g.addedge(personid(i), s, 0); cnt++; }
+            if (havebed[i]) { g.addedge(bedid(i), t, 1); g.addedge(t, bedid(i), 0); }
+        }
+        for (int i = 1; i &lt;= n; i++)
+            for (int j = 1; j &lt;= n; j++) {
+                int x;
+                scanf(&quot;%d&quot;, &amp;x);
+                if (x || (i == j))
+                    if (((havebed[i] &amp;&amp; !gohome[i]) || !havebed[i]) &amp;&amp; havebed[j]) { g.addedge(personid(i), bedid(j), 1); g.addedge(bedid(j), personid(i), 0); }
+            }
+        dinic();
+        if (maxflow == cnt) printf(&quot;^_^\n&quot;);
+        else printf(&quot;T_T\n&quot;);
+    }
+    return 0;
+}</code></pre>
+<h4 id="sdoi2015星际战争">[SDOI2015]星际战争</h4>
+<p><a href="https://www.luogu.com.cn/problem/P3324">https://www.luogu.com.cn/problem/P3324</a></p>
+<p>因为题目是要使最大值最小，所以可以考虑二分时间$ti$，然后从源点向武器连容量为$b[i]\times ti$的边，从武器向机器人连容量无限的边，从机器人向汇点连容量为$a[i]$的边，求最大流是否为装甲值之和。</p>
+<p>注意$\texttt{double}$别写成了$\texttt{int}$。然后算好边的数量，第一次交时边数没算对$\texttt{RE}$了。</p>
+<p>题解里很多把所有容量乘上一万或一千最后答案在除以一万或一千从而避免浮点数的，不是很懂，这不是自找麻烦吗。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;queue&gt;
+
+const int INF = 0x7fffffff;
+const double eps = 1e-3;
+int n, m, s, t, a[55], b[55], suma, sumb;
+bool able[55][55];
+double ti, maxflow;
+struct edge { int to, next; double cap, flow; };
+struct graph {
+    int ecnt = 1, head[110], dep[110], now[110];
+    edge edges[10010];
+    inline void addedge(int u, int v, double cap) {
+        edges[++ecnt].to = v;
+        edges[ecnt].cap = cap;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+    inline int weapon(int x) { return x; }
+    inline int bot(int x) { return m + x; }
+    inline void init() {
+        ecnt = 1; memset(edges, 0, sizeof edges); maxflow = 0;
+        memset(head, 0, sizeof head); memset(dep, 0, sizeof dep); memset(now, 0, sizeof now);
+        for (int i = 1; i &lt;= m; i++) { addedge(s, weapon(i), b[i] * ti); addedge(weapon(i), s, 0); }
+        for (int i = 1; i &lt;= n; i++) { addedge(bot(i), t, a[i]); addedge(t, bot(i), 0); }
+        for (int i = 1; i &lt;= m; i++)
+            for (int j = 1; j &lt;= n; j++)
+                if (able[i][j]) { addedge(weapon(i), bot(j), INF); addedge(bot(j), weapon(i), 0); }
+    }
+}g;
+std::queue&lt;int&gt; q;
+
+inline double min(double a, double b) { return a &lt; b ? a : b; }
+inline bool bfs() {
+    while (!q.empty()) q.pop();
+    memset(g.dep, 0, sizeof g.dep);
+    g.dep[s] = 1;
+    g.now[s] = g.head[s];
+    q.push(s);
+    while (!q.empty()) {
+        int x = q.front();
+        q.pop();
+        for (int i = g.head[x]; i; i = g.edges[i].next) {
+            if (g.edges[i].flow &gt;= g.edges[i].cap || g.dep[g.edges[i].to]) continue;
+            int &amp;v = g.edges[i].to;
+            g.dep[v] = g.dep[x] + 1;
+            g.now[v] = g.head[v];
+            if (v == t) return true;
+            q.push(v);
+        }
+    }
+    return false;
+}
+double dfs(int x, double flow) {
+    if (x == t) return flow;
+    double ans = 0, f = 0;
+    for (int i = g.now[x]; i &amp;&amp; flow; i = g.edges[i].next) {
+        g.now[x] = i;
+        if (g.edges[i].flow &gt;= g.edges[i].cap || (g.dep[x] + 1 ^ g.dep[g.edges[i].to])) continue;
+        int &amp;v = g.edges[i].to;
+        f = dfs(v, min(flow, g.edges[i].cap - g.edges[i].flow));
+        if (!f) g.dep[v] = 0;
+        g.edges[i].flow += f; g.edges[i ^ 1].flow -= f;
+        ans += f; flow -= f;
+    }
+    return ans;
+}
+inline void dinic() { while (bfs()) maxflow += dfs(s, INF); }
+inline double abs(double x) { return x &gt; 0 ? x : -x; }
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    s = n + m + 1; t = n + m + 2;
+    for (int i = 1; i &lt;= n; i++) { scanf(&quot;%d&quot;, &amp;a[i]); suma += a[i]; }
+    for (int i = 1; i &lt;= m; i++) { scanf(&quot;%d&quot;, &amp;b[i]); sumb += b[i]; }
+    for (int i = 1; i &lt;= m; i++)
+        for (int j = 1; j &lt;= n; j++) {
+            int x; scanf(&quot;%d&quot;, &amp;x);
+            if (x) able[i][j] = true;
+        }
+    double l = (double)suma / sumb, r = suma;
+    while (r - l &gt; eps) {
+        double mid = l + (r - l) / 2;
+        ti = mid;
+        g.init();
+        dinic();
+        if (abs(maxflow - suma) &lt;= eps) r = mid;
+        else l = mid + eps;
+    }
+    printf(&quot;%lf\n&quot;, l);
+    return 0;
+}</code></pre>
+<a href="../posts.html" class="link" style="display:block; text-align:center;">return</a>
+</div>
+</body>
+</html>
