@@ -468,6 +468,651 @@ int main() {
     printf(&quot;%lf\n&quot;, l);
     return 0;
 }</code></pre>
+<h3 id="2020-08-11">2020-08-11</h3>
+<h4 id="【模板】最小费用最大流">【模板】最小费用最大流</h4>
+<p><a href="https://www.luogu.com.cn/problem/P3381">https://www.luogu.com.cn/problem/P3381</a></p>
+<p>其实费用流用$\texttt{Dinic}$照样可以做。注意反向边的边权等于正向边的边权的相反数。以及$\texttt{ecnt}$一定要初始化为$1$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;queue&gt;
+
+const int INF = 0x7fffffff;
+int n, m, s, t, maxflow, minw;
+struct edge { int to, next, cap, flow, w; };
+struct graph {
+    int ecnt = 1, head[5010], dis[5010], now[5010];
+    bool vis[5010];
+    edge edges[100100];
+    inline void addedge(int u, int v, int cap, int w) {
+        edges[++ecnt].to = v;
+        edges[ecnt].cap = cap;
+        edges[ecnt].w = w;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+}g;
+std::queue&lt;int&gt; q;
+
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+inline bool spfa() {
+    while (!q.empty()) q.pop();
+    memset(g.dis, 0x3f, sizeof g.dis);
+    memset(g.vis, 0, sizeof g.vis);
+    g.dis[s] = 0;
+    g.now[s] = g.head[s];
+    q.push(s);
+    while (!q.empty()) {
+        int x = q.front();
+        q.pop();
+        g.vis[x] = false;
+        for (int i = g.head[x]; i; i = g.edges[i].next) {
+            if (g.edges[i].flow &gt;= g.edges[i].cap) continue;
+            int &amp;v = g.edges[i].to, w = g.edges[i].w;
+            g.now[v] = g.head[v];
+            if (g.dis[v] &gt; g.dis[x] + w) {
+                g.dis[v] = g.dis[x] + w;
+                if (!g.vis[v]) { q.push(v); g.vis[v] = true; }
+            }
+        }
+    }
+    return g.dis[t] ^ 0x3f3f3f3f;
+}
+int dfs(int x, int flow) {
+    if (x == t) return flow;
+    g.vis[x] = true;
+    int ans = 0, f = 0;
+    for (int i = g.now[x]; i &amp;&amp; flow; i = g.edges[i].next) {
+        g.now[x] = i;
+        int &amp;v = g.edges[i].to, w = g.edges[i].w;
+        if (g.edges[i].flow &gt;= g.edges[i].cap || (g.dis[x] + w != g.dis[v]) || g.vis[v]) continue;
+        f = dfs(v, min(flow, g.edges[i].cap - g.edges[i].flow));
+        if (!f) g.dis[v] = INF;
+        g.edges[i].flow += f; g.edges[i ^ 1].flow -= f;
+        ans += f; flow -= f; minw += f * w;
+    }
+    g.vis[x] = false;
+    return ans;
+}
+inline void dinic() {
+    while (spfa())
+        maxflow += dfs(s, INF);
+}
+
+int main() {
+    scanf(&quot;%d%d%d%d&quot;, &amp;n, &amp;m, &amp;s, &amp;t);
+    for (int i = 1; i &lt;= m; i++) {
+        int u, v, w, f;
+        scanf(&quot;%d%d%d%d&quot;, &amp;u, &amp;v, &amp;w, &amp;f);
+        g.addedge(u, v, w, f); g.addedge(v, u, 0, -f);
+    }
+    dinic();
+    printf(&quot;%d %d\n&quot;, maxflow, minw);
+    return 0;
+}</code></pre>
+<h4 id="vani有约会雨天的尾巴">[Vani有约会]雨天的尾巴</h4>
+<p><a href="https://www.luogu.com.cn/problem/P4556">https://www.luogu.com.cn/problem/P4556</a></p>
+<p>其实线段树合并就是个暴力，直接把每个位置上的节点数据加起来就行，显然对普通线段树这样做每次合并复杂度是$O(nlogn)$的，但对于节点较少的动态开点线段树这样做复杂度较小，因为每次合并的复杂度取决于两棵树的重叠叶子个数，若重叠叶子总数为$n$则总复杂度为$O(nlogn)$。</p>
+<p>这题可以对每个节点开个桶然后树上差分，但是数组开不下，这时可以用权值线段树代替数组充当桶，因为有差分所以每个节点的线段树需要插入的节点很少，总共需要插入的节点个数是$O(m)$的，所以总复杂度是$O(mlogw)$，其中$w$为值的范围。</p>
+<p>注意差分时是对$lca$和它的父亲分别$-1$。合并后一定要更新根节点编号。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int n, m, f[100100][20], depth[100100], root[100100], ans[100100];
+struct edge { int to, next; };
+struct graph {
+    int ecnt = 1, head[100100];
+    edge edges[200100];
+    inline void addedge(int u, int v) {
+        edges[++ecnt].to = v;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+}g;
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+struct segtreenode { int ans, cnt, lson, rson; };
+struct segtree {
+    int cnt;
+    segtreenode nodes[8000100];
+    inline void pushup(int x) {
+        nodes[x].cnt = max(nodes[nodes[x].lson].cnt, nodes[nodes[x].rson].cnt);
+        if (!nodes[nodes[x].lson].ans || !nodes[nodes[x].rson].ans)
+            nodes[x].ans = nodes[nodes[x].lson].ans ^ nodes[nodes[x].rson].ans;
+        else if (nodes[nodes[x].lson].cnt &gt;= nodes[nodes[x].rson].cnt) nodes[x].ans = nodes[nodes[x].lson].ans;
+        else nodes[x].ans = nodes[nodes[x].rson].ans;
+    }
+    int insert(int x, int l, int r, int q, int v) {
+        if (!x) x = ++cnt;
+        if (l == r) {
+            nodes[x].cnt += v;
+            if (nodes[x].cnt &gt; 0) nodes[x].ans = q;
+            else nodes[x].ans = 0;
+            return x;
+        }
+        int mid = l + (r - l &gt;&gt; 1);
+        if (q &lt;= mid) nodes[x].lson = insert(nodes[x].lson, l, mid, q, v);
+        else if (mid + 1 &lt;= q) nodes[x].rson = insert(nodes[x].rson, mid + 1, r, q, v);
+        pushup(x);
+        return x;
+    }
+    int merge(int x, int y, int l, int r) {
+        if (!x || !y) return x ^ y;
+        if (l == r) {
+            nodes[x].cnt += nodes[y].cnt;
+            if (nodes[x].cnt &gt; 0) nodes[x].ans = l;
+            else nodes[x].ans = 0;
+            return x;
+        }
+        int mid = l + (r - l &gt;&gt; 1);
+        nodes[x].lson = merge(nodes[x].lson, nodes[y].lson, l, mid);
+        nodes[x].rson = merge(nodes[x].rson, nodes[y].rson, mid + 1, r);
+        pushup(x);
+        return x;
+    }
+}segtree;
+
+void dfs1(int x, int fa) {
+    depth[x] = depth[fa] + 1;
+    f[x][0] = fa;
+    for (int i = 1; i &lt; 20; i++) f[x][i] = f[f[x][i - 1]][i - 1];
+    for (int i = g.head[x]; i; i = g.edges[i].next) {
+        int &amp;v = g.edges[i].to;
+        if (v == fa) continue;
+        dfs1(v, x);
+    }
+}
+inline void swap(int &amp;a, int &amp;b) { int t = a; a = b; b = t; }
+inline int lca(int x, int y) {
+    if (depth[x] &lt; depth[y]) swap(x, y);
+    for (int i = 19; i &gt;= 0; i--)
+        if (depth[f[x][i]] &gt;= depth[y]) x = f[x][i];
+    if (x == y) return x;
+    for (int i = 19; i &gt;= 0; i--)
+        if (f[x][i] ^ f[y][i]) x = f[x][i], y = f[y][i];
+    return f[x][0];
+}
+void dfs2(int x, int lst) {
+    for (int i = g.head[x]; i; i = g.edges[i].next) {
+        if (i == (lst ^ 1)) continue;
+        int &amp;v = g.edges[i].to;
+        dfs2(v, i);
+        root[x] = segtree.merge(root[x], root[v], 1, 100000);
+    }
+    ans[x] = segtree.nodes[root[x]].ans;
+}
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt; n; i++) {
+        int u, v;
+        scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+        g.addedge(u, v); g.addedge(v, u);
+    }
+    dfs1(1, 0);
+    for (int i = 1; i &lt;= m; i++) {
+        int x, y, z;
+        scanf(&quot;%d%d%d&quot;, &amp;x, &amp;y, &amp;z);
+        int a = lca(x, y);
+        root[x] = segtree.insert(root[x], 1, 100000, z, 1);
+        root[y] = segtree.insert(root[y], 1, 100000, z, 1);
+        root[a] = segtree.insert(root[a], 1, 100000, z, -1);
+        if (f[a][0]) root[f[a][0]] = segtree.insert(root[f[a][0]], 1, 100000, z, -1);
+    }
+    dfs2(1, 0);
+    for (int i = 1; i &lt;= n; i++) printf(&quot;%d\n&quot;, ans[i]);
+    return 0;
+}</code></pre>
+<h4 id="永无乡">永无乡</h4>
+<p><a href="https://www.luogu.com.cn/problem/P3224">https://www.luogu.com.cn/problem/P3224</a></p>
+<p>用并查集维护连通性，对每个连通块维护一棵权值线段树，保存连通块里的重要度，查询时直接查就完事了，合并时就合并线段树。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+const int MAXN = 100100;
+int n, m, q, p[MAXN], root[MAXN], pnode[MAXN];
+inline void swap(int &amp;a, int &amp;b) { int t = a; a = b; b = t; }
+struct usetnode { int fa, size; };
+struct uset {
+    usetnode nodes[MAXN];
+    inline void init() { for (int i = 1; i &lt;= n; i++) nodes[i].fa = i, nodes[i].size = 1; }
+    int find(int x) {
+        if (nodes[x].fa == x) return x;
+        return nodes[x].fa = find(nodes[x].fa);
+    }
+    inline void merge(int x, int y) {
+        nodes[y].fa = x;
+        nodes[x].size += nodes[y].size;
+    }
+    inline bool same(int x, int y) { return find(x) == find(y); }
+}uset;
+struct segtreenode { int cnt, lson, rson; };
+struct segtree {
+    int cnt;
+    segtreenode nodes[MAXN * 80];
+    inline void pushup(int x) { nodes[x].cnt = nodes[nodes[x].lson].cnt + nodes[nodes[x].rson].cnt; }
+    int insert(int x, int l, int r, int q, int v) {
+        if (!x) x = ++cnt;
+        if (l == r) { nodes[x].cnt += v; return x; }
+        int mid = l + (r - l &gt;&gt; 1);
+        if (q &lt;= mid) nodes[x].lson = insert(nodes[x].lson, l, mid, q, v);
+        else if (mid + 1 &lt;= q) nodes[x].rson = insert(nodes[x].rson, mid + 1, r, q, v);
+        pushup(x);
+        return x;
+    }
+    int merge(int x, int y, int l, int r) {
+        if (!x || !y) return x ^ y;
+        if (l == r) { nodes[x].cnt += nodes[y].cnt; return x; }
+        int mid = l + (r - l &gt;&gt; 1);
+        nodes[x].lson = merge(nodes[x].lson, nodes[y].lson, l, mid);
+        nodes[x].rson = merge(nodes[x].rson, nodes[y].rson, mid + 1, r);
+        pushup(x);
+        return x;
+    }
+    int kth(int x, int l, int r, int k) {
+        if (l == r) return l;
+        int mid = l + (r - l &gt;&gt; 1);
+        if (k &lt;= nodes[nodes[x].lson].cnt) return kth(nodes[x].lson, l, mid, k);
+        else if (k &lt;= nodes[x].cnt) return kth(nodes[x].rson, mid + 1, r, k - nodes[nodes[x].lson].cnt);
+        else return -1;
+    }
+}segtree;
+
+inline char read() {
+    register char c = getchar();
+    while (c == &#39; &#39; || c == &#39;\n&#39; || c == &#39;\r&#39;) c = getchar();
+    return c;
+}
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt;= n; i++) {
+        scanf(&quot;%d&quot;, &amp;p[i]);
+        pnode[p[i]] = i;
+        root[i] = segtree.insert(root[i], 1, 100000, p[i], 1);
+    }
+    uset.init();
+    for (int i = 1; i &lt;= m; i++) {
+        int u, v;
+        scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+        if (!uset.same(u, v)) {
+            u = uset.find(u); v = uset.find(v);
+            if (uset.nodes[u].size &lt; uset.nodes[v].size) swap(u, v);
+            uset.merge(u, v);
+            root[u] = segtree.merge(root[u], root[v], 1, 100000);
+        }
+    }
+    scanf(&quot;%d&quot;, &amp;q);
+    for (int i = 1; i &lt;= q; i++) {
+        char opt = read();
+        if (opt == &#39;B&#39;) {
+            int x, y;
+            scanf(&quot;%d%d&quot;, &amp;x, &amp;y);
+            if (!uset.same(x, y)) {
+                x = uset.find(x); y = uset.find(y);
+                if (uset.nodes[x].size &lt; uset.nodes[y].size) swap(x, y);
+                uset.merge(x, y);
+                root[x] = segtree.merge(root[x], root[y], 1, 100000);
+            }
+        }
+        else if (opt == &#39;Q&#39;) {
+            int x, k;
+            scanf(&quot;%d%d&quot;, &amp;x, &amp;k);
+            x = uset.find(x);
+            int ans = segtree.kth(root[x], 1, 100000, k);
+            if (ans ^ -1) printf(&quot;%d\n&quot;, pnode[ans]);
+            else printf(&quot;-1\n&quot;);
+        }
+    }
+    return 0;
+}</code></pre>
+<h3 id="2020-08-12">2020-08-12</h3>
+<h4 id="sdoi2015寻宝游戏">[SDOI2015]寻宝游戏</h4>
+<p><a href="https://www.luogu.com.cn/problem/P3320">https://www.luogu.com.cn/problem/P3320</a></p>
+<p>$\texttt{luogu}$的任务计划里咕的题太多了，随便打开一个一看，竟然和之前做的那道异象石完全一样。虽然以前写过但还是没有一遍过样例，把$dis$放在遍历子树之后更新了，这样每个节点的$dis$就是到父节点的距离，而不是到根节点的距离。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;set&gt;
+
+const int MAXN = 100100;
+int n, m, depth[MAXN], f[MAXN][20], dfn[MAXN], cnt;
+long long dis[MAXN], ans;
+bool exist[MAXN];
+struct edge { int to, next, w; };
+struct graph {
+    int ecnt, head[MAXN];
+    edge edges[MAXN &lt;&lt; 1];
+    inline void addedge(int u, int v, int w) {
+        edges[++ecnt].to = v;
+        edges[ecnt].w = w;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+}g;
+struct node {
+    int x;
+    node(int xv = 0): x(xv) {}
+    bool operator &lt; (const node &amp;a) const { return dfn[x] &lt; dfn[a.x]; }
+};
+std::set&lt;node&gt; nodes;
+
+void dfs(int x, int fa) {
+    dfn[x] = ++cnt;
+    depth[x] = depth[fa] + 1;
+    f[x][0] = fa;
+    for (int i = 1; i &lt; 20; i++) f[x][i] = f[f[x][i - 1]][i - 1];
+    for (int i = g.head[x]; i; i = g.edges[i].next) {
+        int &amp;v = g.edges[i].to;
+        if (v == fa) continue;
+        dis[v] = dis[x] + g.edges[i].w;
+        dfs(v, x);
+    }
+}
+inline void swap(int &amp;a, int &amp;b) { int t = a; a = b; b = t; }
+inline int lca(int x, int y) {
+    if (depth[x] &lt; depth[y]) swap(x, y);
+    for (int i = 19; i &gt;= 0; i--)
+        if (depth[f[x][i]] &gt;= depth[y]) x = f[x][i];
+    if (x == y) return x;
+    for (int i = 19; i &gt;= 0; i--)
+        if (f[x][i] ^ f[y][i]) x = f[x][i], y = f[y][i];
+    return f[x][0];
+}
+inline long long dist(int x, int y) { return dis[x] + dis[y] - (dis[lca(x, y)] &lt;&lt; 1); }
+inline void insert(int x) {
+    std::set&lt;node&gt;::iterator p = nodes.insert(node(x)).first;
+    std::set&lt;node&gt;::iterator l = (p == nodes.begin()) ? --nodes.end() : --nodes.find(node(x));
+    std::set&lt;node&gt;::iterator r = (p == --nodes.end()) ? nodes.begin() : ++nodes.find(node(x));
+    ans -= dist(l -&gt; x, r -&gt; x);
+    ans += dist(l -&gt; x, p -&gt; x) + dist(p -&gt; x, r -&gt; x);
+}
+inline void remove(int x) {
+    std::set&lt;node&gt;::iterator p = nodes.find(node(x));
+    std::set&lt;node&gt;::iterator l = (p == nodes.begin()) ? --nodes.end() : --nodes.find(node(x));
+    std::set&lt;node&gt;::iterator r = (p == --nodes.end()) ? nodes.begin() : ++nodes.find(node(x));
+    ans -= dist(l -&gt; x, p -&gt; x) + dist(p -&gt; x, r -&gt; x);
+    ans += dist(l -&gt; x, r -&gt; x);
+    nodes.erase(p);
+}
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt; n; i++) {
+        int u, v, w;
+        scanf(&quot;%d%d%d&quot;, &amp;u, &amp;v, &amp;w);
+        g.addedge(u, v, w); g.addedge(v, u, w);
+    }
+    dfs(1, 0);
+    for (int i = 1; i &lt;= m; i++) {
+        int x;
+        scanf(&quot;%d&quot;, &amp;x);
+        exist[x] = !exist[x];
+        if (exist[x]) insert(x);
+        else remove(x);
+        printf(&quot;%lld\n&quot;, ans);
+    }
+    return 0;
+}</code></pre>
+<h4 id="曹冲养猪">曹冲养猪</h4>
+<p><a href="https://www.luogu.com.cn/problem/P1495">https://www.luogu.com.cn/problem/P1495</a></p>
+<p>$\texttt{CRT}$的模板题。对于同余方程组$\begin{cases}x\equiv a_1\pmod {m_1}\x\equiv a_2\pmod {m_2}\...\x\equiv a_n\pmod {m_n}\end{cases}$，其中模数互质，定义$M=\prod_{i=1}^n m_i$，$M_i=\dfrac{M}{m_i}$，$k_i=M_i^{-1}\pmod {m_i}$。存在一个解为$x=\sum_{i=1}^n a_iM_ik_i$。这是因为对于任意一个方程组$x\equiv a_j\pmod {m_j}$，有$x\equiv a_jM_jk_j\pmod {m_j}$，其他项都是$m_j$的倍数所以就没了。而$M_j$和$k_j$在$\mod m_j$意义下互为逆元，因此$x\equiv a_j\pmod {m_j}$成立。然后算出来还得模$M$。</p>
+<p>需要注意的是这题得用$\texttt{exgcd}$求逆元，但求出来并不是最小正整数解，如果解大于$0$需要模一遍$M$，否则取反后模$M$再用$M$减。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int n, a[11], m[11];
+long long ans;
+
+void exgcd(long long a, long long b, long long &amp;x, long long &amp;y) {
+    if (!b) { x = 1; y = 0; return; }
+    exgcd(b, a % b, y, x);
+    y -= a / b * x;
+}
+inline long long inv(long long x, long long m) { long long a, b; exgcd(x, m, a, b); return a &gt; 0 ? a : m - (-a % m); }
+inline void crt() {
+    long long M = 1;
+    for (int i = 1; i &lt;= n; i++) M *= m[i];
+    for (int i = 1; i &lt;= n; i++)
+        ans = (ans + (a[i] * (M / m[i])) % M * inv(M / m[i], m[i]) % M) % M;
+}
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d%d&quot;, &amp;m[i], &amp;a[i]);
+    crt();
+    printf(&quot;%lld\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h4 id="能量采集">能量采集</h4>
+<p><a href="https://www.luogu.com.cn/problem/P1447">https://www.luogu.com.cn/problem/P1447</a></p>
+<p>简单的莫反。莫反大概主要就是用到几个结论$\mu\ast1=\varepsilon$，$\varphi\ast1=id$，$f\ast\varepsilon=f$，$\mu\ast id=\varphi$，然后就是交换求和号。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int n, m, p[100100], pcnt;
+long long ans, phi[100100];
+bool isprime[100100];
+
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    int k = min(n, m);
+    for (int i = 2; i &lt;= k; i++) isprime[i] = true;
+    phi[1] = 1;
+    for (int i = 2; i &lt;= k; i++) {
+        if (isprime[i]) {
+            p[++pcnt] = i;
+            phi[i] = i - 1;
+        }
+        for (int j = 1; j &lt;= pcnt &amp;&amp; i * p[j] &lt;= k; j++) {
+            isprime[i * p[j]] = false;
+            if (i % p[j]) phi[i * p[j]] = phi[i] * phi[p[j]];
+            else {
+                phi[i * p[j]] = phi[i] * p[j];
+                break;
+            }
+        }
+    }
+    for (int i = 1; i &lt;= k; i++) phi[i] += phi[i - 1];
+    for (int i = 1, j; i &lt;= k; i = j + 1) {
+        j = min(n / (n / i), m / (m / i));
+        ans += (long long)(n / i) * (m / i) * (phi[j] - phi[i - 1]);
+    }
+    printf(&quot;%lld\n&quot;, ans * 2 - (long long)n * m);
+    return 0;
+}</code></pre>
+<h3 id="2020-08-13">2020-08-13</h3>
+<h4 id="heoi2016tjoi2016排序">[HEOI2016/TJOI2016]排序</h4>
+<p><a href="https://www.luogu.com.cn/problem/P2824">https://www.luogu.com.cn/problem/P2824</a></p>
+<p>巧妙的二分。二分最后的序列上下标$q$对应的值$v$，将序列中小于$v$的数看作$0$，大于等于$v$的数看作$1$。思路的关键是无视进行排序的过程，直接看进行完所有排序操作后的序列，这个序列上的数字会随着$v$的变化而变化。如果第$q$位为$1$说明第$q$位上的数字大于等于$v$，否则小于$v$。可以用线段树维护区间$01$排序，总复杂度$O(mlog^2n)$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int n, m, q, a[100100], v;
+struct operation { int op, l, r; }opts[100100];
+struct segtreenode { int cnt0, asntag; };
+struct segtree {
+    segtreenode nodes[400100];
+    inline int lson(int x) { return x &lt;&lt; 1; }
+    inline int rson(int x) { return x &lt;&lt; 1 | 1; }
+    inline void pushup(int x) { nodes[x].cnt0 = nodes[lson(x)].cnt0 + nodes[rson(x)].cnt0; }
+    inline void pushdown(int x, int l, int r) {
+        if (nodes[x].asntag == -1) return;
+        int mid = l + (r - l &gt;&gt; 1);
+        if (nodes[x].asntag == 0) nodes[lson(x)].cnt0 = mid - l + 1, nodes[rson(x)].cnt0 = r - mid;
+        else nodes[lson(x)].cnt0 = nodes[rson(x)].cnt0 = 0;
+        nodes[lson(x)].asntag = nodes[rson(x)].asntag = nodes[x].asntag;
+        nodes[x].asntag = -1;
+    }
+    void build(int x, int l, int r) {
+        nodes[x].asntag = -1;
+        if (l == r) {
+            if (a[l] &lt; v) nodes[x].cnt0 = 1;
+            else nodes[x].cnt0 = 0;
+            return;
+        }
+        int mid = l + (r - l &gt;&gt; 1);
+        build(lson(x), l, mid);
+        build(rson(x), mid + 1, r);
+        pushup(x);
+    }
+    void assign(int x, int l, int r, int ql, int qr, int v) {
+        if (ql &gt; qr) return;
+        if (ql &lt;= l &amp;&amp; r &lt;= qr) {
+            if (!v) nodes[x].cnt0 = r - l + 1;
+            else nodes[x].cnt0 = 0;
+            nodes[x].asntag = v;
+            return;
+        }
+        pushdown(x, l, r);
+        int mid = l + (r - l &gt;&gt; 1);
+        if (ql &lt;= mid) assign(lson(x), l, mid, ql, qr, v);
+        if (mid + 1 &lt;= qr) assign(rson(x), mid + 1, r, ql, qr, v);
+        pushup(x);
+    }
+    int query(int x, int l, int r, int ql, int qr, int v) {
+        if (ql &lt;= l &amp;&amp; r &lt;= qr) {
+            if (!v) return nodes[x].cnt0;
+            else return r - l + 1 - nodes[x].cnt0;
+        }
+        pushdown(x, l, r);
+        int mid = l + (r - l &gt;&gt; 1), ans = 0;
+        if (ql &lt;= mid) ans += query(lson(x), l, mid, ql, qr, v);
+        if (mid + 1 &lt;= qr) ans += query(rson(x), mid + 1, r, ql, qr, v);
+        return ans;
+    }
+}segtree;
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;a[i]);
+    for (int i = 1; i &lt;= m; i++) scanf(&quot;%d%d%d&quot;, &amp;opts[i].op, &amp;opts[i].l, &amp;opts[i].r);
+    scanf(&quot;%d&quot;, &amp;q);
+    int l = 1, r = n + 1;
+    while (l &lt; r) {
+        v = l + (r - l &gt;&gt; 1);
+        segtree.build(1, 1, n);
+        for (int i = 1; i &lt;= m; i++) {
+            int opt = opts[i].op, l = opts[i].l, r = opts[i].r;
+            int cnt0 = segtree.query(1, 1, n, l, r, 0), cnt1 = r - l + 1 - cnt0;
+            if (opt == 0) segtree.assign(1, 1, n, l, l + cnt0 - 1, 0), segtree.assign(1, 1, n, l + cnt0, r, 1);
+            else segtree.assign(1, 1, n, l, l + cnt1 - 1, 1), segtree.assign(1, 1, n, l + cnt1, r, 0);
+        }
+        int t = segtree.query(1, 1, n, q, q, 1);
+        if (t) l = v + 1;
+        else r = v;
+    }
+    printf(&quot;%d\n&quot;, l - 1);
+    return 0;
+}</code></pre>
+<h4 id="国家集训队等差子序列">[国家集训队]等差子序列</h4>
+<p><a href="https://www.luogu.com.cn/problem/P2757">https://www.luogu.com.cn/problem/P2757</a></p>
+<p>线段树维护$hash$。具体就是开一个权值线段树，每位上是$0$或$1$表示有没有这个数，然后通过乘上预处理的幂和膜$19260817$进行$hash$，这样就可以单点修改和区间查询$hash$值，然后边扫边加入遍历到的值，如果在值域上以当前遍历到的数为中心的两侧不对称，说明存在以当前遍历到的数为中心的等差序列，于是可以维护正反两个$hash$值，如果以当前遍历到的数为中心的极大区间正反$hash$值相同则对称，也就是不存在以当前遍历到的数为中心的等差序列。</p>
+<p>这题我断断续续调了七个小时心态都调崩了，因为是第一次写$hash$所以还以为是$hash$写挂了或者爆$\texttt{int}$了之类的，最后查出来是查询时某一侧子节点$hash$值乘上预处理的幂时，乘的幂的指数是子节点的区间长度，这样在查询的区间不完全覆盖当前节点时会导致$hash$值错误，正确做法是乘的幂的指数为查询的区间边界到中点的区间长度。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+const int BASE = 2, MOD = 19260817;
+int t, n, pwr[100100], p[100100];
+struct segtreenode { long long hash1, hash2; };
+struct segtree {
+    segtreenode nodes[400100];
+    inline int lson(int x) { return x &lt;&lt; 1; }
+    inline int rson(int x) { return x &lt;&lt; 1 | 1; }
+    inline void pushup(int x, int l, int r) {
+        int mid = l + (r - l &gt;&gt; 1);
+        nodes[x].hash1 = (nodes[lson(x)].hash1 * pwr[r - mid] % MOD + nodes[rson(x)].hash1) % MOD;
+        nodes[x].hash2 = (nodes[lson(x)].hash2 + (nodes[rson(x)].hash2 * pwr[mid - l + 1] % MOD)) % MOD;
+    }
+    void insert(int x, int l, int r, int v) {
+        if (l == r) {
+            nodes[x].hash1 = nodes[x].hash2 = 1;
+            return;
+        }
+        int mid = l + (r - l &gt;&gt; 1);
+        if (v &lt;= mid) insert(lson(x), l, mid, v);
+        else if (mid + 1 &lt;= v) insert(rson(x), mid + 1, r, v);
+        pushup(x, l, r);
+    }
+    long long query(int x, int l, int r, int ql, int qr, int type) {
+        if (ql &lt;= l &amp;&amp; r &lt;= qr) {
+            if (type == 1) return nodes[x].hash1;
+            else return nodes[x].hash2;
+        }
+        int mid = l + (r - l &gt;&gt; 1);
+        if (ql &lt;= mid &amp;&amp; mid + 1 &lt;= qr) {
+            if (type == 1) return (query(lson(x), l, mid, ql, mid, type) * pwr[qr - mid] % MOD + query(rson(x), mid + 1, r, mid + 1, qr, type)) % MOD;
+            else return (query(lson(x), l, mid, ql, mid, type) + (query(rson(x), mid + 1, r, mid + 1, qr, type) * pwr[mid - ql + 1] % MOD)) % MOD;
+        }
+        else if (ql &lt;= mid) return query(lson(x), l, mid, ql, qr, type);
+        else if (mid + 1 &lt;= qr) return query(rson(x), mid + 1, r, ql, qr, type);
+    }
+    void clear(int x, int l, int r) {
+        nodes[x].hash1 = nodes[x].hash2 = 0;
+        if (l == r) return;
+        int mid = l + (r - l &gt;&gt; 1);
+        clear(lson(x), l, mid);
+        clear(rson(x), mid + 1, r);
+    }
+}segtree;
+
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+
+int main() {
+    pwr[0] = 1;
+    for (int i = 1; i &lt;= 100000; i++) pwr[i] = pwr[i - 1] * BASE % MOD;
+    scanf(&quot;%d&quot;, &amp;t);
+    while (t--) {
+        scanf(&quot;%d&quot;, &amp;n);
+        segtree.clear(1, 1, n);
+        for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;p[i]);
+        bool ans = false;
+        for (int i = 1; i &lt;= n &amp;&amp; !ans; i++) {
+            segtree.insert(1, 1, n, p[i]);
+            int r = min(p[i], n - p[i] + 1);
+            if (segtree.query(1, 1, n, p[i] - r + 1, p[i] + r - 1, 1) != segtree.query(1, 1, n, p[i] - r + 1, p[i] + r - 1, 2)) ans = true;
+        }
+        if (ans) printf(&quot;Y\n&quot;);
+        else printf(&quot;N\n&quot;);
+    }
+    return 0;
+}</code></pre>
+<h4 id="haoi2009毛毛虫">[HAOI2009]毛毛虫</h4>
+<p><a href="https://www.luogu.com.cn/problem/P3174">https://www.luogu.com.cn/problem/P3174</a></p>
+<p>这题我之前看着很难，今晚半夜里做完上面那题就随便点进这题，发现就是个很简单的魔改树形$\texttt{DP}$求直径，定义$dp[x]$表示以$x$为根到子树内节点的最大毛毛虫，然后在原做法的基础上加加减减就好了。</p>
+<p>注意$n=1$的情况。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+const int MAXN = 300100;
+int n, m, deg[MAXN], dp[MAXN], ans;
+struct edge { int to, next; };
+struct graph {
+    int ecnt = 1, head[MAXN];
+    edge edges[MAXN &lt;&lt; 1];
+    inline void addedge(int u, int v) {
+        edges[++ecnt].to = v;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+}g;
+
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+void dfs(int x, int lst) {
+    dp[x] = deg[x] + 1;
+    ans = max(ans, dp[x]);
+    for (int i = g.head[x]; i; i = g.edges[i].next) {
+        if (i == (lst ^ 1)) continue;
+        int &amp;v = g.edges[i].to;
+        dfs(v, i);
+        ans = max(ans, dp[x] + dp[v] - 2);
+        dp[x] = max(dp[x], dp[v] + deg[x] - 1);
+    }
+}
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt;= m; i++) {
+        int u, v;
+        scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+        g.addedge(u, v); g.addedge(v, u);
+        deg[u]++, deg[v]++;
+    }
+    dfs(1, 0);
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
 <a href="../posts.html" class="link" style="display:block; text-align:center;">return</a>
 </div>
 </body>
