@@ -1113,6 +1113,207 @@ int main() {
     printf(&quot;%d\n&quot;, ans);
     return 0;
 }</code></pre>
+<h3 id="2020-08-14">2020-08-14</h3>
+<h4 id="emiya-家今天的饭">Emiya 家今天的饭</h4>
+<p><a href="https://www.luogu.com.cn/problem/P5664">https://www.luogu.com.cn/problem/P5664</a></p>
+<p>每一列的菜不超过一半的方案数等于没有限制的方案数减去某一列上的菜超过一半的方案数。选择的菜超过一半的列最多只有一个，因此可以枚举这一列，然后设$dp[i][j][k]$表示前$i$行中当前选择的第$l$列选了$j$个数，其他列总共选了$k$个数，然后$dp[i][j][k]=dp[i-1][j][k]+dp[i-1][j-1][k]\times a[i][l]+dp[i-1][j][k-1]\times (sum[i]-a[i][l])$。因为只关心当前列和其他列的大小关系因此可以设$dp[i][j]$表示前$i$行中当前选的第$k$列选的数与其他列总共选的数的差为$j$，那么$dp[i][j]=dp[i-1][j]+dp[i-1][j-1]\times a[i][k]+dp[i-1][j+1]\times (sum[i]-a[i][k])$。边界条件是$dp[0][0]=1$。答案是$\sum_{i=1}^n dp[n][i]$。注意第二维可能是负数，解决方法是枚举时给变量加上一个固定的数，使得加上后一定大于等于$0$。没有限制的方案数更简单，设$dp[i][j]$为前$i$行总共选了$j$个数的方案数，然后$dp[i][j]=dp[i-1][j]+dp[i-1][j-1]\times sum[i]$。边界条件是$dp[0][0]=1$。答案是$\sum_{i=1}^n dp[n][i]$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+const int MOD = 998244353;
+int n, m, a[110][2010];
+long long f[110][210], g[110][110], sum[110], tot, cnt;
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt;= n; i++)
+        for (int j = 1; j &lt;= m; j++) scanf(&quot;%d&quot;, &amp;a[i][j]), sum[i] = (sum[i] + a[i][j]) % MOD;
+    for (int k = 1; k &lt;= m; k++) {
+        memset(f, 0, sizeof f);
+        f[0][n + 1] = 1;
+        for (int i = 1; i &lt;= n; i++)
+            for (int j = -i + n + 1; j &lt;= i + n + 1; j++) {
+                f[i][j] = ((f[i - 1][j] + f[i - 1][j - 1] * a[i][k] % MOD) % MOD + f[i - 1][j + 1] * (sum[i] - a[i][k]) % MOD) % MOD;
+            }
+        for (int j = 1 + n + 1; j &lt;= n + n + 1; j++) cnt = (cnt + f[n][j]) % MOD;
+    }
+    g[0][0] = 1;
+    for (int i = 1; i &lt;= n; i++)
+        for (int j = 0; j &lt;= n; j++) {
+            g[i][j] = g[i - 1][j];
+            if (j &gt; 0) g[i][j] = (g[i][j] + g[i - 1][j - 1] * sum[i] % MOD) % MOD;
+        }
+    for (int i = 1; i &lt;= n; i++) tot = (tot + g[n][i]) % MOD;
+    printf(&quot;%lld\n&quot;, (tot - cnt + MOD) % MOD);
+    return 0;
+}</code></pre>
+<h4 id="父子">父子</h4>
+<p><a href="https://www.luogu.com.cn/problem/P4981">https://www.luogu.com.cn/problem/P4981</a></p>
+<p>有标号有根树计数。需要用到一个叫$\texttt{prufer}$序列的东西，可以使一棵无根树和一个序列相互转化。无根树上度数为$1$的点称为叶子节点。对于一棵树，每次找出编号最小的叶子节点，然后把和它唯一连接的点的编号写到序列末尾，直到只剩下两个点，得到的序列就是这棵树的$\texttt{prufer}$序列。对于一个$\texttt{prufer}$序列，从左到右遍历，每次在点集中找到不在序列中的编号最小的点，把这个点和当前遍历到的序列上的点连一条边，最后把点集中剩下两个点连一条边，然后就得到了这个序列对应的树。</p>
+<p>$\texttt{prufer}$序列和树的一一对应的。一个$n$个点的树对应的$\texttt{prufer}$序列的长度为$n-2$。这个序列上任意一个数的值可以为$[1,n]$中任意一个数，因此$n$个点的有标号无根树的数量为$n^{n-2}$。</p>
+<p>对于有根树，可以枚举让每个点都当作根，因此有标号有根树的数量为$n^{n-1}$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+const int MOD = 1e9 + 9;
+int t;
+
+long long pow(long long x, int k) {
+    long long ans = 1;
+    while (k) {
+        if (k &amp; 1) ans = ans * x % MOD;
+        x = x * x % MOD;
+        k &gt;&gt;= 1;
+    }
+    return ans;
+}
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;t);
+    while (t--) {
+        int n;
+        scanf(&quot;%d&quot;, &amp;n);
+        printf(&quot;%lld\n&quot;, pow(n, n - 1));
+    }
+    return 0;
+}</code></pre>
+<h4 id="hnoi2004树的计数">[HNOI2004]树的计数</h4>
+<p><a href="https://www.luogu.com.cn/problem/P2290">https://www.luogu.com.cn/problem/P2290</a></p>
+<p>一个点的度数为$d_i$，那么它在$\texttt{prufer}$序列中出现的次数就是$d_i-1$。这个还是很显然的。于是问题就转化为每种元素出现过指定次数的排列数量，先把相同元素看作不同元素于是答案是$(n-2)!$，然后相同元素之间交换位置不会产生贡献，即随便排列不影响答案，所以把答案除以每个数的度数减一的阶乘。所以答案是$\dfrac{(n-2)!}{\prod_{i=1}^n (d_i-1)!}$。</p>
+<p>这题不用取模，答案$\texttt{long long}$在范围内，但中间过程中会爆$\texttt{long long}$，写高精度比较小题大做，因为只有乘除法操作所以可以每次把要乘除的数质因数分解，然后转化为加减法。</p>
+<p>注意特判。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int n, deg[160], p[160], d[160], id[160], pcnt;
+bool isprime[160], ok = true;
+struct number {
+    int cnt[160];
+    inline void mul(int x) {
+        int flag = x &gt; 0 ? 1 : -1;
+        x = x &gt; 0 ? x : -x;
+        while (x ^ 1) cnt[id[d[x]]] += flag, x /= d[x];
+    }
+    inline long long value() {
+        long long ans = 1;
+        for (int i = 1; i &lt;= pcnt; i++)
+            for (int j = 1; j &lt;= cnt[id[p[i]]]; j++) ans *= p[i];
+        return ans;
+    }
+}ans;
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;deg[i]);
+    int sum = 0;
+    for (int i = 1; i &lt;= n; i++) sum += deg[i];
+    if (sum != n * 2 - 2) ok = false;
+    if (n != 1) for (int i = 1; i &lt;= n; i++)
+        if (!deg[i]) ok = false;
+    if (ok) {
+        for (int i = 2; i &lt;= n; i++) isprime[i] = true;
+        for (int i = 2; i &lt;= n; i++) {
+            if (isprime[i]) p[++pcnt] = i, d[i] = i, id[i] = pcnt;
+            for (int j = 1; j &lt;= pcnt &amp;&amp; i * p[j] &lt;= n; j++) {
+                isprime[i * p[j]] = false;
+                d[i * p[j]] = p[j];
+                if (!(i % p[j])) break;
+            }
+        }
+        for (int i = 2; i &lt;= n - 2; i++) ans.mul(i);
+        for (int i = 1; i &lt;= n; i++)
+            for (int j = 2; j &lt;= deg[i] - 1; j++) ans.mul(-j);
+        printf(&quot;%lld\n&quot;, ans.value());
+    }
+    else printf(&quot;0\n&quot;);
+    return 0;
+}</code></pre>
+<h4 id="a-牛牛爱字符串">A. 牛牛爱字符串</h4>
+<p><a href="https://ac.nowcoder.com/acm/contest/6885/A">https://ac.nowcoder.com/acm/contest/6885/A</a></p>
+<p>晚上比较闲，就去打了牛客的比赛，第一次打。直接膜你即可，不过我交了$6$次才过。</p>
+<p>顺便当场学习了$\texttt{getline}$的用法。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;iostream&gt;
+#include&lt;string&gt;
+
+std::string s;
+
+int main() {
+    while (getline(std::cin, s)) {
+        bool innum = false;
+        for (int i = 0; i &lt; s.size(); i++) {
+            if (&#39;1&#39; &lt;= s[i] &amp;&amp; s[i] &lt;= &#39;9&#39;) {
+                printf(&quot;%c&quot;, s[i]);
+                innum = true;
+            }
+            else if (s[i] == &#39;0&#39; &amp;&amp; innum) printf(&quot;0&quot;);
+            else if (s[i] == &#39;0&#39; &amp;&amp; !(&#39;0&#39; &lt;= s[i + 1] &amp;&amp; s[i + 1] &lt;= &#39;9&#39;)) printf(&quot;0 &quot;);
+            else if (!(&#39;0&#39; &lt;= s[i] &amp;&amp; s[i] &lt;= &#39;9&#39;)) {
+                if (innum) printf(&quot; &quot;);
+                innum = false;
+            }
+            else if (s[i] == &#39; &#39; &amp;&amp; (&#39;0&#39; &lt;= s[i - 1] &amp;&amp; s[i - 1] &lt;= &#39;9&#39;)) printf(&quot; &quot;);
+        }
+        printf(&quot;\n&quot;);
+    }
+    return 0;
+}</code></pre>
+<h4 id="b-牛牛爱位运算">B. 牛牛爱位运算</h4>
+<p><a href="https://ac.nowcoder.com/acm/contest/6885/B">https://ac.nowcoder.com/acm/contest/6885/B</a></p>
+<p>$a&amp;b\le a,b$，因此答案就是最大的数。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int t;
+
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;t);
+    while (t--) {
+        int n, ans = 0;
+        scanf(&quot;%d&quot;, &amp;n);
+        for (int i = 1; i &lt;= n; i++) {
+            int x;
+            scanf(&quot;%d&quot;, &amp;x);
+            ans = max(ans, x);
+        }
+        printf(&quot;%d\n&quot;, ans);
+    }
+    return 0;
+}</code></pre>
+<h4 id="c-牛牛爱博弈">C. 牛牛爱博弈</h4>
+<p><a href="https://ac.nowcoder.com/acm/contest/6885/C">https://ac.nowcoder.com/acm/contest/6885/C</a></p>
+<p>这个想了半天不会做，最后写了个$O(t+nlogn)$的暴力打表找规律，发现$3$的倍数是必败局面，否则是必胜局面。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int t;
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;t);
+    while (t--) {
+        int n;
+        scanf(&quot;%d&quot;, &amp;n);
+        if (n % 3) printf(&quot;Alan\n&quot;);
+        else printf(&quot;Frame\n&quot;);
+    }
+    return 0;
+}</code></pre>
+<h4 id="d-牛妹爱序列">D. 牛妹爱序列</h4>
+<p><a href="https://ac.nowcoder.com/acm/contest/6885/D">https://ac.nowcoder.com/acm/contest/6885/D</a></p>
+<p>胡乱贪心，倒序遍历序列，如果当前遍历到的数和前一个数都是$1$就前缀翻转当前位置，否则单点翻转当前位置。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int n, ans, flag, a[100100];
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;a[i]);
+    for (int i = n; i &gt;= 1; i--) {
+        if (a[i] ^ flag == 1 &amp;&amp; a[i - 1] ^ flag == 1) ans++, flag ^= 1;
+        else if (a[i] ^ flag) ans++;
+    }
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<p>后面两题都不会。</p>
 <a href="../posts.html" class="link" style="display:block; text-align:center;">return</a>
 </div>
 </body>
