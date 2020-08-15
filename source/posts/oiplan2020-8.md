@@ -1417,3 +1417,43 @@ int main() {
 ```
 
 后面两题都不会。
+
+### 2020-08-15
+#### [SDOI2016]排列计数
+https://www.luogu.com.cn/problem/P4071
+
+枚举哪些位置满足条件，数量是$\dbinom{n}{m}$。然后对于每种情况，剩下的位置就是一个错排问题，设$f[n]$表示没有数字和下标相同的排列数，则答案就是$\dbinom{n}{m}f[n-m]$。
+
+组合数可以预处理阶乘，然后算阶乘的逆元，$O(logp)$计算。错排有两种方法求，一种可以$O(n)$预处理，$f[n]=(n-1)\times(f[n-1]+f[n-2])$。这是因为第$n$个数不能放到第$n$个位置，所以枚举放到前$n-1$个位置，设放到了第$k$个位置，那么第$k$个位置上的数可以放到第$n$个位置，这样方案数就是$f[n-2]$，也可以不放在第$n$个位置，这时假设$p_k$就是$p_n$，让$p_n$不在第$n$个位置，那么方案数就是$f[n-1]$，所以总方案数就是$(n-1)\times(f[n-1]+f[n-2])$。
+
+另一种方法是容斥原理。今天从$\texttt{SDSC}$回家的路上我想了一下午终于想通为什么错排的递推公式和容斥原理的公式是对的了(可能天生对计数不太擅长)，晚上看了下2013年的集训队论文集，里面讲容斥原理讲得很详细，我看了觉得很妙，打算仔细读一下然后明天再写容斥的方法，因为回到家里又不能熬夜了，我的青春结束了。
+
+```cpp
+#include<cstdio>
+
+const int MOD = 1e9 + 7;
+int t;
+long long fac[1000100], f[1000100];
+
+void exgcd(int a, int b, int &x, int &y) {
+    if (!b) { x = 1; y = 0; return; }
+    exgcd(b, a % b, y, x);
+    y -= a / b * x;
+}
+inline int inv(int a) { int x, y; exgcd(a, MOD, x, y); return (x % MOD + MOD) % MOD; }
+inline long long c(int n, int m) { return fac[n] * inv(fac[m]) % MOD * inv(fac[n - m]) % MOD; }
+
+int main() {
+    fac[0] = 1;
+    for (int i = 1; i <= 1000000; i++) fac[i] = fac[i - 1] * i % MOD;
+    f[0] = 1; f[2] = 1;
+    for (int i = 3; i <= 1000000; i++) f[i] = (i - 1) * ((f[i - 1] + f[i - 2]) % MOD) % MOD;
+    scanf("%d", &t);
+    while (t--) {
+        int n, m;
+        scanf("%d%d", &n, &m);
+        printf("%lld\n", c(n, m) * f[n - m] % MOD);
+    }
+    return 0;
+}
+```
