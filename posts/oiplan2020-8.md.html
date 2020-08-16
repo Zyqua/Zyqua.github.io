@@ -1341,7 +1341,7 @@ int main() {
     return 0;
 }</code></pre>
 <h3 id="2020-08-16">2020-08-16</h3>
-<p>今天把博客的$\LaTeX$修好了，要不这文章没法看了。</p>
+<p>今天把博客的$\LaTeX$修好了，要不这文章没法看了。(不过好像括号没法正常显示)</p>
 <p>关于容斥原理，主要是两个公式：
 $$\left|\bigcup_{i=1}^nS_i\right|=\sum_{m=1}^n(-1)^{m+1}\sum_{a_i&lt;a_{i+1}}\left|\bigcap_{i=1}^mS_{a_i}\right|$$
 $$\left|\bigcap_{i=1}^nS_i\right|=|U|-\left|\bigcup_{i=1}^n\overline{S_i}\right|$$</p>
@@ -1354,6 +1354,13 @@ $$\left|\bigcap_{i=1}^nS_i\right|=|U|-\left|\bigcup_{i=1}^n\overline{S_i}\right|
 <p>这样我们就可以$O(n)$计算错排问题的答案。虽然容斥原理的公式中枚举子集的复杂度是指数级的，但通过推式子合并答案可以得出更高效的计算方法。</p>
 <p>不定方程解的个数：方程$\sum_{i=1}^nx_i=m$的非负整数解的个数为$\dbinom{m+n-1}{n-1}$。考虑插板法，相当于在$m$个球中加入$n-1$个球，然后选择$n-1$个球把没有选择的$m$个球分成$n$组。</p>
 <p>给每个变量加上$x_i\le b_i$的限制后，可以通过容斥计算解的个数。$\overline{S_i}$相当于$x_i\ge b_i+1$，其他变量没有限制的解的个数，那么把等式两边减去$b_i+1$，就把问题转化为了求非负整数解的个数，就是上面那个组合数。多个$\overline{S_i}$的交集的计算方法也是如此。剩下的都是直接套容斥的公式，这样就解决了问题。</p>
+<p>以上内容参考资料：</p>
+<ul>
+<li><p>2013年信息学奥林匹克 中国国家队候选队员论文集 《浅谈容斥原理》(王迪)。</p>
+</li>
+<li><p><a href="https://sshwy.github.io/2019/04/41980/">https://sshwy.github.io/2019/04/41980/</a> 容斥原理入门 (sshwy)</p>
+</li>
+</ul>
 <p>那么顺便写一下上年$\texttt{D2T1}$的公式化解法($\texttt{CSP2019}$，永远的痛)。</p>
 <p>枚举每行选了哪道菜，第$i$行可选$sx_i$道菜，第$i$列选了$sy_i$道菜。限制条件$P_i$是$sy_i\le\left\lfloor\dfrac{n}{2}\right\rfloor$。那么</p>
 <p>$$\left|\bigcap_{i=1}^mS_i\right|=|U|-\left|\bigcup_{i=1}^m\overline{S_i}\right|\\=\prod_{i=1}^nsx_i-\sum_{i=1}^m|\overline{S_i}|\\=\prod_{i=1}^nsx_i-\sum_{i=1}^m\sum_{j=1}^ndp[n][j]$$</p>
