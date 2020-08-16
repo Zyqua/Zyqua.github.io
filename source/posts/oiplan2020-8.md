@@ -1457,3 +1457,121 @@ int main() {
     return 0;
 }
 ```
+
+### 2020-08-16
+今天把博客的$\LaTeX$修好了，要不这文章没法看了。
+
+关于容斥原理，主要是两个公式：
+$$\left|\bigcup_{i=1}^nS_i\right|=\sum_{m=1}^n(-1)^{m+1}\sum_{a_i<a_{i+1}}\left|\bigcap_{i=1}^mS_{a_i}\right|$$
+$$\left|\bigcap_{i=1}^nS_i\right|=|U|-\left|\bigcup_{i=1}^n\overline{S_i}\right|$$
+
+第一个就是容斥原理的公式。容斥原理其实是一种转换角度的思维方式，第一个是把求并集转换为求交集，第二个是把求交集转换为求补集的并集。一般找出题目中要求答案满足的一些条件，并设为$P_i$，把满足$P_i$的答案的集合设为$S_i$，然后问题就是求$\left|\bigcap_{i=1}^nS_i\right|$。
+
+错排问题：第$i$个位置上的条件$P_i$就是$p_i\not=i$，$S_i=\{p|p_i\not=i\}$。求$\left|\bigcap_{i=1}^nS_i\right|$。
+
+$\overline{S_i}=\{p|p_i=i\}$，所以$|\overline{S_i}|=(n-1)!$，$|\bigcap_{i=1}^m\overline{S_i}|=(n-m)!$。因此：
+
+$$\left|\bigcup_{i=1}^n\overline{S_i}\right|=\sum_{m=1}^n(-1)^{m+1}\sum_{a_i<a_{i+1}}\left|\bigcap_{i=1}^m\overline{S_{a_i}}\right|\\\\=\sum_{m=1}^n(-1)^{m+1}\dbinom{n}{m}(n-m)!\\\\=\sum_{m=1}^n(-1)^{m+1}\dfrac{n!}{m!}.$$
+
+$|U|=n!$，所以答案为：
+
+$$\left|\bigcap_{i=1}^nS_i\right|=|U|-\left|\bigcup_{i=1}^n\overline{S_i}\right|\\\\=n!-\sum_{m=1}^n(-1)^{m+1}\dfrac{n!}{m!}\\\\=n!\left(1+\sum_{m=1}^n\dfrac{(-1)^m}{m!}\right)\\\\=n!\sum_{m=0}^n\dfrac{(-1)^m}{m!}$$
+
+这样我们就可以$O(n)$计算错排问题的答案。虽然容斥原理的公式中枚举子集的复杂度是指数级的，但通过推式子合并答案可以得出更高效的计算方法。
+
+不定方程解的个数：方程$\sum_{i=1}^nx_i=m$的非负整数解的个数为$\dbinom{m+n-1}{n-1}$。考虑插板法，相当于在$m$个球中加入$n-1$个球，然后选择$n-1$个球把没有选择的$m$个球分成$n$组。
+
+给每个变量加上$x_i\le b_i$的限制后，可以通过容斥计算解的个数。$\overline{S_i}$相当于$x_i\ge b_i+1$，其他变量没有限制的解的个数，那么把等式两边减去$b_i+1$，就把问题转化为了求非负整数解的个数，就是上面那个组合数。多个$\overline{S_i}$的交集的计算方法也是如此。剩下的都是直接套容斥的公式，这样就解决了问题。
+
+那么顺便写一下上年$\texttt{D2T1}$的公式化解法($\texttt{CSP2019}$，永远的痛)。
+
+枚举每行选了哪道菜，第$i$行可选$sx_i$道菜，第$i$列选了$sy_i$道菜。限制条件$P_i$是$sy_i\le\left\lfloor\dfrac{n}{2}\right\rfloor$。那么
+
+$$\left|\bigcap_{i=1}^mS_i\right|=|U|-\left|\bigcup_{i=1}^m\overline{S_i}\right|\\\\=\prod_{i=1}^nsx_i-\sum_{i=1}^m|\overline{S_i}|\\\\=\prod_{i=1}^nsx_i-\sum_{i=1}^m\sum_{j=1}^ndp[n][j]$$
+
+第二行是因为最多只有一列不满足条件，因此补集之间没有交集，直接加起来即可。
+
+#### [HAOI2008]硬币购物
+https://www.luogu.com.cn/problem/P1450
+
+求$\sum_{i=1}^4c_ix_i=s$的非负整数解的个数，要求$x_i\le d_i$。如果没有限制那么可以用完全背包预处理计算答案。加上限制后可以套用和上面一样的方法容斥合并答案。
+
+```cpp
+#include<cstdio>
+
+int c[5], n, d[5], s;
+long long dp[100100];
+
+int main() {
+    scanf("%d%d%d%d%d", &c[1], &c[2], &c[3], &c[4], &n);
+    dp[0] = 1;
+    for (int i = 1; i <= 4; i++)
+        for (int j = 1; j <= 100000; j++)
+            if (j - c[i] >= 0) dp[j] += dp[j - c[i]];
+    while (n--) {
+        scanf("%d%d%d%d%d", &d[1], &d[2], &d[3], &d[4], &s);
+        long long ans = 0;
+        for (int stt = 1; stt <= 15; stt++) {
+            int cnt = 0, t = s;
+            for (int i = 1; i <= 4; i++) if (stt & (1 << (i - 1))) t -= c[i] * (d[i] + 1), cnt++;
+            if (t < 0) continue;
+            if (cnt % 2) ans += dp[t];
+            else ans -= dp[t];
+        }
+        printf("%lld\n", dp[s] - ans);
+    }
+    return 0;
+}
+```
+
+#### [HAOI2016]放棋子
+https://www.luogu.com.cn/problem/P3182
+
+因为障碍不在同一行同一列所以可以随意调整行和列的顺序，最后调整成一个单位矩阵的样子，然后枚举每行放的棋子所在的列的位置，这样就是一个错排问题，可以直接递推求解，因为没有模数所以要写高精度。
+
+然后就是压$8$位的高精进制是$1e8$，写成$1e9$调了一个小时。
+
+```cpp
+#include<cstdio>
+#include<cstring>
+
+int n;
+struct number {
+    int a[5010], n;
+    int& operator [] (const int &idx) { return a[idx]; }
+    inline int max(int a, int b) { return a > b ? a : b; }
+    inline void add(number &x, number &y) {
+        for (int i = 1; i <= max(x.n, y.n); i++) {
+            a[i + 1] += ((long long)x[i] + y[i]) / (int)1e8;
+            a[i] += ((long long)x[i] + y[i]) % (int)1e8;
+        }
+        n = max(x.n, y.n);
+        if (a[n + 1]) n++;
+    }
+    inline void mul(int x, number y) {
+        memset(a, 0, sizeof a);
+        for (int i = 1; i <= y.n; i++) {
+            a[i + 1] += ((long long)x * y[i]) / (int)1e8;
+            a[i] += ((long long)x * y[i]) % (int)1e8;
+        }
+        n = y.n;
+        if (a[n + 1]) n++;
+    }
+    inline void print() {
+        printf("%d", a[n]);
+        for (int i = n - 1; i >= 1; i--) printf("%08d", a[i]);
+        printf("\n");
+    }
+}dp[210];
+
+int main() {
+    scanf("%d", &n);
+    dp[2].a[1] = 1, dp[2].n = 1;
+    for (int i = 3; i <= n; i++) {
+        dp[i].add(dp[i - 1], dp[i - 2]);
+        dp[i].mul(i - 1, dp[i]);
+    }
+    dp[n].print();
+    return 0;
+}
+```
