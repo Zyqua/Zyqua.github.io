@@ -888,7 +888,7 @@ int main() {
 #### 曹冲养猪
 https://www.luogu.com.cn/problem/P1495
 
-$\texttt{CRT}$的模板题。对于同余方程组$\begin{cases}x\equiv a_1\pmod {m_1}\\x\equiv a_2\pmod {m_2}\\...\\x\equiv a_n\pmod {m_n}\end{cases}$，其中模数互质，定义$M=\prod_{i=1}^n m_i$，$M_i=\dfrac{M}{m_i}$，$k_i=M_i^{-1}\pmod {m_i}$。存在一个解为$x=\sum_{i=1}^n a_iM_ik_i$。这是因为对于任意一个方程组$x\equiv a_j\pmod {m_j}$，有$x\equiv a_jM_jk_j\pmod {m_j}$，其他项都是$m_j$的倍数所以就没了。而$M_j$和$k_j$在$\mod m_j$意义下互为逆元，因此$x\equiv a_j\pmod {m_j}$成立。然后算出来还得模$M$。
+$\texttt{CRT}$的模板题。对于同余方程组$\begin{cases}x\equiv a_1\pmod {m_1}\\\\x\equiv a_2\pmod {m_2}\\\\...\\\\x\equiv a_n\pmod {m_n}\end{cases}$，其中模数互质，定义$M=\prod_{i=1}^n m_i$，$M_i=\dfrac{M}{m_i}$，$k_i=M_i^{-1}\pmod {m_i}$。存在一个解为$x=\sum_{i=1}^n a_iM_ik_i$。这是因为对于任意一个方程组$x\equiv a_j\pmod {m_j}$，有$x\equiv a_jM_jk_j\pmod {m_j}$，其他项都是$m_j$的倍数所以就没了。而$M_j$和$k_j$在$\mod m_j$意义下互为逆元，因此$x\equiv a_j\pmod {m_j}$成立。然后算出来还得模$M$。
 
 需要注意的是这题得用$\texttt{exgcd}$求逆元，但求出来并不是最小正整数解，如果解大于$0$需要模一遍$M$，否则取反后模$M$再用$M$减。
 
@@ -1348,7 +1348,7 @@ int main() {
 #### B. 牛牛爱位运算
 https://ac.nowcoder.com/acm/contest/6885/B
 
-$a&b\le a,b$，因此答案就是最大的数。
+$a\And b\le a,b$，因此答案就是最大的数。
 
 ```cpp
 #include<cstdio>
