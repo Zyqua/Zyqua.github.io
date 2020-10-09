@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+        <html>
+            <head>
+                <meta charset="utf-8"/>
+                <title>n-kw && n-c by others</title>
+                <link rel="stylesheet" type="text/css" href="../styles.css"/>
+                <link rel="stylesheet" type="text/css" href="../markdownStyles.css"/>
+                <link rel="stylesheet" href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css">
+                <script defer src="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.js"></script>
+                <script>
+                var katex_config = {
+                    delimiters: 
+                    [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false}
+                    ]
+                };
+                </script>
+                <script defer src="https://cdn.bootcss.com/KaTeX/0.11.1/contrib/auto-render.min.js" onload="renderMathInElement(document.body,katex_config)"></script>
+            </head>
+            <body>
+                <div class="body">
+                <p class="title">striving & singing</p><h3 id="2020-09-22">2020-09-22</h3>
+<h4 id="子串">子串</h4>
+<p><a href="https://www.luogu.com.cn/problem/P2679">https://www.luogu.com.cn/problem/P2679</a></p>
+<p>不难想到用$dp[i][j][k]$表示在 A 的前$i$个字符中取$k$个子串来匹配 B 的前$j$个字符的方案数。但是当 A 中的第$i$个字符要和前面匹配的字符连在一起时，要求第$i-1$个字符也被用来匹配，然而这个状态中既有$i-1$没有参与匹配的，也有$i-1$参与匹配的，这就没法 DP 了。</p>
+<p>这时一般可以更细致地刻画一下状态，也就是加一维。设$dp[i][j][k][l]$表示 A 的前$i$个字符中取$k$个子串和 B 的前$j$个字符匹配，且第$i$个字符参与匹配$(l=1)$或不参与匹配$(l=0)$的方案数，那么有：</p>
+<p>$$dp[i][j][k][0]=\begin{cases}dp[i-1][j][k][0]+dp[i-1][j][k][1]&amp;A[i]=B[j]\0&amp;A[i]\not=B[j]\end{cases}$$</p>
+<p>$$dp[i][j][k][1]=\begin{cases}dp[i-1][j-1][k][1]+dp[i-1][j-1][k-1][0]+dp[i-1][j-1][k-1][1]&amp;A[i]=B[j]\0&amp;A[i]\not=B[j]\end{cases}$$</p>
+<p>时间复杂度$O(nmk)$，足以通过，但空间开不下，滚动数组之。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+const int MOD = 1e9 + 7;
+int n, m, k, dp[2][210][210][2];
+char a[1010], b[210];
+
+int main() {
+    scanf(&quot;%d%d%d&quot;, &amp;n, &amp;m, &amp;k);
+    scanf(&quot;%s%s&quot;, a + 1, b + 1);
+    dp[0][0][0][0] = dp[1][0][0][0] = 1;
+    int curi = 0;
+    for (int i = 1; i &lt;= n; i++, curi ^= 1) {
+        for (int j = 1; j &lt;= m; j++) {
+            for (int k = 1; k &lt;= i &amp;&amp; k &lt;= j; k++) {
+                dp[curi][j][k][0] = (dp[curi ^ 1][j][k][0] + dp[curi ^ 1][j][k][1]) % MOD;
+                if (a[i] == b[j])
+                    dp[curi][j][k][1] = ((dp[curi ^ 1][j - 1][k - 1][0] + dp[curi ^ 1][j - 1][k - 1][1]) % MOD + dp[curi ^ 1][j - 1][k][1]) % MOD;
+                else dp[curi][j][k][1] = 0;
+            }
+        }
+    }
+    printf(&quot;%d\n&quot;, (dp[curi ^ 1][m][k][0] + dp[curi ^ 1][m][k][1]) % MOD);
+    return 0;
+}</code></pre>
+<h4 id="数列">数列</h4>
+<p><a href="https://www.luogu.com.cn/problem/P1799">https://www.luogu.com.cn/problem/P1799</a></p>
+<p>设$dp[i][j]$表示前$i$个数删了$j$个，最多有几个数在自己的位置上，则有：</p>
+<p>$$dp[i][j]=\max(dp[i-1][j]+\Delta,dp[i-1][j-1])$$</p>
+<p>$$\Delta=\begin{cases}1&amp;i-j=a[i]\0&amp;i-j\not=a[i]\end{cases}$$</p>
+<p>注意枚举$j$时的范围为$[0,i]$，而不是$[1,i]$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int n, a[1010], dp[1010][1010], ans;
+
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;a[i]);
+    for (int i = 1; i &lt;= n; i++)
+        for (int j = 0; j &lt;= i; j++) {
+            dp[i][j] = dp[i - 1][j] + (i - j == a[i] ? 1 : 0);
+            if (j) dp[i][j] = max(dp[i][j], dp[i - 1][j - 1]);
+        }
+    for (int i = 1; i &lt;= n; i++) ans = max(ans, dp[n][i]);
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h4 id="释放囚犯">释放囚犯</h4>
+<p><a href="https://www.luogu.com.cn/problem/P1622">https://www.luogu.com.cn/problem/P1622</a></p>
+<p>区间 DP。设$dp[i][j]$表示释放$[i,j]$中所有的囚犯所需最少的肉，然后对于每个状态枚举区间的分割点即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;algorithm&gt;
+
+int n, m, a[110], dp[110][110];
+
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt;= m; i++) scanf(&quot;%d&quot;, &amp;a[i]);
+    std::sort(a + 1, a + m + 1);
+    a[m + 1] = n + 1;
+    for (int l = 1; l &lt;= m; l++)
+        for (int i = 1; i + l - 1 &lt;= m; i++) {
+            int j = i + l - 1;
+            dp[i][j] = 0x3fffffff;
+            for (int k = i; k &lt;= j; k++)
+                dp[i][j] = min(dp[i][j], dp[i][k - 1] + dp[k + 1][j] + a[j + 1] - 1 - (a[i - 1] + 1));
+        }
+    printf(&quot;%d\n&quot;, dp[1][m]);
+    return 0;
+}</code></pre>
+<h3 id="2020-09-23">2020-09-23</h3>
+<h4 id="旅行商简化版">旅行商简化版</h4>
+<p><a href="https://www.luogu.com.cn/problem/P1523">https://www.luogu.com.cn/problem/P1523</a></p>
+<p>一个回路可以分成向东和向西两个部分，相当于两个点在同一个起点出发向东走到达同一个终点。首先按照横坐标排个序，那么下面可以 DP。设$dp[i][j]$表示这两个点一个走到了编号为$i$的点，一个走到了编号为$j$的点时当前路径的最短长度。那么有：</p>
+<p>$$dp[i][j]=\begin{cases}dp[i-1][j]+dist(i-1,i)&amp;j&lt;i-1\\min_{k=1}^{j-1}{dp[j][k]+dist(k,i)}\end{cases}$$</p>
+<p>因为每次只有某一个点走，所以只有一个编号会发生变化，所以这样是对的。</p>
+<p>最后要求的答案为$\min_{i=1}^{n-1}{dp[n][i]+dist(i,n)}$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cmath&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+
+int n;
+double dp[1010][1010], ans = 1e18;
+struct point {
+    int x, y;
+    bool operator &lt; (const point &amp;b) const { return x &lt; b.x; }
+}points[1010];
+
+inline double dist(int i, int j) { return sqrt((double)(points[i].x - points[j].x) * (points[i].x - points[j].x)
+                                                + (double)(points[i].y - points[j].y) * (points[i].y - points[j].y)); }
+inline double min(double a, double b) { return a &lt; b ? a : b; }
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d%d&quot;, &amp;points[i].x, &amp;points[i].y);
+    std::sort(points + 1, points + n + 1);
+    memset(dp, 0x7f, sizeof dp);
+    dp[2][1] = dist(1, 2);
+    for (int i = 3; i &lt;= n; i++)
+        for (int j = 1; j &lt; i; j++) {
+            if (j &lt; i - 1) dp[i][j] = dp[i - 1][j] + dist(i - 1, i);
+            else for (int k = 1; k &lt; j; k++) dp[i][j] = min(dp[i][j], dp[j][k] + dist(k, i));
+        }
+    for (int i = 1; i &lt; n; i++) ans = min(ans, dp[n][i] + dist(i, n));
+    printf(&quot;%.2lf\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h3 id="2020-09-24">2020-09-24</h3>
+<h4 id="子序列">子序列</h4>
+<p><a href="https://www.luogu.com.cn/problem/P1410">https://www.luogu.com.cn/problem/P1410</a></p>
+<p>显然，若序列中存在一个长度大于 2 的不上升序列，则不存在合法的划分方案，否则一定存在。</p>
+<p>找一个长度大于 2 的不上升序列，可以枚举中间位置，然后对于每个中间位置找左边有没有大于等于它的数，右边有没有小于等于它的数，这样复杂度是$O(n^2)$的。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int n, a[2010];
+
+int main() {
+    while (~scanf(&quot;%d&quot;, &amp;n)) {
+        for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;a[i]);
+        int max = 0, secmax = 0; bool ans = true;
+        for (int i = 1; i &lt;= n &amp;&amp; ans; i++) {
+            if (max &lt; a[i]) max = a[i];
+            else if (secmax &lt; a[i]) secmax = a[i];
+            else ans = false;
+        }
+        if (ans) printf(&quot;Yes!\n&quot;);
+        else printf(&quot;No!\n&quot;);
+    }
+    return 0;
+}</code></pre>
+<h3 id="2020-09-26">2020-09-26</h3>
+<h4 id="小z的队伍排列">小Z的队伍排列</h4>
+<p><a href="https://www.luogu.com.cn/problem/P2132">https://www.luogu.com.cn/problem/P2132</a></p>
+<p>设$dp[i][j][k][l][m]$表示这五列分别放了$i,j,k,l,m$个数，然后直接 DP 即可。因为不确定有几排所以可以递归枚举状态。</p>
+<p>注意开long long。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int k, n[6], stt[6];
+long long dp[31][31][31][31][31];
+
+void dfs(int x) {
+    if (x == k + 1) {
+        if (stt[1]) dp[stt[1]][stt[2]][stt[3]][stt[4]][stt[5]] += dp[stt[1] - 1][stt[2]][stt[3]][stt[4]][stt[5]];
+        if (stt[2]) dp[stt[1]][stt[2]][stt[3]][stt[4]][stt[5]] += dp[stt[1]][stt[2] - 1][stt[3]][stt[4]][stt[5]];
+        if (stt[3]) dp[stt[1]][stt[2]][stt[3]][stt[4]][stt[5]] += dp[stt[1]][stt[2]][stt[3] - 1][stt[4]][stt[5]];
+        if (stt[4]) dp[stt[1]][stt[2]][stt[3]][stt[4]][stt[5]] += dp[stt[1]][stt[2]][stt[3]][stt[4] - 1][stt[5]];
+        if (stt[5]) dp[stt[1]][stt[2]][stt[3]][stt[4]][stt[5]] += dp[stt[1]][stt[2]][stt[3]][stt[4]][stt[5] - 1];
+        return;
+    }
+    for (int i = 0; i &lt;= n[x] &amp;&amp; i &lt;= stt[x - 1]; i++) stt[x] = i, dfs(x + 1), stt[x] = 0;
+}
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;k);
+    for (int i = 1; i &lt;= k; i++) scanf(&quot;%d&quot;, &amp;n[i]);
+    dp[0][0][0][0][0] = 1; stt[0] = 0x3fffffff;
+    dfs(1);
+    printf(&quot;%lld\n&quot;, dp[n[1]][n[2]][n[3]][n[4]][n[5]]);
+    return 0;
+}</code></pre>
+<h4 id="环状最大两段区间和">环状最大两段区间和</h4>
+<p><a href="https://www.luogu.com.cn/problem/P1121">https://www.luogu.com.cn/problem/P1121</a></p>
+<p>如果不考虑环状，那么可以设$f[i]$表示以第$i$个位置结尾的最大区间和，$g[i]$表示以第$i$个位置开始的最大区间和，$h[i]$表示开头在第$i$个位置以及之后的最大区间和，那么有</p>
+<p>$$f[i]=\max(f[i-1]+a[i],a[i])$$</p>
+<p>$$g[i]=\max(g[i+1]+a[i],a[i])$$</p>
+<p>$$h[i]=\max(g[i],h[i+1])$$</p>
+<p>而答案是</p>
+<p>$$\max_{i=1}^{n-1}{f[i]+h[i+1]}$$</p>
+<p>如果考虑环状，那么有两种情况，一种和上面一样，选择的区间没有跨过 1 和 n 之间的间隔，这时和上面一样做即可；另一种情况是选择的某个区间跨过了 1 和 n 之间的间隔，那么选的必然是开头一段，结尾一段，中间一段，这时可以发现把每个位置选与不选的状态取反后，与上面的情况等价，只是要求的变成了最小两端区间和，并且强制第 1 和第 n 个位置要选择。据此 DP 即可。</p>
+<p>注意在第一次 DP 时，$h[n+1]$应初始化为$-\inf$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+
+int n, a[200100], f[200100], g[200100], h[200100], ans = -0x3fffffff, sum;
+
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    h[n + 1] = -0x3fffffff;
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;a[i]), sum += a[i];
+    for (int i = 1; i &lt;= n; i++) f[i] = max(f[i - 1] + a[i], a[i]);
+    for (int i = n; i &gt;= 1; i--) g[i] = max(g[i + 1] + a[i], a[i]), h[i] = max(g[i], h[i + 1]);
+    for (int i = 1; i &lt; n; i++) ans = max(ans, f[i] + h[i + 1]);
+    memset(f, 0x3f, sizeof f); memset(g, 0x3f, sizeof g); memset(h, 0x3f, sizeof h);
+    for (int i = 2; i &lt;= n; i++) f[i] = min(f[i - 1] + a[i], a[i]);
+    for (int i = n - 1; i &gt;= 2; i--) g[i] = min(g[i + 1] + a[i], a[i]), h[i] = min(g[i], h[i + 1]);
+    for (int i = 2; i &lt; n; i++) ans = max(ans, sum - f[i] - h[i + 1]);
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h4 id="不等数列">不等数列</h4>
+<p><a href="https://www.luogu.com.cn/problem/P2401">https://www.luogu.com.cn/problem/P2401</a></p>
+<p>设$dp[i][j]$表示长度为$i$，有$j$个小于号的排列个数，那么有</p>
+<p>$$dp[i][j]=(j+1)dp[i-1][j]+(i-j)dp[i-1][j-1]$$</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+const int MOD = 2015;
+int n, k, dp[1010][1010];
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;k);
+    for (int i = 0; i &lt;= n; i++) dp[i][0] = 1;
+    for (int i = 1; i &lt;= n; i++)
+        for (int j = 1; j &lt;= k &amp;&amp; j &lt; i; j++) dp[i][j] = ((j + 1) * dp[i - 1][j] % MOD + (i - j) * dp[i - 1][j - 1] % MOD) % MOD;
+    printf(&quot;%d\n&quot;, dp[n][k]);
+    return 0;
+}</code></pre>
+<h4 id="塔">塔</h4>
+<p><a href="https://www.luogu.com.cn/problem/P1651">https://www.luogu.com.cn/problem/P1651</a></p>
+<p>可以设$dp[i][j]$表示两个塔的高度分别为$i,j$时的最大高度，那么这就是个 01 背包问题，有</p>
+<p>$$dp[i][j]=\max(dp[i-h[k]][j],dp[i][j-h[k]],dp[i][j])$$</p>
+<p>发现其实只关心$i,j$的相对大小关系，那么可以设$dp[i]$表示第一个塔的高度减第二个塔的高度为$i$时的第一个塔的最大高度，那么有</p>
+<p>$$dp[i]=\max(dp[i+h[k]]+h[k],dp[i-h[k]],dp[i])$$</p>
+<p>滚动数组即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+const int K = 500100;
+int n, h[55], sumh, dp[2][1001000];
+
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;h[i]), sumh += h[i];
+    memset(dp, -0x3f, sizeof dp);
+    dp[1][K] = 0;
+    int cur = 0;
+    for (int i = 1; i &lt;= n; i++) {
+        for (int j = -sumh; j &lt;= sumh; j++) {
+            dp[cur][j + K] = dp[cur ^ 1][j + K];
+            if (j - h[i] &gt;= -sumh) dp[cur][j + K] = max(dp[cur][j + K], dp[cur ^ 1][j - h[i] + K]);
+            if (j + h[i] &lt;= sumh) dp[cur][j + K] = max(dp[cur][j + K], dp[cur ^ 1][j + h[i] + K] + h[i]);
+        }
+        cur ^= 1;
+    }
+    if (!dp[cur ^ 1][K]) printf(&quot;-1\n&quot;);
+    else printf(&quot;%d\n&quot;, dp[cur ^ 1][K]);
+    return 0;
+}</code></pre>
+<h4 id="跑路">跑路</h4>
+<p><a href="https://www.luogu.com.cn/problem/P1613">https://www.luogu.com.cn/problem/P1613</a></p>
+<p>设$g[i][j][k]$表示$i$和$j$之间是否存在长度为$2^k$的路径，那么有</p>
+<p>$$g[i][j][k]=||_{l=1}^ng[i][l][k-1]&amp;&amp;g[l][j][k-1]$$</p>
+<p>然后所有长度为$2^k$的路径都可以看作一条长度为$1$的边，使用 Floyd 求最短路即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+int n, m, g[55][55][65], dis[55][55];
+
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    memset(dis, 0x3f, sizeof dis);
+    for (int i = 1; i &lt;= m; i++) {
+        int u, v; scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+        g[u][v][0] = dis[u][v] = 1;
+    }
+    for (int l = 1; l &lt;= 64; l++)
+        for (int k = 1; k &lt;= n; k++)
+            for (int i = 1; i &lt;= n; i++)
+                for (int j = 1; j &lt;= n; j++) g[i][j][l] = g[i][j][l] | (g[i][k][l - 1] &amp; g[k][j][l - 1]);
+    for (int l = 1; l &lt;= 64; l++)
+        for (int i = 1; i &lt;= n; i++)
+            for (int j = 1; j &lt;= n; j++) if (g[i][j][l]) dis[i][j] = 1;
+    for (int k = 1; k &lt;= n; k++)
+        for (int i = 1; i &lt;= n; i++)
+            for (int j = 1; j &lt;= n; j++) dis[i][j] = min(dis[i][j], dis[i][k] + dis[k][j]);
+    printf(&quot;%d\n&quot;, dis[1][n]);
+    return 0;
+}</code></pre>
+<h4 id="狗哥采矿">狗哥采矿</h4>
+<p><a href="https://www.luogu.com.cn/problem/P2380">https://www.luogu.com.cn/problem/P2380</a></p>
+<p>因为只能走直路，所以可以直接枚举当前位置是一路往西走还是一路往北走，在此之前预处理前缀和即可，设$dp[i][j]$表示前$i$行前$j$列最多能采到矿的数量，那么有</p>
+<p>$$suma[i][j]=suma[i][j-1]+a[i][j]$$</p>
+<p>$$sumb[i][j]=sumb[i-1][j]+b[i][j]$$</p>
+<p>$$dp[i][j]=\max(dp[i-1][j]+suma[i][j],dp[i][j-1]+sumb[i][j])$$</p>
+<p>注意每个数据有多组输入。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+int n, m, a[510][510], b[510][510], dp[510][510], suma[510][510], sumb[510][510];
+
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+
+int main() {
+    while (~scanf(&quot;%d%d&quot;, &amp;n, &amp;m)) {
+        if (n == 0 &amp;&amp; m == 0) break;
+        memset(dp, 0, sizeof dp);
+        for (int i = 1; i &lt;= n; i++)
+            for (int j = 1; j &lt;= m; j++) scanf(&quot;%d&quot;, &amp;a[i][j]), suma[i][j] = suma[i][j - 1] + a[i][j];
+        for (int i = 1; i &lt;= n; i++)
+            for (int j = 1; j &lt;= m; j++) scanf(&quot;%d&quot;, &amp;b[i][j]), sumb[i][j] = sumb[i - 1][j] + b[i][j];
+        for (int i = 1; i &lt;= n; i++)
+            for (int j = 1; j &lt;= m; j++) dp[i][j] = max(dp[i - 1][j] + suma[i][j], dp[i][j - 1] + sumb[i][j]);
+        printf(&quot;%d\n&quot;, dp[n][m]);
+    }
+    return 0;
+}</code></pre>
+<h4 id="琪露诺">琪露诺</h4>
+<p><a href="https://www.luogu.com.cn/problem/P1725">https://www.luogu.com.cn/problem/P1725</a></p>
+<p>设$dp[i]$表示走到$i$时的最大权值和，直接 DP 加单调队列优化即可。</p>
+<p>注意权值可能为负数，需要初始化 dp 数组为$-\inf$，且$dp[0]=0$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;queue&gt;
+
+int n, l, r, a[200100], dp[200100], ans = -0x7fffffff;
+std::deque&lt;int&gt; q;
+
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+
+int main() {
+    scanf(&quot;%d%d%d&quot;, &amp;n, &amp;l, &amp;r);
+    for (int i = 0; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;a[i]);
+    memset(dp, -0x3f, sizeof dp);
+    dp[0] = 0;
+    for (int i = 0; i &lt;= n; i++) {
+        if (i - l &gt;= 0) {
+            while (!q.empty() &amp;&amp; dp[q.back()] &lt;= dp[i - l]) q.pop_back();
+            q.push_back(i - l);
+        }
+        while (!q.empty() &amp;&amp; q.front() &lt; i - r) q.pop_front();
+        if (!q.empty()) dp[i] = dp[q.front()] + a[i];
+    }
+    for (int i = n - r + 1; i &lt;= n; i++) ans = max(ans, dp[i]);
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<a href="../posts.html" class="link" style="display:block; text-align:center;">return</a>
+</div>
+</body>
+</html>

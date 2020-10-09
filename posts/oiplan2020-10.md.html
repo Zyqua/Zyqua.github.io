@@ -5,12 +5,18 @@
                 <title>n-kw && n-c by others</title>
                 <link rel="stylesheet" type="text/css" href="../styles.css"/>
                 <link rel="stylesheet" type="text/css" href="../markdownStyles.css"/>
-                <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-                <script type="text/x-mathjax-config">
-                    MathJax.Hub.Config({
-                        tex2jax: {inlineMath: [['$','$'], ['(',')']]}
-                    });
+                <link rel="stylesheet" href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css">
+                <script defer src="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.js"></script>
+                <script>
+                var katex_config = {
+                    delimiters: 
+                    [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false}
+                    ]
+                };
                 </script>
+                <script defer src="https://cdn.bootcss.com/KaTeX/0.11.1/contrib/auto-render.min.js" onload="renderMathInElement(document.body,katex_config)"></script>
             </head>
             <body>
                 <div class="body">
@@ -332,6 +338,503 @@ int main() {
         else lx = mid + 1;
     }
     printf(&quot;%d\n&quot;, lx);
+    return 0;
+}</code></pre>
+<h3 id="2020-08-26">2020-08-26</h3>
+<h4 id="【模板】卢卡斯定理">【模板】卢卡斯定理</h4>
+<p><a href="https://www.luogu.com.cn/problem/P3807">https://www.luogu.com.cn/problem/P3807</a></p>
+<p>$$\binom{n}{m}\equiv\binom{n/p}{m/p}\binom{n\bmod p}{m\bmod p}\pmod p$$</p>
+<p>其中$p$是质数。</p>
+<p>注意特判$n&lt;m$的情况。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int t, fac[100100];
+
+void exgcd(int a, int b, int &amp;x, int &amp;y) {
+    if (!b) { x = 1; y = 0; return; }
+    exgcd(b, a % b, y, x);
+    y -= a / b * x;
+}
+inline int inv(int a, int p) { int x, y; exgcd(a, p, x, y); return (x % p + p) % p; }
+int binom(int n, int m, int p) {
+    if (n &lt; m) return 0;
+    if (n &lt; p &amp;&amp; m &lt; p) return (long long)fac[n] * inv(fac[m], p) % p * inv(fac[n - m], p) % p;
+    return (long long)binom(n / p, m / p, p) * binom(n % p, m % p, p) % p;
+}
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;t);
+    while (t--) {
+        int n, m, p;
+        scanf(&quot;%d%d%d&quot;, &amp;n, &amp;m, &amp;p);
+        fac[0] = 1;
+        for (int i = 1; i &lt;= p; i++) fac[i] = (long long)fac[i - 1] * i % p;
+        printf(&quot;%d\n&quot;, binom(n + m, m, p));
+    }
+    return 0;
+}</code></pre>
+<h4 id="shoi2015超能粒子炮·改">[SHOI2015]超能粒子炮·改</h4>
+<p><a href="https://www.luogu.com.cn/problem/P4345">https://www.luogu.com.cn/problem/P4345</a></p>
+<p>用 $\text{Lucas}$ 定理拆开后，发现$\left\lfloor\dfrac{i}{p}\right\rfloor$只有$\left\lfloor\dfrac{k}{p}\right\rfloor$种取值，于是可以用和整除分块类似的思想，枚举这个值，然后推式子，发现是一个递归式。</p>
+<p>$$f(n,k)=\sum_{i=0}^k\dbinom{n}{i}\bmod 2333\\=\sum_{i=0}^k\dbinom{n/p}{i/p}\dbinom{n\bmod p}{i\bmod p}\\=\sum_{i=0}^{k/p-1}\dbinom{n/p}{i}\sum_{j=0}^{p-1}\dbinom{n\bmod p}{j}+\dbinom{n/p}{k/p}\sum_{j=0}^{k\bmod p}\dbinom{n\bmod p}{j}\\=f(n/p,k/p-1)f(n\bmod p,p-1)+\dbinom{n/p}{k/p}f(n\bmod p,k\bmod p)$$</p>
+<p>于是可以$O(2333^2)$预处理$f$和组合数，然后和 $\text{Lucas}$ 定理一样递归求解。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+const int MOD = 2333;
+int t, cn[2500][2500], fv[2500][2500];
+
+int binom(long long n, long long m) {
+    if (n &lt; m) return 0;
+    if (n &lt; MOD &amp;&amp; m &lt; MOD) return cn[n][m];
+    return binom(n / MOD, m / MOD) * binom(n % MOD, m % MOD) % MOD;
+}
+int f(long long n, long long k) {
+    if (k &lt; 0) return 0;
+    if (n &lt; MOD &amp;&amp; k &lt; MOD) return fv[n][k];
+    return (f(n / MOD, k / MOD - 1) * f(n % MOD, MOD - 1) % MOD + binom(n / MOD, k / MOD) * f(n % MOD, k % MOD) % MOD) % MOD;
+}
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;t);
+    for (int i = 0; i &lt; 2333; i++) cn[i][0] = fv[i][0] = 1;
+    for (int i = 0; i &lt; 2333; i++) fv[0][i] = 1;
+    for (int i = 1; i &lt; 2333; i++)
+        for (int j = 1; j &lt; 2333; j++) {
+            cn[i][j] = (cn[i - 1][j] + cn[i - 1][j - 1]) % MOD;
+            fv[i][j] = (fv[i][j - 1] + cn[i][j]) % MOD;
+        }
+    while (t--) {
+        long long n, k;
+        scanf(&quot;%lld%lld&quot;, &amp;n, &amp;k);
+        printf(&quot;%d\n&quot;, f(n, k));
+    }
+    return 0;
+}</code></pre>
+<h4 id="sdoi2010古代猪文">[SDOI2010]古代猪文</h4>
+<p><a href="https://www.luogu.com.cn/record/list?user=116063">https://www.luogu.com.cn/record/list?user=116063</a></p>
+<p>题目要求是实际上就是这个式子：</p>
+<p>$$g^{\sum_{d|n}\binom{n}{n/d}}\bmod 999911659$$</p>
+<p>可以用欧拉定理的推论处理指数：</p>
+<p>$$g^{\sum_{d|n}\binom{n}{n/d}\bmod 999911658}\bmod 999911659$$</p>
+<p>那么现在要求的就是这个式子：</p>
+<p>$$\sum_{d|n}\binom{n}{n/d}\bmod 999911658\\=\sum_{d|n}\binom{n}{d}\bmod 999911658$$</p>
+<p>把$999911658$质因数分解，得到$2,3,4679,35617$这四个质数。于是可以分别求解模这四个质数的方程，再用 $\text{CRT}$ 合并得到答案。</p>
+<p>$$\begin{cases}x\equiv\sum_{d|n}\binom{n}{d}\pmod 2\\x\equiv\sum_{d|n}\binom{n}{d}\pmod 3\\x\equiv\sum_{d|n}\binom{n}{d}\pmod{4679}\\x\equiv\sum_{d|n}\binom{n}{d}\pmod{35617}\end{cases}$$</p>
+<p>直接枚举所有约数，对于每个约数计算组合数。因为$n$的范围比较大，但模数很小，所以可以用 $\text{Lucas}$ 定理求组合数。</p>
+<p>注意特判快速幂底数为$0$的情况。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+const int c[5] = { 0, 2, 3, 4679, 35617 }, MOD = 999911659, M = 999911658;
+int n, g, fac[40000], invfac[40000], a[5];
+
+inline int pwr(int x, int k, int p) {
+    if (!(x % p)) return 0;
+    int ans = 1;
+    while (k) {
+        if (k &amp; 1) ans = (long long)ans * x % p;
+        x = (long long)x * x % p;
+        k &gt;&gt;= 1;
+    }
+    return ans % p;
+}
+inline int inv(int x, int p) { return pwr(x, p - 2, p); }
+int binom(int n, int m, int p) {
+    if (n &lt; m) return 0;
+    if (n &lt; p &amp;&amp; m &lt; p) return (long long)fac[n] * invfac[m] % p * invfac[n - m] % p;
+    return (long long)binom(n / p, m / p, p) * binom(n % p, m % p, p) % p;
+}
+int getsum(int p) {
+    int ans = 0;
+    for (int i = 1; i * i &lt;= n; i++) {
+        if (n % i) continue;
+        if (i ^ (n / i)) ans = ((ans + binom(n, i, p)) % p + binom(n, n / i, p)) % p;
+        else ans = (ans + binom(n, i, p)) % p;
+    }
+    return ans;
+}
+int crt() {
+    int ans = 0;
+    for (int i = 1; i &lt;= 4; i++) ans = (ans + (long long)a[i] * (M / c[i]) % M * inv(M / c[i], c[i]) % M) % M;
+    return (ans % M + M) % M;
+}
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;g);
+    for (int x = 1; x &lt;= 4; x++) {
+        int p = c[x];
+        fac[0] = 1;
+        for (int i = 1; i &lt; p; i++) fac[i] = (long long)fac[i - 1] * i % p;
+        invfac[p - 1] = inv(fac[p - 1], p);
+        for (int i = p - 2; i &gt;= 0; i--) invfac[i] = (long long)invfac[i + 1] * (i + 1) % p;
+        a[x] = getsum(p);
+    }
+    printf(&quot;%d\n&quot;, pwr(g, crt(), MOD));
+    return 0;
+}</code></pre>
+<h3 id="2020-08-27">2020-08-27</h3>
+<h4 id="noi2012随机数生成器">[NOI2012]随机数生成器</h4>
+<p><a href="https://www.luogu.com.cn/problem/P2044">https://www.luogu.com.cn/problem/P2044</a></p>
+<p>$$\begin{bmatrix}X_n\1\end{bmatrix}=\begin{bmatrix}a&amp;c\0&amp;1\end{bmatrix}\begin{bmatrix}X_{n-1}\1\end{bmatrix}$$</p>
+<p>当递推式要加上一个常数项时，可以在矩阵中加一个$1$，然后在转移矩阵中的对应位置填上常数项。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+int g;
+long long m, a, c, x0, n;
+inline long long mul(long long, long long);
+struct matrix {
+    int l, w; long long a[3][3];
+    matrix(int lv = 0, int wv = 0): l(lv), w(wv) { memset(a, 0, sizeof a); }
+    long long* operator [] (const int &amp;idx) { return &amp;a[idx][0]; }
+    matrix operator * (matrix b) const {
+        matrix ans(l, b.w);
+        for (int i = 1; i &lt;= ans.l; i++)
+            for (int j = 1; j &lt;= ans.w; j++)
+                for (int k = 1; k &lt;= w; k++)
+                    ans[i][j] = (ans[i][j] + mul(a[i][k], b[k][j])) % m;
+        return ans;
+    }
+    inline void build() { for (int i = 1; i &lt;= l; i++) a[i][i] = 1; }
+}f(2, 1), trs(2, 2);
+
+inline long long mul(long long x, long long k) {
+    long long ans = 0;
+    while (k) {
+        if (k &amp; 1) ans = (ans + x) % m;
+        x = (x + x) % m;
+        k &gt;&gt;= 1;
+    }
+    return ans;
+}
+inline matrix pwr(matrix &amp;x, long long k) {
+    matrix ans(x.l, x.w); ans.build();
+    while (k) {
+        if (k &amp; 1) ans = ans * x;
+        x = x * x;
+        k &gt;&gt;= 1;
+    }
+    return ans;
+}
+
+int main() {
+    scanf(&quot;%lld%lld%lld%lld%lld%d&quot;, &amp;m, &amp;a, &amp;c, &amp;x0, &amp;n, &amp;g);
+    f[1][1] = x0; f[2][1] = 1;
+    trs[1][1] = a; trs[1][2] = c; trs[2][1] = 0; trs[2][2] = 1;
+    printf(&quot;%lld\n&quot;, (pwr(trs, n) * f)[1][1] % g);
+    return 0;
+}</code></pre>
+<h4 id="usaco07novcow-relays-g">[USACO07NOV]Cow Relays G</h4>
+<p><a href="https://www.luogu.com.cn/problem/P2886">https://www.luogu.com.cn/problem/P2886</a></p>
+<p>设矩阵$A$为经过$i$条边的最短路，矩阵$B$为经过$j$条边的最短路，矩阵$C_{i,j}=\min\limits_{k=1}^n{A_{i,k}+B_{k,j}}$，则$C$就是经过$i+j$条边的最短路。</p>
+<p>矩阵乘法满足结合律，因为</p>
+<p>$$[(AB)C]<em>{i,j}=\sum</em>{l=1}^n\left(\sum_{k=1}^nA_{i,k}B_{k,l}\right)C_{l,j}\=\sum_{k=1}^n\sum_{l=1}^nA_{i,k}B_{k,l}C_{l,j}\=\sum_{k=1}^nA_{i,k}\left(\sum_{l=1}^nB_{k,l}C_{l,j}\right)\=[A(BC)]_{i,j}$$</p>
+<p>同样地，对于本题的矩阵运算，有</p>
+<p>$$[(AB)C]<em>{i,j}=\min\limits</em>{l=1}^n{\min\limits_{k=1}^n{A_{i,k}+B_{k,l}}+C_{l,j}}\=\min\limits_{k=1}^n\min\limits_{l=1}^n{A_{i,k}+B_{k,l}+C_{l,j}}\=\min\limits_{k=1}^n{A_{i,k}+\min\limits_{l=1}^n{B_{k,l}+C_{l,j}}}\=[A(BC)]_{i,j}$$</p>
+<p>因此可以矩阵快速幂计算。</p>
+<p>为了以后方便，再来自己编一下更为广义的矩阵运算结合律：</p>
+<p>$$[(AB)C]<em>{i,j}=\bigoplus</em>{l=1}^n\left(\bigoplus_{k=1}^nA_{i,k}\otimes B_{k,l}\right)\otimes C_{l,j}\=\bigoplus_{k=1}^n\bigoplus_{l=1}^nA_{i,k}\otimes B_{k,l}\otimes C_{l,j}\=\bigoplus_{k=1}^nA_{i,k}\otimes \left(\bigoplus_{l=1}^nB_{k,l}\otimes C_{l,j}\right)\=[A(BC)]_{i,j}$$</p>
+<p>我用$\bigoplus$代替原来的$\sum$，因为这个符号看起来像一个加号加一个圈。同样地，用$\otimes$代替$\times$，因为这个符号像一个乘号加一个圈。根据这个式子，只要$(a\oplus b)\otimes c=(a\otimes c)\oplus(b\otimes c)$即满足分配律，对应的矩阵乘法就满足结合律。</p>
+<p>所以说，因为$(a+b)\times c=a\times c+b\times c$，所以矩阵乘法满足结合律；因为$\min{a,b}+c=\min{a+c,b+c}$，所以本题的矩阵运算满足结合律。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+
+int n, m, s, t, q, nodes[210], id[1010];
+struct edge { int u, v, w; }edges[110];
+inline int min(int, int);
+struct matrix {
+    int l, w, a[210][210];
+    matrix(int lv = 0, int wv = 0): l(lv), w(wv) {}
+    int* operator [] (const int &amp;idx) { return &amp;a[idx][0]; }
+    matrix operator * (matrix b) {
+        matrix ans(l, b.w); ans.build();
+            for (int i = 1; i &lt;= ans.l; i++)
+                for (int j = 1; j &lt;= ans.w; j++)
+                    for (int k = 1; k &lt;= w; k++) ans[i][j] = min(ans[i][j], a[i][k] + b[k][j]);
+        return ans;
+    }
+    inline void build() { memset(a, 0x3f, sizeof a); }
+    inline void resize(int lv, int wv) { l = lv; w = wv; }
+}g;
+
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+inline matrix pwr(matrix x, int k) {
+    matrix ans = x;
+    for (k--; k; x = x * x, k &gt;&gt;= 1)
+        if (k &amp; 1) ans = ans * x;
+    return ans;
+}
+
+int main() {
+    scanf(&quot;%d%d%d%d&quot;, &amp;q, &amp;m, &amp;s, &amp;t);
+    for (int i = 1; i &lt;= m; i++) scanf(&quot;%d%d%d&quot;, &amp;edges[i].w, &amp;edges[i].u, &amp;edges[i].v), nodes[i * 2 - 1] = edges[i].u, nodes[i * 2] = edges[i].v;
+    std::sort(nodes + 1, nodes + m * 2 + 1);
+    n = std::unique(nodes + 1, nodes + m * 2 + 1) - nodes - 1;
+    for (int i = 1; i &lt;= n; i++) id[nodes[i]] = i;
+    g.build(); g.resize(n, n);
+    for (int i = 1; i &lt;= m; i++) {
+        int u = id[edges[i].u], v = id[edges[i].v];
+        g[u][v] = g[v][u] = min(edges[i].w, g[u][v]);
+    }
+    printf(&quot;%d\n&quot;, pwr(g, q)[id[s]][id[t]]);
+    return 0;
+}</code></pre>
+<h4 id="hnoi2002公交车路线">[HNOI2002]公交车路线</h4>
+<p><a href="https://www.luogu.com.cn/problem/P2233">https://www.luogu.com.cn/problem/P2233</a></p>
+<p>设$f(x,i)$表示第$x$个点经过$i$条边的方案数，则有：</p>
+<p>$$\begin{bmatrix}f(1,i)\f(2,i)\f(3,i)\f(4,i)\f(5,i)\f(6,i)\f(7,i)\f(8,i)\end{bmatrix}=\begin{bmatrix}0&amp;1&amp;0&amp;0&amp;0&amp;0&amp;0&amp;1\1&amp;0&amp;1&amp;0&amp;0&amp;0&amp;0&amp;0\0&amp;1&amp;0&amp;1&amp;0&amp;0&amp;0&amp;0\0&amp;0&amp;1&amp;0&amp;0&amp;0&amp;0&amp;0\0&amp;0&amp;0&amp;1&amp;0&amp;1&amp;0&amp;0\0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;1&amp;0\0&amp;0&amp;0&amp;0&amp;0&amp;1&amp;0&amp;1\1&amp;0&amp;0&amp;0&amp;0&amp;0&amp;1&amp;0\end{bmatrix}\begin{bmatrix}f(1,i-1)\f(2,i-1)\f(3,i-1)\f(4,i-1)\f(5,i-1)\f(6,i-1)\f(7,i-1)\f(8,i-1)\end{bmatrix}$$</p>
+<p>注意第$5$个点没有出边，所以第$5$列的数字全为$0$，这样其他的点就无法从点$5$转移过来。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+const int MOD = 1000;
+int n;
+struct matrix {
+    int l, w, a[9][9];
+    matrix(int lv = 0, int wv = 0): l(lv), w(wv) { memset(a, 0, sizeof a); }
+    int* operator [] (const int &amp;idx) { return &amp;a[idx][0]; }
+    matrix operator * (matrix b) {
+        matrix ans(l, b.w);
+        for (int i = 1; i &lt;= ans.l; i++)
+            for (int j = 1; j &lt;= ans.w; j++)
+                for (int k = 1; k &lt;= w; k++) ans[i][j] = (ans[i][j] + a[i][k] * b[k][j] % MOD) % MOD;
+        return ans;
+    }
+    inline void build() { for (int i = 1; i &lt;= l; i++) a[i][i] = 1; }
+}f(8, 1), trs(8, 8);
+
+inline matrix pwr(matrix x, int k) {
+    matrix ans(x.l, x.w); ans.build();
+    for (; k; x = x * x, k &gt;&gt;= 1) if (k &amp; 1) ans = ans * x;
+    return ans;
+}
+
+int main() {
+    f[1][1] = 1;
+    for (int i = 1; i &lt;= 8; i++) trs[i][(i + 6) % 8 + 1] = trs[i][i % 8 + 1] = 1;
+    trs[4][5] = trs[6][5] = 0;
+    scanf(&quot;%d&quot;, &amp;n);
+    printf(&quot;%d\n&quot;, (pwr(trs, n) * f)[5][1]);
+    return 0;
+}</code></pre>
+<h3 id="2020-08-28">2020-08-28</h3>
+<h4 id="tjoi2017可乐">[TJOI2017]可乐</h4>
+<p><a href="https://www.luogu.com.cn/problem/P5789">https://www.luogu.com.cn/problem/P5789</a></p>
+<p>和上一题的做法本质相同，设$f(x,i)$表示点$x$经过$i$条边的方案数，则若存在一条从$u$到$v$的单向边$(u,v)$，则对应转移矩阵$trs_{v,u}=1$。</p>
+<p>对于停在原地，可以对每个点向自己连一条单向边；对于自爆，可以新建一个点，从每个点向这个点连一条单向边。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+const int MOD = 2017;
+int n, m, t, ans;
+struct matrix {
+    int l, w, a[110][110];
+    matrix(int lv = 0, int wv = 0): l(lv), w(wv) { memset(a, 0, sizeof a); }
+    int* operator [] (const int &amp;idx) { return &amp;a[idx][0]; }
+    matrix operator * (matrix b) {
+        matrix ans(l, b.w);
+        for (int i = 1; i &lt;= ans.l; i++)
+            for (int j = 1; j &lt;= ans.w; j++)
+                for (int k = 1; k &lt;= w; k++) ans[i][j] = (ans[i][j] + a[i][k] * b[k][j]) % MOD;
+        return ans;
+    }
+    inline void resize(int lv, int wv) { l = lv; w = wv; }
+    inline void build() { for (int i = 1; i &lt;= l; i++) a[i][i] = 1; }
+}g, f;
+
+inline matrix pwr(matrix x, int k) {
+    matrix ans(x.l, x.w); ans.build();
+    for (; k; x = x * x, k &gt;&gt;= 1) if (k &amp; 1) ans = ans * x;
+    return ans;
+}
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt;= m; i++) {
+        int u, v; scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+        g[u][v] = g[v][u] = 1;
+    }
+    for (int i = 1; i &lt;= n + 1; i++) g[i][i] = g[n + 1][i] = 1;
+    f[1][1] = 1;
+    g.resize(n + 1, n + 1); f.resize(n + 1, 1);
+    scanf(&quot;%d&quot;, &amp;t);
+    f = pwr(g, t) * f;
+    for (int i = 1; i &lt;= n + 1; i++) ans = (ans + f[i][1]) % MOD;
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h4 id="hnoi2011数学作业">[HNOI2011]数学作业</h4>
+<p><a href="https://www.luogu.com.cn/problem/P3216">https://www.luogu.com.cn/problem/P3216</a></p>
+<p>设$f(i)$表示$\text{Concatenate(i)}$，$bit(i)=\left\lfloor\lg i\right\rfloor$，则有：</p>
+<p>$$f(i)=f(i-1)10^{bit(i)}+i$$</p>
+<p>那么可以得出：</p>
+<p>$$\begin{bmatrix}f(i)\i\1\end{bmatrix}=\begin{bmatrix}10^{bit(i)}&amp;1&amp;1\0&amp;1&amp;1\0&amp;0&amp;1\end{bmatrix}\begin{bmatrix}f(i-1)\i-1\1\end{bmatrix}$$</p>
+<p>$bit(i)$并不容易在递推的同时处理，因此可以枚举$bit(i)$的值，然后分段计算，复杂度$O(\lg n\log_2n)$，可以通过。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+int m;
+long long n;
+struct matrix {
+    int l, w, a[4][4];
+    matrix(int lv = 0, int wv = 0): l(lv), w(wv) { memset(a, 0, sizeof a); }
+    inline int* operator [] (const int &amp;idx) { return &amp;a[idx][0]; }
+    inline matrix operator * (matrix b) {
+        matrix ans(l, b.w);
+        for (int i = 1; i &lt;= ans.l; i++)
+            for (int j = 1; j &lt;= ans.w; j++)
+                for (int k = 1; k &lt;= w; k++) ans[i][j] = (ans[i][j] + (long long)a[i][k] * b[k][j] % m) % m;
+        return ans;
+    }
+    inline void build() { for (int i = 1; i &lt;= l; i++) a[i][i] = 1; }
+}f(3, 1), trs(3, 3);
+
+inline matrix pwr(matrix x, long long k) {
+    matrix ans(x.l, x.w); ans.build();
+    for (; k; x = x * x, k &gt;&gt;= 1) if (k &amp; 1) ans = ans * x;
+    return ans;
+}
+inline long long min(long long a, long long b) { return a &lt; b ? a : b; }
+
+int main() {
+    scanf(&quot;%lld%d&quot;, &amp;n, &amp;m);
+    f[1][1] = f[2][1] = 0; f[3][1] = 1;
+    trs[1][2] = trs[1][3] = trs[2][2] = trs[2][3] = trs[3][3] = 1;
+    for (long long bit = 10; bit / 10 &lt;= n; bit *= 10) {
+        trs[1][1] = bit % m;
+        f = pwr(trs, min(bit - 1, n) - bit / 10 + 1) * f;
+        if (bit == 1e18) break;
+    }
+    printf(&quot;%d\n&quot;, f[1][1]);
+    return 0;
+}</code></pre>
+<h4 id="l国的战斗续之多路出击">L国的战斗续之多路出击</h4>
+<p><a href="https://www.luogu.com.cn/problem/P2129">https://www.luogu.com.cn/problem/P2129</a></p>
+<p>每次操作都可以看作一次矩阵乘法：</p>
+<p>$$\begin{bmatrix}1&amp;0&amp;p\0&amp;1&amp;q\0&amp;0&amp;1\end{bmatrix}\begin{bmatrix}x\y\1\end{bmatrix}=\begin{bmatrix}x+p\y+q\1\end{bmatrix}$$</p>
+<p>$$\begin{bmatrix}-1&amp;0&amp;0\0&amp;1&amp;0\0&amp;0&amp;1\end{bmatrix}\begin{bmatrix}x\y\1\end{bmatrix}=\begin{bmatrix}-x\y\1\end{bmatrix}$$</p>
+<p>$$\begin{bmatrix}1&amp;0&amp;0\0&amp;-1&amp;0\0&amp;0&amp;1\end{bmatrix}\begin{bmatrix}x\-y\1\end{bmatrix}$$</p>
+<p>因此直接把操作矩阵乘起来即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+int n, m;
+struct matrix {
+    int l, w; long long a[4][4];
+    matrix(int lv = 0, int wv = 0): l(lv), w(wv) { memset(a, 0, sizeof a); }
+    inline long long* operator [] (const int &amp;idx) { return &amp;a[idx][0]; }
+    inline matrix operator * (matrix b) {
+        matrix ans(l, b.w);
+        for (int i = 1; i &lt;= ans.l; i++)
+            for (int j = 1; j &lt;= ans.w; j++)
+                for (int k = 1; k &lt;= w; k++) ans[i][j] += a[i][k] * b[k][j];
+        return ans;
+    }
+}trs(3, 3), opt1(3, 3), opt2(3, 3), opt3(3, 3), points[500100];
+struct operation {
+    int opt; long long p, q;
+}opts[500100];
+
+inline char read() {
+    register char c = getchar();
+    while (c == &#39; &#39; || c == &#39;\n&#39; || c == &#39;\r&#39;) c = getchar();
+    return c;
+}
+
+int main() {
+    for (int i = 1; i &lt;= 3; i++) trs[i][i] = opt1[i][i] = opt2[i][i] = opt3[i][i] = 1;
+    opt2[1][1] = -1; opt3[2][2] = -1;
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%lld%lld&quot;, &amp;points[i][1][1], &amp;points[i][2][1]), points[i][3][1] = 1, points[i].l = 3, points[i].w = 1;
+    for (int i = 1; i &lt;= m; i++) {
+        char opt = read();
+        if (opt == &#39;m&#39;) opts[i].opt = 1, scanf(&quot;%lld%lld&quot;, &amp;opts[i].p, &amp;opts[i].q);
+        else if (opt == &#39;x&#39;) opts[i].opt = 2;
+        else if (opt == &#39;y&#39;) opts[i].opt = 3;
+    }
+    for (int i = m; i &gt;= 1; i--) {
+        if (opts[i].opt == 1) opt1[1][3] = opts[i].p, opt1[2][3] = opts[i].q, trs = opt1 * trs;
+        else if (opts[i].opt == 2) trs = opt2 * trs;
+        else if (opts[i].opt == 3) trs = opt3 * trs;
+    }
+    for (int i = 1; i &lt;= n; i++) points[i] = trs * points[i], printf(&quot;%lld %lld\n&quot;, points[i][1][1], points[i][2][1]);
+    return 0;
+}</code></pre>
+<h3 id="2020-08-29">2020-08-29</h3>
+<h4 id="cqoi2014数三角形">[CQOI2014]数三角形</h4>
+<p><a href="https://www.luogu.com.cn/problem/P3166">https://www.luogu.com.cn/problem/P3166</a></p>
+<p>首先把$n,m$加$1$，使得格子数转化为点数。</p>
+<p>如果不考虑三点共线，那么答案就是$\dbinom{nm}{3}$。根据之前容斥原理的补集转化公式，可以用总方案数减去三点共线的方案数，得到三点不共线的方案数。三点共线，可以分为横着共线，竖着共线，和斜着共线。显然，横着共线的方案数为$m\dbinom{n}{3}$，竖着共线的方案数为$n\dbinom{m}{3}$。对于斜着共线，可以枚举两个点，若它们之间的线段上有$k$个点可以选(端点不算)，则方案数就是$k$。</p>
+<p>有一个结论：若两个点之间的坐标差分别为$x,y$，则算上这两个点，以这两个点为端点的线段上一共有$(\gcd(i,j)+1)$个整点。考虑对于$x,y$，若存在一个公因数$d$大于$1$，则可以把线段平均分为$d$份，使得分出来的每个线段的端点都是整点。因此最多可以分出$\gcd(x,y)$个端点都是整点的线段，他们的端点数为$\gcd(x,y)+1$。</p>
+<p>因此，可以枚举两个点的坐标差$x,y$，然后方案数就是$2(n-x)(m-y)(\gcd(x,y)-1)$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int n, m;
+long long ans;
+
+int gcd(int a, int b) {
+    if (!b) return a;
+    return gcd(b, a % b);
+}
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m); n++, m++;
+    ans = (long long)(n * m) * (n * m - 1) * (n * m - 2) / 6;
+    if (m &gt;= 3) ans -= (long long)n * m * (m - 1) * (m - 2) / 6;
+    if (n &gt;= 3) ans -= (long long)m * n * (n - 1) * (n - 2) / 6;
+    for (int i = 1; i &lt;= n - 1; i++)
+        for (int j = 1; j &lt;= m - 1; j++) ans -= (long long)(n - i) * (m - j) * (gcd(i, j) - 1) * 2;
+    printf(&quot;%lld\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h3 id="2020-09-01">2020-09-01</h3>
+<p>$8$月$30$号去一中报到，$9$月$1$号开始军训，然后这几天就没怎么做题，把仅做的一题写在这里了。</p>
+<h4 id="联合权值">联合权值</h4>
+<p><a href="https://www.luogu.com.cn/problem/P1351">https://www.luogu.com.cn/problem/P1351</a></p>
+<p>可以枚举中转点$x$，然后父节点和所有子节点之间的贡献就是$w_{fa}\sum_{s\in S}w_s$。然后还得算所有子节点两两的贡献，可以考虑每个子节点的权值乘上所有子节点的权值，即$(\sum w_s)^2$，但这样会多算自己乘自己的贡献，所以还要减去$\sum w_s^2$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+const int MOD = 10007;
+int n, w[200100], ans1, ans2;
+struct edge { int to, next; };
+struct graph {
+    int ecnt, head[200100];
+    edge edges[400100];
+    inline void addedge(int u, int v) {
+        edges[++ecnt].to = v;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+}g;
+
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+void dfs(int x, int fa) {
+    int maxw = 0, maxsecw = 0, sumw = 0, sumw2 = 0;
+    for (int i = g.head[x]; i; i = g.edges[i].next) {
+        int &amp;v = g.edges[i].to;
+        if (v == fa) continue;
+        ans1 = max(ans1, w[fa] * w[v]);
+        ans2 = (ans2 + w[fa] * w[v] * 2) % MOD;
+        maxsecw = min(maxw, max(maxsecw, w[v]));
+        maxw = max(maxw, w[v]);
+        sumw = (sumw + w[v]) % MOD;
+        sumw2 = (sumw2 + w[v] * w[v]) % MOD;
+        dfs(v, x);
+    }
+    ans1 = max(ans1, maxw * maxsecw);
+    ans2 = (ans2 + sumw * sumw - sumw2) % MOD;
+}
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt; n; i++) {
+        int u, v; scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+        g.addedge(u, v); g.addedge(v, u);
+    }
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;w[i]);
+    dfs(1, 0);
+    printf(&quot;%d %d\n&quot;, ans1, ans2);
     return 0;
 }</code></pre>
 <a href="../posts.html" class="link" style="display:block; text-align:center;">return</a>

@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+        <html>
+            <head>
+                <meta charset="utf-8"/>
+                <title>n-kw && n-c by others</title>
+                <link rel="stylesheet" type="text/css" href="../styles.css"/>
+                <link rel="stylesheet" type="text/css" href="../markdownStyles.css"/>
+                <link rel="stylesheet" href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css">
+                <script defer src="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.js"></script>
+                <script>
+                var katex_config = {
+                    delimiters: 
+                    [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false}
+                    ]
+                };
+                </script>
+                <script defer src="https://cdn.bootcss.com/KaTeX/0.11.1/contrib/auto-render.min.js" onload="renderMathInElement(document.body,katex_config)"></script>
+            </head>
+            <body>
+                <div class="body">
+                <p class="title">striving & singing</p><h3 id="2020-09-29">2020-09-29</h3>
+<h4 id="弹珠">弹珠</h4>
+<p><a href="https://www.luogu.com.cn/problem/P1537">https://www.luogu.com.cn/problem/P1537</a></p>
+<p>设$dp[i]$表示权值和能否凑成$i$，那么问题就是一个有 6 种物品的多重背包问题，使用单调队列优化即可。</p>
+<p>注意特判$m$是否能整除$2$。</p>
+<p>另外我之前在写单调队列优化时习惯只存下标而不是存下标和对应的值，然后在 DP 时按照拓扑序 DP，保证每个值在被更新前取到，这种写法在写多重背包时十分恶心，需要各种加加减减以及其他一些写起来浑身难受的操作，于是我决定改为同时存下标和对应的值，但每次都要多写个结构体也不太舒服，于是用了 STL 的 pair，还是挺方便的，写起来好受多了。并且我测试了一下，使用 pair 似乎比只存下标要快一些，后者应该是因为计算量更大所以常数更大。</p>
+<p>使用 pair 所需的头文件为 <utility>。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;queue&gt;
+#include&lt;utility&gt;
+
+int n[7], m, k;
+bool dp[120100];
+std::deque&lt;std::pair&lt;int, int&gt; &gt; q;
+
+int main() {
+    while (~scanf(&quot;%d%d%d%d%d%d&quot;, &amp;n[1], &amp;n[2], &amp;n[3], &amp;n[4], &amp;n[5], &amp;n[6])) {
+        k++;
+        m = n[1] + n[2] * 2 + n[3] * 3 + n[4] * 4 + n[5] * 5 + n[6] * 6;
+        if (m == 0) break;
+        memset(dp, 0, sizeof dp); dp[0] = true;
+        for (int i = 1; i &lt;= 6; i++) {
+            for (int b = 0; b &lt; i; b++) {
+                q.clear();
+                for (int a = 0; a * i + b &lt;= m; a++) {
+                    int x = a * i + b;
+                    while (!q.empty() &amp;&amp; (dp[x] || (!dp[x] &amp;&amp; !q.back().second))) q.pop_back();
+                    q.push_back(std::make_pair(x, dp[x]));
+                    while (!q.empty() &amp;&amp; q.front().first &lt; x - i * n[i]) q.pop_front();
+                    if (!q.empty()) dp[x] = dp[x] || q.front().second;
+                }
+            }
+        }
+        if (!(m % 2) &amp;&amp; dp[m / 2]) printf(&quot;Collection #%d:\nCan be divided.\n\n&quot;, k);
+        else printf(&quot;Collection #%d:\nCan&#39;t be divided.\n\n&quot;, k);
+    }
+    return 0;
+}</code></pre>
+<h4 id="数列的整除性">数列的整除性</h4>
+<p><a href="https://www.luogu.com.cn/problem/P1356">https://www.luogu.com.cn/problem/P1356</a></p>
+<p>设$dp[i][j]$表示前 i 个位置组成数列能否被 j 整除，那么有</p>
+<p>$$dp[i][j]=dp[i-1][j+a[i]]\ ||\ dp[i-1][j-a[i]]$$</p>
+<p>边界条件为$dp[1][-a[1]]=dp[1][a[1]]=\text{true}$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+int t, n, k;
+bool dp[10010][110];
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;t);
+    while (t--) {
+        scanf(&quot;%d%d&quot;, &amp;n, &amp;k);
+        memset(dp, 0, sizeof dp);
+        for (int i = 1; i &lt;= n; i++) {
+            int a; scanf(&quot;%d&quot;, &amp;a);
+            if (i == 1) dp[1][(a % k + k) % k] = dp[1][(-a % k + k) % k] = true;
+            else for (int j = 0; j &lt; k; j++) dp[i][j] = dp[i - 1][((j - a) % k + k) % k] || dp[i - 1][((j + a) % k + k) % k];
+        }
+        if (dp[n][0]) printf(&quot;Divisible\n&quot;);
+        else printf(&quot;Not divisible\n&quot;);
+    }
+    return 0;
+}</code></pre>
+<h3 id="2020-10-01">2020-10-01</h3>
+<h4 id="a-打扑克">A. 打扑克</h4>
+<p><a href="http://csp.ac/contest/37/problem/265">http://csp.ac/contest/37/problem/265</a></p>
+<p>猜结论题，当$n=2$时先手必胜，否则如果$n$是奇数且皮蛋先手则皮蛋胜，否则黑妞胜。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int t;
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;t);
+    while (t--) {
+        int n, op, bit = 0;
+        char c = getchar();
+        while (c != &#39; &#39;) {
+            if (&#39;0&#39; &lt;= c &amp;&amp; c &lt;= &#39;9&#39;) n = c - &#39;0&#39;, bit++;
+            c = getchar();
+        }
+        scanf(&quot;%d&quot;, &amp;op);
+        if (n == 2 &amp;&amp; bit == 1) printf(&quot;%d\n&quot;, op);
+        else if (n % 2 &amp;&amp; !op) printf(&quot;0\n&quot;);
+        else printf(&quot;1\n&quot;);
+    }
+    return 0;
+}</code></pre>
+<h4 id="b-粉刷匠">B. 粉刷匠</h4>
+<p><a href="http://csp.ac/problem/266">http://csp.ac/problem/266</a></p>
+<p>由于每个位置的颜色只取决于最后一次被染色时的颜色，所以考虑把操作倒序，每次操作都相当于把对应行或列直接删掉，让答案加上当前的列数或行数。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int n, m, k;
+long long ans;
+bool vis[2][1000100];
+struct operation {
+    int x, y, z;
+}opts[1000100];
+
+int main() {
+    scanf(&quot;%d%d%d&quot;, &amp;n, &amp;m, &amp;k);
+    for (int i = 1; i &lt;= k; i++) scanf(&quot;%d%d%d&quot;, &amp;opts[i].x, &amp;opts[i].y, &amp;opts[i].z);
+    for (int i = k; i &gt;= 1; i--) {
+        int x = opts[i].x, y = opts[i].y, z = opts[i].z;
+        if (!vis[x][y]) {
+            if (!x) ans += m * z, n--;
+            else ans += n * z, m--;
+        }
+        vis[x][y] = true;
+    }
+    printf(&quot;%lld\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h4 id="c-直线竞速">C. 直线竞速</h4>
+<p><a href="http://csp.ac/contest/37/problem/267">http://csp.ac/contest/37/problem/267</a></p>
+<p>当 t 确定时，选手之间的次序关系也唯一确定，因此每次直接$O(n)$分治找第$k$大元素即可。</p>
+<p>离谱的是，我的$O(mnlogn)$暴力排序过了，$O(mn)$分治却只拿了70分。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;algorithm&gt;
+
+int n, q, t;
+struct player {
+    int a, v, id;
+    bool operator &lt; (const player &amp;b) const {
+        if ((a + (long long)v * t) ^ (b.a + (long long)b.v * t)) return a + (long long)v * t &gt; b.a + (long long)b.v * t;
+        else return id &lt; b.id;
+    }
+}p[7010];
+
+inline void swap(player &amp;a, player &amp;b) { player t = a; a = b; b = t; }
+int kth(int l, int r, int k) {
+    if (l == r) return p[l].id;
+    player x = p[l];
+    int i = l, j = r;
+    while (i &lt; j) {
+        while (i &lt; j &amp;&amp; x &lt; p[j]) j--;
+        p[i] = p[j];
+        while (i &lt; j &amp;&amp; p[i] &lt; x) i++;
+        p[j] = p[i];
+    }
+    p[i] = x;
+    if (k &lt;= i - l + 1) return kth(l, i, k);
+    else return kth(i + 1, r, k - (i - l + 1));
+}
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt;= n; i++) {
+        scanf(&quot;%d%d&quot;, &amp;p[i].v, &amp;p[i].a);
+        p[i].id = i;
+    }
+    scanf(&quot;%d&quot;, &amp;q);
+    for (int i = 1; i &lt;= q; i++) {
+        int k; scanf(&quot;%d%d&quot;, &amp;t, &amp;k);
+        printf(&quot;%d\n&quot;, kth(1, n, k));
+    }
+    return 0;
+}</code></pre>
+<h4 id="d-游戏">D. 游戏</h4>
+<p><a href="http://csp.ac/contest/37/problem/268">http://csp.ac/contest/37/problem/268</a></p>
+<p>把每个数 -1，那么分数就由$(s_1-x)(s_2-y)$变为$s_1s_2$，简化了问题。对于一次操作，因为$(a+b)(c+d)\ge ac+bd$，所以显然同时删掉两段长度大于 1 的序列不如最多只删掉一个长度大于 1 的序列优，于是可以$O(n^3)$ DP，设$dp[i][j]$表示 A 的前 i 个位置和 B 的前 j 个位置还没有删掉，那么有</p>
+<p>$$dp[i][j]=\max\left(\max_{k=1}^{i-1}{dp[k][j-1]+suma(k+1,i)\times b[j]},\max_{k=1}^{j-1}{dp[i-1][k]+sumb(k+1,j)\times a[i]}\right)$$</p>
+<p>因为$suma(k+1,i-1)\times b[j]$已经更新过了$dp[i-1][j]$，$sumb(k+1,j-1)\times a[i]$也已经更新过了$dp[i][j-1]$，所以可以优化为</p>
+<p>$$dp[i][j]=\max(dp[i-1][j-1],dp[i-1][j],dp[i][j-1])+a[i]\times b[j]$$</p>
+<p>需要初始化为$\inf$，并且$dp[0][0]=0$。</p>
+<p>另外洛谷有原题(P1846)。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+int n, m, a[2010], b[2010];
+long long dp[2010][2010];
+
+inline long long min(long long a, long long b) { return a &lt; b ? a : b; }
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;a[i]), a[i]--;
+    for (int i = 1; i &lt;= m; i++) scanf(&quot;%d&quot;, &amp;b[i]), b[i]--;
+    memset(dp, 0x3f, sizeof dp);
+    dp[0][0] = 0;
+    for (int i = 1; i &lt;= n; i++)
+        for (int j = 1; j &lt;= m; j++)
+            dp[i][j] = min(dp[i - 1][j - 1], min(dp[i - 1][j], dp[i][j - 1])) + a[i] * b[j];
+    printf(&quot;%lld\n&quot;, dp[n][m]);
+    return 0;
+}</code></pre>
+<h3 id="2020-10-02">2020-10-02</h3>
+<h4 id="a-小路灯">A. 小路灯</h4>
+<p><a href="http://csp.ac/problem/269">http://csp.ac/problem/269</a></p>
+<p>显然是二分，不过 check 函数可能有点细节。二分最大的距离，在 check 函数中需要在满足限制的前提下尽可能得少放置路灯，这类似于区间覆盖，可以记录 lst 表示上一个路灯放置的坐标， p 表示第一个还没被覆盖的路灯坐标，然后分情况讨论即可。注意若上一个路灯和当前路灯的距离大于二分值则需要同时更新 p 。</p>
+<p>另外，因为坐标可能是 0 所以不存在的值要表示为 -INF (好像 INF 也行)。</p>
+<p>比赛时我看错题了，以为是所有被点亮的路灯与距离最近的路灯的距离的最大值最小，而不是所有路灯，写了个二分对拍没错，但交上去爆零了。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+const int INF = 0x3fffffff;
+int n, k, a[100100];
+
+bool check(int mid) {
+    int cnt = 0, lst = -INF, p = a[1];
+    for (int i = 2; i &lt;= n; i++) {
+        if (p == -INF &amp;&amp; a[i] - lst &gt; mid) p = a[i];
+        else if (p != -INF &amp;&amp; a[i] - p &gt; mid) lst = a[i - 1], cnt++, p = (a[i] - lst &gt; mid ? a[i] : -INF); 
+    }
+    if (p != -INF) cnt++;
+    return cnt &lt;= k;
+}
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;k);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;a[i]);
+    int l = 1, r = a[n] - a[1] + 1;
+    while (l &lt; r) {
+        int mid = l + (r - l &gt;&gt; 1);
+        if (check(mid)) r = mid;
+        else l = mid + 1;
+    }
+    printf(&quot;%d\n&quot;, l);
+    return 0;
+}</code></pre>
+<h4 id="c-路灯">C. 路灯</h4>
+<p><a href="http://csp.ac/problem/271">http://csp.ac/problem/271</a></p>
+<p>可以$O(n^3)$预处理$g[i][j]$表示把$i$和$j$点亮时，$(i,j)$中所有路灯与距离它最近的路灯的距离的和。然后设$f[i][k]$表示前$i$个路灯中点亮了$k$个且点亮了第$i$个路灯时的最小和，那么有：</p>
+<p>$$f[i][k]=\begin{cases}g[0][i]&amp;k=1\\min_{j=1}^{i-1}{dp[j][k-1]+g[j][i]}&amp;k&gt;1\end{cases}$$</p>
+<p>其中$g[0][i]$表示前$i-1$个路灯和第$i$个路灯的距离和。同理，$g[i][n+1]$表示$[i+1,n]$中所有路灯和第$i$个路灯的距离和。令$a[0]=-\inf,a[n+1]=\inf$，然后在计算$g$时就可以顺便处理。</p>
+<p>最后的答案是$\min_{i=1}^n{dp[i][k]+g[i][n+1]}$。</p>
+<p>同样，这题和 t1 一样看错题了，因为一个求最小最大值一个求最小和，其他除了数据范围完全一样。本来就 t1 和 t3 写了正解，结果这两题都看错题了，我好菜。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+const int INF = 0x3fffffff;
+int n, k, a[210], f[210][210], g[210][210], ans = INF;
+
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;k);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;a[i]);
+    a[0] = -INF, a[n + 1] = INF;
+    for (int i = 0; i &lt;= n; i++)
+        for (int j = i + 1; j &lt;= n + 1; j++)
+            for (int k = i + 1; k &lt; j; k++) g[i][j] += min(a[k] - a[i], a[j] - a[k]);
+    memset(f, 0x3f, sizeof f);
+    f[1][1] = 0;
+    for (int i = 2; i &lt;= n; i++) {
+        f[i][1] = g[0][i];
+        for (int k = 2; k &lt;= i; k++)
+            for (int j = 1; j &lt; i; j++) f[i][k] = min(f[i][k], f[j][k - 1] + g[j][i]);
+    }
+    for (int i = 1; i &lt;= n; i++) ans = min(ans, f[i][k] + g[i][n + 1]);
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h4 id="d-匹配">D. 匹配</h4>
+<p><a href="http://csp.ac/problem/272">http://csp.ac/problem/272</a></p>
+<p>通过想象可以得出，三个点能够组成一个组合，当且仅当这三个点中间有个距离他们都是 2 的中转点。那么类似于联合权值那道题，可以枚举中转点，那么这个点对答案的贡献就是所有与它距离为 2 的点的权值中的所有三元组的乘积之和。</p>
+<p>设$dp[x]$表示编号为$x$的节点的所有子节点的权值和。考虑当前中转点遍历所有子节点的过程，根据乘法分配律，当前子节点的$dp[v]$对答案的贡献为$dp[v]$乘上其他二元组权值乘积之和。设 s1 表示当前已遍历过的$dp[v]$与其他和 x 距离为 2 但不是 x 的子节点的权值之和，s2 表示当前已遍历过的$dp[v]$与其他和 x 距离为 2 但不是 x 的子节点的二元组权值乘积之和(可以理解为，s1 对应一元组，s2 对应二元组)。那么每遍历到一个子节点，它对答案的贡献就是$dp[v]\times s2$。而 s2 在原有的基础上还要加上$dp[v]\times s1$，$s1$在原有的基础上还要加上$dp[v]$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int n, a[100100], f[100100];
+long long dp[100100], ans;
+struct edge { int to, next; };
+struct graph {
+    int ecnt = 1, head[100100];
+    edge edges[200100];
+    inline void addedge(int u, int v) {
+        edges[++ecnt].to = v;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+}g;
+
+void dfs1(int x, int lst) {
+    f[x] = g.edges[lst ^ 1].to;
+    for (int i = g.head[x]; i; i = g.edges[i].next) {
+        if ((i ^ lst) == 1) continue;
+        int &amp;v = g.edges[i].to;
+        dfs1(v, i);
+        dp[x] += a[v];
+    }
+}
+void dfs2(int x, int lst) {
+    long long s1 = (f[x] ? dp[f[x]] - a[x] : 0) + a[f[f[x]]], s2 = 0;
+    for (int i = g.head[x]; i; i = g.edges[i].next) {
+        if ((i ^ lst) == 1) continue;
+        int &amp;v = g.edges[i].to;
+        dfs2(v, i);
+        ans += s2 * dp[v];
+        s2 += s1 * dp[v];
+        s1 += dp[v];
+    }
+}
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;a[i]);
+    for (int i = 1; i &lt; n; i++) {
+        int u, v; scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+        g.addedge(u, v); g.addedge(v, u);
+    }
+    dfs1(1, 0);
+    dfs2(1, 0);
+    printf(&quot;%lld\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h3 id="2020-10-03">2020-10-03</h3>
+<h4 id="a-欢乐">A. 欢乐</h4>
+<p><a href="http://csp.ac/contest/39/problem/273">http://csp.ac/contest/39/problem/273</a></p>
+<p>显然可以二分 k ，但 n 比较大无法直接计算比较，有个巧妙的做法是取$\log$，因为$a&gt;b\Leftrightarrow \log a&gt;\log b$所以是对的。类似地，也可以取 sqrt 或者其他一些满足上面这个性质的运算，不过阶乘就算取 sqrt 也没法算所以还是不行。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cmath&gt;
+
+int n;
+double logn;
+
+bool check(int k) {
+    double logk = 0;
+    for (int i = 1; i &lt;= k; i++) logk += log2(i);
+    return logk * 2 &gt;= logn;
+}
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt;= n; i++) logn += log2(i);
+    int l = 1, r = n + 1;
+    while (l &lt; r) {
+        int mid = l + (r - l &gt;&gt; 1);
+        if (check(mid)) r = mid;
+        else l = mid + 1;
+    }
+    printf(&quot;%d\n&quot;, l);
+    return 0;
+}</code></pre>
+<h4 id="b-水题">B. 水题</h4>
+<p><a href="http://csp.ac/contest/39/problem/274">http://csp.ac/contest/39/problem/274</a></p>
+<p>中规模模拟题。注意任务之间比较的是开始时间，另外正在做的任务 dgtks 在加入新节点时，其结束时间为 lst + t[f.x]，而不是 f.t + t[f.x]。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;string&gt;
+#include&lt;map&gt;
+#include&lt;vector&gt;
+#include&lt;algorithm&gt;
+#include&lt;iostream&gt;
+#include&lt;queue&gt;
+
+int cur, l, n, t[1010], thread, deg[1010], ans, lst;
+char s[5000100];
+bool vis[1010];
+struct node {
+    int x, t; std::string name;
+    bool operator &lt; (const node &amp;b) const {
+        if (t ^ b.t) return t &gt; b.t;
+        return name &gt; b.name;
+    }
+    node(int xv = 0, int tv = 0, std::string s = &quot;\0&quot;): x(xv), t(tv), name(s) {}
+};
+std::priority_queue&lt;node&gt; q, dgtks;
+std::vector&lt;node&gt; nodes;
+struct edge { int to, next, w; };
+struct graph {
+    int ecnt, head[1010];
+    edge edges[200100];
+    inline void addedge(int u, int v) {
+        edges[++ecnt].to = v;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+        deg[v]++;
+    }
+}g;
+std::map&lt;std::string, int&gt; id; std::map&lt;int, std::string&gt; nme;
+std::vector&lt;char&gt; ed1, ed2, ed3, ed4, bg, empty;
+
+inline void init() {
+    cur = 1;
+    ed1.push_back(&#39;:&#39;); ed2.push_back(&#39;,&#39;); ed2.push_back(&#39;]&#39;);
+    ed3.push_back(&#39;;&#39;); ed3.push_back(&#39;/&#39;); ed4.push_back(&#39;\0&#39;);
+    bg.push_back(&#39;:&#39;); bg.push_back(&#39;[&#39;);
+}
+inline bool exist(std::vector&lt;char&gt; &amp;s, char &amp;c) { return find(s.begin(), s.end(), c) != s.end(); }
+inline char read(std::string &amp;name, int &amp;begin, std::vector&lt;char&gt; &amp;bg, std::vector&lt;char&gt; &amp;ed) {
+    for (; !exist(ed, s[begin]); begin++)
+        if (!exist(bg, s[begin])) name.push_back(s[begin]);
+    return s[begin++];
+}
+inline void newnode(std::string &amp;name) { if (!id.count(name)) id[name] = ++n, nme[n] = name; }
+inline int toint(std::string &amp;s) {
+    int ans = 0;
+    for (std::string::iterator p = s.begin(); p != s.end(); p++) ans = ans * 10 + *p - &#39;0&#39;;
+    return ans;
+}
+inline char readtask() {
+    std::string u_name;
+    read(u_name, cur, empty, ed1);
+    newnode(u_name);
+    std::string v_name;
+    char c;
+    do {
+        c = read(v_name, cur, bg, ed2);
+        if (v_name.size() == 0) break;
+        newnode(v_name);
+        g.addedge(id[v_name], id[u_name]);
+        v_name.clear();
+    } while (c != &#39;]&#39;);
+    std::string ts;
+    c = read(ts, cur, bg, ed3);
+    t[id[u_name]] = toint(ts);
+    return c;
+}
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+inline void topo() {
+    for (int i = 1; i &lt;= n; i++)
+        if (!deg[i]) nodes.push_back(node(i, 0, nme[i]));
+    std::sort(nodes.begin(), nodes.end());
+    for (std::vector&lt;node&gt;::iterator p = --nodes.end(); ; p--) {
+        if ((int)dgtks.size() &lt; thread) dgtks.push(node(p -&gt; x, t[p -&gt; x], p -&gt; name));
+        else q.push(*p);
+        if (p == nodes.begin()) break;
+    }
+    while (!dgtks.empty()) {
+        int lst = -1;
+        while (!dgtks.empty() &amp;&amp; (lst == -1 || dgtks.top().t == lst)) {
+            node f = dgtks.top();
+            dgtks.pop();
+            ans = max(ans, f.t); lst = f.t;
+            for (int i = g.head[f.x]; i; i = g.edges[i].next) {
+                int &amp;v = g.edges[i].to;
+                deg[v]--;
+                if (!deg[v]) q.push(node(v, f.t, nme[v]));
+            }
+        }
+        while ((int)dgtks.size() &lt; thread &amp;&amp; !q.empty()) {
+            node f = q.top();
+            dgtks.push(node(f.x, lst + t[f.x], f.name));
+            q.pop();
+        }
+    }
+}
+
+int main() {
+    scanf(&quot;%s&quot;, s + 1); l = strlen(s + 1);
+    init();
+    while (readtask() != &#39;/&#39;);
+    std::string ts; read(ts, cur, empty, ed4);
+    thread = toint(ts);
+    topo();
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h4 id="d-赛">D. 赛</h4>
+<p><a href="http://csp.ac/contest/39/problem/276">http://csp.ac/contest/39/problem/276</a></p>
+<p>暴力是枚举 V 字的两端，计算中间有多少个小于两端的数，但其实可以枚举中间的数，计算两边分别有多少个大于它的数，再相乘即可。可以直接用值域树状数组维护，因为求的是后缀和所以在树状数组中要把序列反转，也就是<code>x = n - x + 1</code>。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+const int MOD = 1e9 + 7;
+int n, a[100100];
+long long f[100100], g[100100], ans;
+struct ft {
+    long long a[100100];
+    inline int lowbit(int x) { return x &amp; -x; }
+    inline void add(int x, int v) { for (x = n - x + 1; x &lt;= n; x += lowbit(x)) a[x] += v; }
+    inline long long query(int x) {
+        long long ans = 0;
+        for (x = n - x + 1; x &gt;= 1; x -= lowbit(x)) ans += a[x];
+        return ans;
+    }
+    inline void clear() { memset(a, 0, sizeof(long long) * (n + 1)); }
+}ft;
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;a[i]);
+    for (int i = 1; i &lt;= n; i++) {
+        f[i] = ft.query(a[i] + 1);
+        ft.add(a[i], i);
+    }
+    ft.clear();
+    for (int i = n; i &gt;= 1; i--) {
+        g[i] = ft.query(a[i] + 1);
+        ft.add(a[i], n - i + 1);
+    }
+    for (int i = 1; i &lt;= n; i++) ans = (ans + f[i] * g[i] % MOD) % MOD;
+    printf(&quot;%lld\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h3 id="2020-10-04">2020-10-04</h3>
+<h4 id="a-油箱">A. 油箱</h4>
+<p><a href="http://csp.ac/contest/40/problem/277">http://csp.ac/contest/40/problem/277</a></p>
+<p>显然可以直接二分油箱容量，然后判断所有边权小于等于油箱容量的边组成的图是否满足任意一个点都能到达其他所有点，等价于图中只有一个强连通分量，直接上 tarjan 即可。另一种思路是等价于节点 1 能够到达所有节点，并且所有节点都能到达节点 1。两种都可以$O(n)$解决，总复杂度$O(n\log w)$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;stack&gt;
+#include&lt;cstring&gt;
+
+int n, m, dfn[50100], low[50100], scccnt, cnt, maxw;
+bool vis[50100];
+struct edge { int to, next, w; };
+struct graph {
+    int ecnt, head[50100];
+    edge edges[200100];
+    inline void addedge(int u, int v, int w) {
+        edges[++ecnt].to = v;
+        edges[ecnt].w = w;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+}g;
+std::stack&lt;int&gt; stk;
+
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+void tarjan(int x, const int mid) {
+    dfn[x] = low[x] = ++cnt;
+    vis[x] = true;
+    stk.push(x);
+    for (int i = g.head[x]; i; i = g.edges[i].next) {
+        if (g.edges[i].w &gt; mid) continue;
+        int &amp;v = g.edges[i].to;
+        if (!dfn[v]) { tarjan(v, mid); low[x] = min(low[x], low[v]); }
+        else if (vis[v]) { low[x] = min(low[x], dfn[v]); }
+    }
+    if (dfn[x] == low[x]) {
+        ++scccnt;
+        int t;
+        do {
+            t = stk.top();
+            vis[t] = false;
+            stk.pop();
+        } while (t != x);
+    }
+}
+bool check(int mid) {
+    memset(dfn, 0, sizeof(int) * (n + 1)); memset(low, 0, sizeof(int) * (n + 1)); memset(vis, 0, sizeof(bool) * (n + 1));
+    cnt = scccnt = 0;
+    for (int i = 1; i &lt;= n; i++)
+        if (!dfn[i]) tarjan(i, mid);
+    return scccnt == 1;
+}
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt;= m; i++) {
+        int u, v, w; scanf(&quot;%d%d%d&quot;, &amp;u, &amp;v, &amp;w);
+        g.addedge(u, v, w);
+        maxw = max(maxw, w);
+    }
+    int l = 1, r = maxw + 1;
+    while (l &lt; r) {
+        int mid = l + (r - l &gt;&gt; 1);
+        if (check(mid)) r = mid;
+        else l = mid + 1;
+    }
+    if (l &lt;= maxw) printf(&quot;%d\n&quot;, l);
+    else printf(&quot;-1\n&quot;);
+    return 0;
+}</code></pre>
+<h4 id="b-求和">B. 求和</h4>
+<p><a href="http://csp.ac/contest/40/problem/278">http://csp.ac/contest/40/problem/278</a></p>
+<p>考虑序列上的情况，可以对区间分治，每次返回左区间 a 的和与右区间 b 的和的乘积，这样显然是对的，而且很巧妙。复杂度$O(n\log n)$。对于树上的情况，直接套上去即可。</p>
+<h4 id="c-染色">C. 染色</h4>
+<p><a href="http://csp.ac/contest/40/problem/279">http://csp.ac/contest/40/problem/279</a></p>
+<p>可以通过前后缀优化$O(nm)$ DP 出前某个位置和后某个位置不用某种颜色的最小代价，然后枚举相同的颜色，单调队列优化即可。然而考场上没调出来直接爆零了，到现在也没调出来。</p>
+<h4 id="d-数字">D. 数字</h4>
+<p><a href="http://csp.ac/contest/40/problem/280">http://csp.ac/contest/40/problem/280</a></p>
+<p>考虑每次在末尾添加一个数字。将好数看作点，点之间的边权为一个好数最少要添加几个数字才能得到另一个好数，那么问题求的就是图的最短哈密顿通路，可以直接状压 DP 。求好数之间的距离可以用最短路。</p>
+<h3 id="2020-10-06">2020-10-06</h3>
+<h4 id="a-math">A. math</h4>
+<p>考虑欧几里得算法：
+$$\gcd(q^a-1,q^b-1)=\gcd(q^a-1-q^{a-b}(q^b-1),q^b-1)\=\gcd(q^{a-b}-1,q^b-1)$$</p>
+<p>相当于每次对指数进行一次更相减损，因此答案就是$q^{\gcd(a,b)}-1$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int t, q, a, b, p;
+
+inline int pwr(int x, int k) {
+    int ans = 1;
+    for (; k; x = (long long)x * x % p, k &gt;&gt;= 1)
+        if (k &amp; 1) ans = (long long)ans * x % p;
+    return ans % p;
+}
+inline int gcd(int a, int b) {
+    if (!b) return a;
+    return gcd(b, a % b);
+}
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;t);
+    while (t--) {
+        scanf(&quot;%d%d%d%d&quot;, &amp;q, &amp;a, &amp;b, &amp;p);
+        printf(&quot;%d\n&quot;, (pwr(q, gcd(a, b)) - 1 + p) % p);
+    }
+    return 0;
+}</code></pre>
+<h4 id="b-candy">B. candy</h4>
+<p><a href="http://csp.ac/contest/42/problem/286">http://csp.ac/contest/42/problem/286</a></p>
+<p>暴力做法是记录每种糖果数的袋子数量，然后每次查询直接找倍数。可以加一个类似于 Dinic 中的当前弧优化的优化，记录一下每个数最近一次找到的倍数是多少，然后下次直接从这个倍数开始找，复杂度$O(n+m)$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int n, m, cnt[1000100], cur[1000100], k, ans[1000100], maxa;
+
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt;= n; i++) {
+        int x; scanf(&quot;%d&quot;, &amp;x);
+        cnt[x]++;
+        maxa = max(maxa, x);
+    }
+    scanf(&quot;%d&quot;, &amp;m);
+    for (int i = 1; i &lt;= m; i++) {
+        int x; scanf(&quot;%d&quot;, &amp;x);
+        int j = cur[x];
+        while (j &lt;= maxa &amp;&amp; !cnt[j]) j += x;
+        if (j &gt; maxa) break;
+        cnt[j]--;
+        cur[x] = j;
+        ans[++k] = j;
+    }
+    printf(&quot;%d\n&quot;, k);
+    for (int i = 1; i &lt;= k; i++) printf(&quot;%d &quot;, ans[i]);
+    return 0;
+}</code></pre>
+<h4 id="c-langrange">C. langrange</h4>
+<p><a href="http://csp.ac/contest/42/problem/287">http://csp.ac/contest/42/problem/287</a></p>
+<p>我在考场上写的做法是把式子拆开，然后分治计算，和之前求和那题思路是一样的，因为带修所以还需要树状数组维护，总复杂度$O(m\log^2n)$，直接 TLE 和暴力同分。</p>
+<p>更优的做法是利用拉格朗日恒等式：</p>
+<p>$$\left(\sum_{i=1}^na_i^2\right)\left(\sum_{i=1}^nb_i^2\right)=\left(\sum_{i=1}^na_ib_i\right)^2+\sum_{1\le i&lt;j\le n}(a_ib_j-a_jb_i)^2$$</p>
+<p>因此直接维护区间 a 平方和，b 平方和，ab 之积即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+const int MOD = 998244353;
+int n, q, a[500100], b[500100];
+struct ft {
+    int a[500100];
+    inline int lowbit(int x) { return x &amp; -x; }
+    inline void add(int x, int v) { for (; x &lt;= n; x += lowbit(x)) a[x] = (a[x] + v) % MOD; }
+    inline int query(int x) {
+        int ans = 0;
+        for (; x &gt;= 1; x -= lowbit(x)) ans = (ans + a[x]) % MOD;
+        return ans;
+    }
+    inline int query(int l, int r) { return (query(r) - query(l - 1) + MOD) % MOD; }
+}a2, b2, ab;
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;q);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;a[i]);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;b[i]);
+    for (int i = 1; i &lt;= n; i++) {
+        a2.add(i, (long long)a[i] * a[i] % MOD);
+        b2.add(i, (long long)b[i] * b[i] % MOD);
+        ab.add(i, (long long)a[i] * b[i] % MOD);
+    }
+    while (q--) {
+        int opt; scanf(&quot;%d&quot;, &amp;opt);
+        if (opt == 1) {
+            int l, r; scanf(&quot;%d%d&quot;, &amp;l, &amp;r);
+            int t = ab.query(l, r);
+            printf(&quot;%lld\n&quot;, ((long long)a2.query(l, r) * b2.query(l, r) % MOD - (long long)t * t % MOD + MOD) % MOD);
+        }
+        else if (opt == 2) {
+            int x, va, vb; scanf(&quot;%d%d%d&quot;, &amp;x, &amp;va, &amp;vb);
+            a2.add(x, ((long long)va * va % MOD - (long long)a[x] * a[x] % MOD + MOD) % MOD);
+            b2.add(x, ((long long)vb * vb % MOD - (long long)b[x] * b[x] % MOD + MOD) % MOD);
+            ab.add(x, ((long long)va * vb % MOD - (long long)a[x] * b[x] % MOD + MOD) % MOD);
+            a[x] = va; b[x] = vb;
+        }
+    }
+    return 0;
+}</code></pre>
+<a href="../posts.html" class="link" style="display:block; text-align:center;">return</a>
+</div>
+</body>
+</html>

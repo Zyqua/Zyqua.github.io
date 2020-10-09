@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+        <html>
+            <head>
+                <meta charset="utf-8"/>
+                <title>n-kw && n-c by others</title>
+                <link rel="stylesheet" type="text/css" href="../styles.css"/>
+                <link rel="stylesheet" type="text/css" href="../markdownStyles.css"/>
+                <link rel="stylesheet" href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css">
+                <script defer src="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.js"></script>
+                <script>
+                var katex_config = {
+                    delimiters: 
+                    [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false}
+                    ]
+                };
+                </script>
+                <script defer src="https://cdn.bootcss.com/KaTeX/0.11.1/contrib/auto-render.min.js" onload="renderMathInElement(document.body,katex_config)"></script>
+            </head>
+            <body>
+                <div class="body">
+                <p class="title">striving & singing</p><h3 id="2020-09-11">2020-09-11</h3>
+<p>ZhengruIOI 普及组五连测 Day1。</p>
+<h4 id="a-【20zr普及组五连测day1】排列">A. 【20zr普及组五连测day1】排列</h4>
+<p><a href="http://www.zhengruioi.com/contest/695/problem/1545">http://www.zhengruioi.com/contest/695/problem/1545</a></p>
+<p>看到题目直接打表，然后发现答案是一个斐波那契数列，然后直接矩阵快速幂即可。</p>
+<p>原理是设$f(i)$表示$i$的答案，那么第$i$个位置只能填$i$或$i-1$，填$i$时剩余位置的方案数为$f(i-1)$，填$i-1$时第$i-1$个位置只能填$i$，那么剩余位置的方案数为$f(i-2)$。因此$f(i)=f(i-1)+f(i-2)$。</p>
+<p>懂了，矩阵快速幂是普及组 T1 难度考点。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+const int MOD = 998244353;
+long long n;
+struct matrix {
+    int l, w, a[3][3];
+    matrix(int lv = 0, int wv = 0): l(lv), w(wv) { memset(a, 0, sizeof a); }
+    int* operator [] (const int &amp;idx) { return &amp;a[idx][0]; }
+    matrix operator * (matrix b) {
+        matrix ans(l, b.w);
+        for (int i = 1; i &lt;= ans.l; i++)
+            for (int j = 1; j &lt;= ans.w; j++)
+                for (int k = 1; k &lt;= w; k++) ans[i][j] = (ans[i][j] + (long long)a[i][k] * b[k][j] % MOD) % MOD;
+        return ans;
+    }
+    inline void build() { for (int i = 1; i &lt;= l; i++) a[i][i] = 1; }
+}f(2, 1), trs(2, 2);
+
+inline matrix pwr(matrix x, long long k) {
+    matrix ans(x.l, x.w); ans.build();
+    for (; k; x = x * x, k &gt;&gt;= 1)
+        if (k &amp; 1) ans = ans * x;
+    return ans;
+}
+
+int main() {
+    f[1][1] = 1;
+    trs[1][1] = trs[1][2] = trs[2][1] = 1;
+    scanf(&quot;%lld&quot;, &amp;n);
+    f = pwr(trs, n) * f;
+    printf(&quot;%d\n&quot;, f[1][1]);
+    return 0;
+}</code></pre>
+<h4 id="b-【20zr普及组五连测day1】游走">B. 【20zr普及组五连测day1】游走</h4>
+<p><a href="http://www.zhengruioi.com/contest/695/problem/1546">http://www.zhengruioi.com/contest/695/problem/1546</a></p>
+<p>设一条路径经过了$k$个点，最后在深度为$d$的节点停下，那么最小步数为$2(k-1)-d$。可以考虑在走完某条路径后再回到根节点，那么最小步数为$2(k-1)$，因为显然每条边都最少经过两次。然后因为不用回到根节点所以最小步数为$2(k-1)-d$。然后根据题目条件有$2(k-1)-\min(m,d)\le m$，这里$d$变成了$\min(m,d)$的原因是当$d&gt;m$时无法走到深度为$d$的点，最多只能走到深度为$m$的点。因此$k\le\dfrac{m+\min(m,d)}{2}+1$，所以答案就是$\min(n,\dfrac{m+\min(m,d)}{2}+1)$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int n, m, d;
+struct edge { int to, next; };
+struct graph {
+    int ecnt = 1, head[100100];
+    edge edges[200100];
+    inline void addedge(int u, int v) {
+        edges[++ecnt].to = v;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+}g;
+
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+void dfs(int x, int lst, int cnt) {
+    d = max(d, cnt);
+    for (int i = g.head[x]; i; i = g.edges[i].next) {
+        if ((i ^ lst) == 1) continue;
+        int &amp;v = g.edges[i].to;
+        dfs(v, i, cnt + 1);
+    }
+}
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt; n; i++) {
+        int u, v; scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+        g.addedge(u, v); g.addedge(v, u);
+    }
+    dfs(1, 0, 0);
+    printf(&quot;%d\n&quot;, min(n, (m + min(m, d)) / 2 + 1));
+    return 0;
+}</code></pre>
+<h4 id="c-【20zr普及组五连测day1】颜色">C. 【20zr普及组五连测day1】颜色</h4>
+<p><a href="http://www.zhengruioi.com/contest/695/problem/1547">http://www.zhengruioi.com/contest/695/problem/1547</a></p>
+<p>可以考虑每种颜色对答案的贡献即包含这种颜色的路径条数，那么补集转化一下就是所有路径减去不包含这种颜色的路径条数。所有这种颜色的点把树分成若干连通块，每个连通块的路径条数就是$\binom{size}{2}$，除根节点所在的连通块外，每个连通块都有一个位于顶端的这种颜色的节点，可以在这个节点处计算连通块大小。</p>
+<p>有一个巧妙的方法：设$s_i$为以节点$i$为顶端的连通块大小，$f[c[x]]$表示当前所有以第$c[x]$种颜色的节点为顶端的连通块大小$+1$之和，那么在递归遍历完以子节点$v$为根的子树后，可以得到$f[c[x]]$的增量，而$size[v]$减去这个增量就是$v$所在的连通块的大小。之所以要使$f[c[x]]$加一，是因为还要算上这个颜色的节点，这样用$size[v]$减才是对的。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int n, c[200100], size[200100], f[200100], cn;
+bool vis[200100];
+long long ans;
+struct edge { int to, next; };
+struct graph {
+    int ecnt = 1, head[200100];
+    edge edges[400100];
+    inline void addedge(int u, int v) {
+        edges[++ecnt].to = v;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+}g;
+
+void dfs(int x, int lst) {
+    size[x] = 1; f[c[x]]++;
+    for (int i = g.head[x]; i; i = g.edges[i].next) {
+        if ((i ^ lst) == 1) continue;
+        int &amp;v = g.edges[i].to, s = f[c[x]];
+        dfs(v, i);
+        size[x] += size[v];
+        s = size[v] - (f[c[x]] - s);
+        f[c[x]] += s;
+        ans -= (long long)s * (s - 1) / 2;
+    }
+}
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;c[i]), vis[c[i]] = true;
+    for (int i = 1; i &lt;= n; i++) if (vis[i]) cn++;
+    for (int i = 1; i &lt; n; i++) {
+        int u, v; scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+        g.addedge(u, v); g.addedge(v, u);
+    }
+    ans = (long long)cn * n * (n - 1) / 2;
+    dfs(1, 0);
+    for (int i = 1; i &lt;= n; i++) if (vis[i]) ans -= (long long)(n - f[i]) * (n - f[i] - 1) / 2;
+    printf(&quot;%lld\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h4 id="d-【20zr普及组五连测day1】区间">D. 【20zr普及组五连测day1】区间</h4>
+<p><a href="http://www.zhengruioi.com/contest/695/problem/1548">http://www.zhengruioi.com/contest/695/problem/1548</a></p>
+<p>是个 DP，然后题解其他部分我就看不懂了，垃圾题解写了跟没写一样，连转移方程都没有，状态含义也是含糊不清。等我 DP 水平提高点再来补。</p>
+<h3 id="2020-09-13">2020-09-13</h3>
+<h4 id="宝物筛选">宝物筛选</h4>
+<p><a href="https://www.luogu.com.cn/problem/P1776">https://www.luogu.com.cn/problem/P1776</a></p>
+<p>多重背包模板题。设$dp[j]$表示所选重量之和为$j$时的最大价值和，那么$dp[j]=\max\limits_{i=1}^c (dp[j-wi]+vi)$，可以用把$j$按照$j\bmod w$的值分组，然后直接对每组 DP，从而可以用单调队列优化。不用推式子，但其他题解上都推了一堆式子，不是很懂。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;queue&gt;
+
+int n, m;
+long long dp[40100], ans;
+std::deque&lt;int&gt; q;
+
+inline long long max(long long a, long long b) { return a &gt; b ? a : b; }
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt;= n; i++) {
+        int v, w, c; scanf(&quot;%d%d%d&quot;, &amp;v, &amp;w, &amp;c);
+        for (int b = 0; b &lt; w; b++) {
+            int cur = (m - b) / w - 1;
+            q.clear();
+            for (int a = (m - b) / w; a &gt;= 0; a--) {
+                while (!q.empty() &amp;&amp; q.front() &gt;= a) q.pop_front();
+                while (cur &gt;= 0 &amp;&amp; cur &gt;= a - c) {
+                    while (!q.empty() &amp;&amp; dp[q.back() * w + b] + v * (a - q.back()) &lt;= dp[cur * w + b] + v * (a - cur)) q.pop_back();
+                    q.push_back(cur);
+                    cur--;
+                }
+                if (!q.empty()) dp[a * w + b] = max(dp[a * w + b], dp[q.front() * w + b] + v * (a - q.front()));
+            }
+        }
+    }
+    for (int i = 1; i &lt;= m; i++) ans = max(ans, dp[i]);
+    printf(&quot;%lld\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h4 id="樱花">樱花</h4>
+<p><a href="https://www.luogu.com.cn/problem/P1833">https://www.luogu.com.cn/problem/P1833</a></p>
+<p>混合背包模板题，直接写即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;queue&gt;
+
+int n, m, tshh, tsmm, tehh, temm;
+long long dp[1010], ans;
+std::deque&lt;int&gt; q;
+
+inline long long max(long long a, long long b) { return a &gt; b ? a : b; }
+
+int main() {
+    scanf(&quot;%d:%d %d:%d %d&quot;, &amp;tshh, &amp;tsmm, &amp;tehh, &amp;temm, &amp;n);
+    m = tehh * 60 + temm - (tshh * 60 + tsmm);
+    for (int i = 1; i &lt;= n; i++) {
+        int w, v, c; scanf(&quot;%d%d%d&quot;, &amp;w, &amp;v, &amp;c);
+        if (c == 0) for (int j = w; j &lt;= m; j++) dp[j] = max(dp[j], dp[j - w] + v);
+        else if (c == 1) for (int j = m; j &gt;= w; j--) dp[j] = max(dp[j], dp[j - w] + v);
+        else {
+            for (int b = 0; b &lt; w; b++) {
+                int cur = (m - b) / w - 1;
+                for (int a = (m - b) / w; a &gt;= 0; a--) {
+                    while (!q.empty() &amp;&amp; q.front() &gt;= a) q.pop_front();
+                    while (cur &gt;= 0 &amp;&amp; cur &gt;= a - c) {
+                        while (!q.empty() &amp;&amp; dp[q.back() * w + b] + v * (a - q.back()) &lt;= dp[cur * w + b] + v * (a - cur)) q.pop_back();
+                        q.push_back(cur);
+                        cur--;
+                    }
+                    if (!q.empty()) dp[a * w + b] = max(dp[a * w + b], dp[q.front() * w + b] + v * (a - q.front()));
+                }
+            }
+        }
+    }
+    for (int i = 1; i &lt;= m; i++) ans = max(ans, dp[i]);
+    printf(&quot;%lld\n&quot;, ans);
+    return 0;
+}</code></pre>
+<a href="../posts.html" class="link" style="display:block; text-align:center;">return</a>
+</div>
+</body>
+</html>
