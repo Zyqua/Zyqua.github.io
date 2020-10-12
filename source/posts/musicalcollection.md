@@ -2,7 +2,7 @@ title: musicalcollection
 date: 2020-01-09
 weight: 20200109
 <!--more-->
-本人的两大爱好，一是敲代码二是听音乐。这篇文章用来清点两年来发掘到的所有好的音乐。现在不再按照派别和作者分类，而是以一张专辑为单位按照我个人的喜好程度排列。每张专辑会有一个曲目列表，前面有👍表示这首单曲在"我喜欢的音乐"歌单里。
+本人的两大爱好，一是OI二是听音乐。这篇文章用来清点两年来发掘到的所有好的音乐。现在不再按照派别和作者分类，而是以一张专辑为单位按照我个人的喜好程度排列。每张专辑会有一个曲目列表，前面有👍表示这首单曲在"我喜欢的音乐"歌单里。
 
 长篇大论，细节有待补充。
 #### 《Lift Your Skinny Fists Like Antennas to Heaven》
@@ -42,6 +42,19 @@ weight: 20200109
 
 - 《Nervous, Sad, Poor...》
 - 《Bleak, Uncertain, Beautiful...》
+<div class="clearfix"></div><br/>
+
+#### 《Give Me Beauty... Or Give Me Death!》
+作者: Ef
+
+<img src="http://p2.music.126.net/uP_LWu-RmHiBK_ZVrN2L6w==/109951163367903365.jpg?param=150y150" class="musiccover"></img>
+
+- 《Ett》
+- 《Hello Scotland》
+- 👍《Final Touch / Hidden Agenda》
+- 《He Came, He Stayed, He fell》
+- 👍《Tomorrow My Friend...》
+- 《We'll Meet in the End》
 <div class="clearfix"></div><br/>
 
 #### 《Enjoy Eternal Bliss》
@@ -217,19 +230,6 @@ weight: 20200109
 - 👍《I just wanted to make you something beautiful》
 - 《Waiting and waltzing in airport terminals》
 - 👍《The light weren't that bright, but our eyes were so tired》
-<div class="clearfix"></div><br/>
-
-#### 《Give Me Beauty... Or Give Me Death!》
-作者: Ef
-
-<img src="http://p2.music.126.net/uP_LWu-RmHiBK_ZVrN2L6w==/109951163367903365.jpg?param=150y150" class="musiccover"></img>
-
-- 《Ett》
-- 《Hello Scotland》
-- 👍《Final Touch / Hidden Agenda》
-- 《He Came, He Stayed, He fell》
-- 👍《Tomorrow My Friend...》
-- 《We'll Meet in the End》
 <div class="clearfix"></div><br/>
 
 #### 《Hymn to the Immortal Wind》

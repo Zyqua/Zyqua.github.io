@@ -1,1 +1,1 @@
-这个网站是`nkwnc`本人自己搭建的博客。网页由`JavaScript`脚本在本地自动生成，网页主体和脚本均由本人编写。使用了`marked`开源库将`MarkDown`文档转为网页，以及`Mathjax`开源库渲染`LaTeX`。后续功能不会陆续上线(咕咕咕)。
+这个网站是`qaxyre0ij`本人自己编写的博客。使用了`marked`开源库将`MarkDown`文档转为网页，以及`KaTeX`渲染`LaTeX`。
