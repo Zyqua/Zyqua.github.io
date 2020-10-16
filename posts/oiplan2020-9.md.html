@@ -197,13 +197,13 @@ int main() {
 <p>$\Omega={0,1}$。表示这次有没有买到新邮票。</p>
 <p>$Y_i$为这次有没有买到新邮票。也就是说$Y_i(\omega)=\omega$，其中$\omega\in\Omega$。</p>
 <p>那么下面开始推式子：</p>
-<p>$$E[X_i]=E[E[X_i|Y_i]]\=E[X_i|Y_i=1]P(Y_i=1)+E[X_i|Y_i=0]P(Y_i=0)\=E[X_{i+1}+1]P(Y_i=1)+E[X_i+1]P(Y_i=0)\=(E[X_{i+1}]+1)P(Y_i=1)+(E[X_i]+1)P(Y_i=0)\=E[X_{i+1}]P(Y_i=1)+E[X_i]P(Y_i=0)+1$$</p>
+<p>$$E[X_i]=E[E[X_i|Y_i]]\\=E[X_i|Y_i=1]P(Y_i=1)+E[X_i|Y_i=0]P(Y_i=0)\\=E[X_{i+1}+1]P(Y_i=1)+E[X_i+1]P(Y_i=0)\\=(E[X_{i+1}]+1)P(Y_i=1)+(E[X_i]+1)P(Y_i=0)\\=E[X_{i+1}]P(Y_i=1)+E[X_i]P(Y_i=0)+1$$</p>
 <p>$$E[X_i]P(Y_i=1)=E[X_{i+1}]P(Y_i=1)+1$$</p>
 <p>$$P(Y_i=1)=\dfrac{n-i}{n}$$</p>
-<p>$$E[X_i]=E[X_{i+1}]+\dfrac{1}{P(Y_i=1)}\=E[X_{i+1}]+\dfrac{n}{n-i}$$</p>
-<p>$$E[A_i]=E[E[A_i|Y_i]]\=E[A_i|Y_i=1]P(Y_i=1)+E[A_i|Y_i=0]P(Y_i=0)\=E[A_{i+1}+X_{i+1}+1]P(Y_i=1)+E[A_i+X_i+1]P(Y_i=0)$$</p>
+<p>$$E[X_i]=E[X_{i+1}]+\dfrac{1}{P(Y_i=1)}\\=E[X_{i+1}]+\dfrac{n}{n-i}$$</p>
+<p>$$E[A_i]=E[E[A_i|Y_i]]\\=E[A_i|Y_i=1]P(Y_i=1)+E[A_i|Y_i=0]P(Y_i=0)\\=E[A_{i+1}+X_{i+1}+1]P(Y_i=1)+E[A_i+X_i+1]P(Y_i=0)$$</p>
 <p>$$E[A_i]P(Y_i=1)=(E[A_{i+1}]+E[X_{i+1}])P(Y_i=1)+E[X_i]P(Y_i=0)+1$$</p>
-<p>$$E[A_i]=E[A_{i+1}]+E[X_{i+1}]+\dfrac{P(Y_i=0)}{P(Y_i=1)}E[X_i]+\dfrac{1}{P(Y_i=1)}\=E[A_{i+1}]+E[X_{i+1}]+\dfrac{i}{n-i}E[X_i]+\dfrac{n}{n-i}$$</p>
+<p>$$E[A_i]=E[A_{i+1}]+E[X_{i+1}]+\dfrac{P(Y_i=0)}{P(Y_i=1)}E[X_i]+\dfrac{1}{P(Y_i=1)}\\=E[A_{i+1}]+E[X_{i+1}]+\dfrac{i}{n-i}E[X_i]+\dfrac{n}{n-i}$$</p>
 <p>推完式子，就可以直接递推了。</p>
 <pre><code class="language-cpp">#include&lt;cstdio&gt;
 
@@ -304,9 +304,9 @@ int main() {
 <p>$\Omega={0,1}$，表示第$i$位上是几。</p>
 <p>$Y_i$表示第$i$位数字是几。</p>
 <p>$A_i$就是要求的答案，即极大连续全$1$子串长度立方之和。</p>
-<p>$$E[A_i]=E[E[A_i|Y_i]]\=E[A_i|Y_i=1]P(Y_i=1)+E[A_i|Y_i=0]P(Y_i=0)\=E[A_{i-1}+(X_{i-1}+1)^3-X_{i-1}^3]P(Y_i=1)+E[A_{i-1}]P(Y_i=0)\=E[A_{i-1}]P(Y_i=1)+E[3X_{i-1}^2+3X_{i-1}+1]P(Y_i=1)+E[A_{i-1}]P(Y_i=0)\=E[A_{i-1}]+(3E[X_{i-1}^2]+3E[X_{i-1}]+1)P(Y_i=1)$$</p>
-<p>$$E[X_i^2]=E[E[X_i^2|Y_i]]\=E[X_i^2|Y_i=1]P(Y_i=1)+E[X_i^2|Y_i=0]P(Y_i=0)\=E[(X_{i-1}+1)^2]P(Y_i=1)+0\=E[X_{i-1}^2+2X_{i-1}+1]P(Y_i=1)\=(E[X_{i-1}^2]+2E[X_{i-1}]+1)P(Y_i=1)$$</p>
-<p>$$E[X_i]=E[E[X_i|Y_i]]\=E[X_i|Y_i=1]P(Y_i=1)+E[X_i|Y_i=0]P(Y_i=0)\=E[X_{i-1}+1]P(Y_i=1)+0\=(E[X_{i-1}]+1)P(Y_i=1)$$</p>
+<p>$$E[A_i]=E[E[A_i|Y_i]]\\=E[A_i|Y_i=1]P(Y_i=1)+E[A_i|Y_i=0]P(Y_i=0)\\=E[A_{i-1}+(X_{i-1}+1)^3-X_{i-1}^3]P(Y_i=1)+E[A_{i-1}]P(Y_i=0)\\=E[A_{i-1}]P(Y_i=1)+E[3X_{i-1}^2+3X_{i-1}+1]P(Y_i=1)+E[A_{i-1}]P(Y_i=0)\\=E[A_{i-1}]+(3E[X_{i-1}^2]+3E[X_{i-1}]+1)P(Y_i=1)$$</p>
+<p>$$E[X_i^2]=E[E[X_i^2|Y_i]]\\=E[X_i^2|Y_i=1]P(Y_i=1)+E[X_i^2|Y_i=0]P(Y_i=0)\\=E[(X_{i-1}+1)^2]P(Y_i=1)+0\\=E[X_{i-1}^2+2X_{i-1}+1]P(Y_i=1)\\=(E[X_{i-1}^2]+2E[X_{i-1}]+1)P(Y_i=1)$$</p>
+<p>$$E[X_i]=E[E[X_i|Y_i]]\\=E[X_i|Y_i=1]P(Y_i=1)+E[X_i|Y_i=0]P(Y_i=0)\\=E[X_{i-1}+1]P(Y_i=1)+0\\=(E[X_{i-1}]+1)P(Y_i=1)$$</p>
 <pre><code class="language-cpp">#include&lt;cstdio&gt;
 
 int n;
@@ -369,7 +369,7 @@ int main() {
 }</code></pre>
 <h4 id="【模板】扩展欧拉定理">【模板】扩展欧拉定理</h4>
 <p><a href="https://www.luogu.com.cn/problem/P5091">https://www.luogu.com.cn/problem/P5091</a></p>
-<p>$$a^b\equiv\begin{cases}a^{b\bmod\varphi(m)}&amp;a\perp m\a^{b\bmod\varphi(m)+\varphi(m)}&amp;b\ge\varphi(m)\a^b&amp;b&lt;\varphi(m)\end{cases}\pmod m$$</p>
+<p>$$a^b\equiv\begin{cases}a^{b\bmod\varphi(m)}&amp;a\perp m\\a^{b\bmod\varphi(m)+\varphi(m)}&amp;b\ge\varphi(m)\\a^b&amp;b&lt;\varphi(m)\end{cases}\pmod m$$</p>
 <p>公式的第一条实际上是欧拉定理的推论，即$a^{\varphi(m)}\equiv 1\pmod m(a\perp m)$，因为是$1$所以可以直接除掉，于是指数$b$就可以$\mod\varphi(m)$。</p>
 <p>另外，这题$b$的范围很大，但用高精度又比较小题大做，可以边读入边模$\varphi(m)$，这样做的正确性在于$(a+b)\bmod m=a\bmod m+b\bmod m$，这也是$m$比$b$先给出的原因。</p>
 <pre><code class="language-cpp">#include&lt;cstdio&gt;

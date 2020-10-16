@@ -221,19 +221,19 @@ $Y_i$为这次有没有买到新邮票。也就是说$Y_i(\omega)=\omega$，其�
 
 那么下面开始推式子：
 
-$$E[X_i]=E[E[X_i|Y_i]]\\=E[X_i|Y_i=1]P(Y_i=1)+E[X_i|Y_i=0]P(Y_i=0)\\=E[X_{i+1}+1]P(Y_i=1)+E[X_i+1]P(Y_i=0)\\=(E[X_{i+1}]+1)P(Y_i=1)+(E[X_i]+1)P(Y_i=0)\\=E[X_{i+1}]P(Y_i=1)+E[X_i]P(Y_i=0)+1$$
+$$E[X_i]=E[E[X_i|Y_i]]\\\\=E[X_i|Y_i=1]P(Y_i=1)+E[X_i|Y_i=0]P(Y_i=0)\\\\=E[X_{i+1}+1]P(Y_i=1)+E[X_i+1]P(Y_i=0)\\\\=(E[X_{i+1}]+1)P(Y_i=1)+(E[X_i]+1)P(Y_i=0)\\\\=E[X_{i+1}]P(Y_i=1)+E[X_i]P(Y_i=0)+1$$
 
 $$E[X_i]P(Y_i=1)=E[X_{i+1}]P(Y_i=1)+1$$
 
 $$P(Y_i=1)=\dfrac{n-i}{n}$$
 
-$$E[X_i]=E[X_{i+1}]+\dfrac{1}{P(Y_i=1)}\\=E[X_{i+1}]+\dfrac{n}{n-i}$$
+$$E[X_i]=E[X_{i+1}]+\dfrac{1}{P(Y_i=1)}\\\\=E[X_{i+1}]+\dfrac{n}{n-i}$$
 
-$$E[A_i]=E[E[A_i|Y_i]]\\=E[A_i|Y_i=1]P(Y_i=1)+E[A_i|Y_i=0]P(Y_i=0)\\=E[A_{i+1}+X_{i+1}+1]P(Y_i=1)+E[A_i+X_i+1]P(Y_i=0)$$
+$$E[A_i]=E[E[A_i|Y_i]]\\\\=E[A_i|Y_i=1]P(Y_i=1)+E[A_i|Y_i=0]P(Y_i=0)\\\\=E[A_{i+1}+X_{i+1}+1]P(Y_i=1)+E[A_i+X_i+1]P(Y_i=0)$$
 
 $$E[A_i]P(Y_i=1)=(E[A_{i+1}]+E[X_{i+1}])P(Y_i=1)+E[X_i]P(Y_i=0)+1$$
 
-$$E[A_i]=E[A_{i+1}]+E[X_{i+1}]+\dfrac{P(Y_i=0)}{P(Y_i=1)}E[X_i]+\dfrac{1}{P(Y_i=1)}\\=E[A_{i+1}]+E[X_{i+1}]+\dfrac{i}{n-i}E[X_i]+\dfrac{n}{n-i}$$
+$$E[A_i]=E[A_{i+1}]+E[X_{i+1}]+\dfrac{P(Y_i=0)}{P(Y_i=1)}E[X_i]+\dfrac{1}{P(Y_i=1)}\\\\=E[A_{i+1}]+E[X_{i+1}]+\dfrac{i}{n-i}E[X_i]+\dfrac{n}{n-i}$$
 
 推完式子，就可以直接递推了。
 
@@ -355,11 +355,11 @@ $Y_i$表示第$i$位数字是几。
 
 $A_i$就是要求的答案，即极大连续全$1$子串长度立方之和。
 
-$$E[A_i]=E[E[A_i|Y_i]]\\=E[A_i|Y_i=1]P(Y_i=1)+E[A_i|Y_i=0]P(Y_i=0)\\=E[A_{i-1}+(X_{i-1}+1)^3-X_{i-1}^3]P(Y_i=1)+E[A_{i-1}]P(Y_i=0)\\=E[A_{i-1}]P(Y_i=1)+E[3X_{i-1}^2+3X_{i-1}+1]P(Y_i=1)+E[A_{i-1}]P(Y_i=0)\\=E[A_{i-1}]+(3E[X_{i-1}^2]+3E[X_{i-1}]+1)P(Y_i=1)$$
+$$E[A_i]=E[E[A_i|Y_i]]\\\\=E[A_i|Y_i=1]P(Y_i=1)+E[A_i|Y_i=0]P(Y_i=0)\\\\=E[A_{i-1}+(X_{i-1}+1)^3-X_{i-1}^3]P(Y_i=1)+E[A_{i-1}]P(Y_i=0)\\\\=E[A_{i-1}]P(Y_i=1)+E[3X_{i-1}^2+3X_{i-1}+1]P(Y_i=1)+E[A_{i-1}]P(Y_i=0)\\\\=E[A_{i-1}]+(3E[X_{i-1}^2]+3E[X_{i-1}]+1)P(Y_i=1)$$
 
-$$E[X_i^2]=E[E[X_i^2|Y_i]]\\=E[X_i^2|Y_i=1]P(Y_i=1)+E[X_i^2|Y_i=0]P(Y_i=0)\\=E[(X_{i-1}+1)^2]P(Y_i=1)+0\\=E[X_{i-1}^2+2X_{i-1}+1]P(Y_i=1)\\=(E[X_{i-1}^2]+2E[X_{i-1}]+1)P(Y_i=1)$$
+$$E[X_i^2]=E[E[X_i^2|Y_i]]\\\\=E[X_i^2|Y_i=1]P(Y_i=1)+E[X_i^2|Y_i=0]P(Y_i=0)\\\\=E[(X_{i-1}+1)^2]P(Y_i=1)+0\\\\=E[X_{i-1}^2+2X_{i-1}+1]P(Y_i=1)\\\\=(E[X_{i-1}^2]+2E[X_{i-1}]+1)P(Y_i=1)$$
 
-$$E[X_i]=E[E[X_i|Y_i]]\\=E[X_i|Y_i=1]P(Y_i=1)+E[X_i|Y_i=0]P(Y_i=0)\\=E[X_{i-1}+1]P(Y_i=1)+0\\=(E[X_{i-1}]+1)P(Y_i=1)$$
+$$E[X_i]=E[E[X_i|Y_i]]\\\\=E[X_i|Y_i=1]P(Y_i=1)+E[X_i|Y_i=0]P(Y_i=0)\\\\=E[X_{i-1}+1]P(Y_i=1)+0\\\\=(E[X_{i-1}]+1)P(Y_i=1)$$
 
 ```cpp
 #include<cstdio>
@@ -432,7 +432,7 @@ int main() {
 #### 【模板】扩展欧拉定理
 https://www.luogu.com.cn/problem/P5091
 
-$$a^b\equiv\begin{cases}a^{b\bmod\varphi(m)}&a\perp m\\a^{b\bmod\varphi(m)+\varphi(m)}&b\ge\varphi(m)\\a^b&b<\varphi(m)\end{cases}\pmod m$$
+$$a^b\equiv\begin{cases}a^{b\bmod\varphi(m)}&a\perp m\\\\a^{b\bmod\varphi(m)+\varphi(m)}&b\ge\varphi(m)\\\\a^b&b<\varphi(m)\end{cases}\pmod m$$
 
 公式的第一条实际上是欧拉定理的推论，即$a^{\varphi(m)}\equiv 1\pmod m(a\perp m)$，因为是$1$所以可以直接除掉，于是指数$b$就可以$\mod\varphi(m)$。
 

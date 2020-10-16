@@ -406,7 +406,7 @@ int main() {
 <p><a href="https://www.luogu.com.cn/problem/P2051">https://www.luogu.com.cn/problem/P2051</a></p>
 <p>这题我看了题解，因为想不出来怎么划分阶段和设计状态。</p>
 <p>由题意得每行每列最多只能放两个棋，那么每行每列放的棋的数量只有 0, 1, 2 三种情况。可以以行为阶段进行 DP，设$dp[i][j][k]$表示前 i 行中有 j 列放了 1 个棋，k 列放了 2 个棋，剩下$m-j-k$列没有放棋。然后分情况讨论即可。</p>
-<p>$$dp[i][j][k]=dp[i-1][j][k]\+(j+1)dp[i-1][j+1][k-1]+(m-j-k+1)dp[i-1][j-1][k]\+\binom{j+2}{2}dp[i-1][j+2][k-2]+\binom{m-j-k+2}{2}dp[i-1][j-2][k]\+(m-j-k+1)j\cdot dp[i-1][j][k-1]$$</p>
+<p>$$dp[i][j][k]=dp[i-1][j][k]\\+(j+1)dp[i-1][j+1][k-1]+(m-j-k+1)dp[i-1][j-1][k]\\+\binom{j+2}{2}dp[i-1][j+2][k-2]+\binom{m-j-k+2}{2}dp[i-1][j-2][k]\\+(m-j-k+1)j\cdot dp[i-1][j][k-1]$$</p>
 <pre><code class="language-cpp">#include&lt;cstdio&gt;
 
 const int MOD = 9999973;
@@ -438,12 +438,12 @@ int main() {
 <p>$$x_{i+1}=\overline a-a_i+x_i$$</p>
 <p>$$x_i=\overline a-a_{i-1}+x_{i-1}(i\in[1,n])$$</p>
 <p>用$x_1$表示出其他的$x_i$，那么有：</p>
-<p>$$x_i=\begin{cases}x_1&amp;i=1\x_{i-1}+\overline a-a_{i-1}&amp;i\in[2,n]\end{cases}$$</p>
-<p>$$x_i=\begin{cases}x_1&amp;i=1\x_1+\sum_{j=1}^{i-1}(\overline a-a_j)&amp;i\in[2,n]\end{cases}$$</p>
+<p>$$x_i=\begin{cases}x_1&amp;i=1\\x_{i-1}+\overline a-a_{i-1}&amp;i\in[2,n]\end{cases}$$</p>
+<p>$$x_i=\begin{cases}x_1&amp;i=1\\x_1+\sum_{j=1}^{i-1}(\overline a-a_j)&amp;i\in[2,n]\end{cases}$$</p>
 <p>设</p>
-<p>$$c_i=\begin{cases}0&amp;i=1\\sum_{j=1}^{i-1}(a_j-\overline a)&amp;i\in[2,n]\end{cases}$$</p>
+<p>$$c_i=\begin{cases}0&amp;i=1\\\sum_{j=1}^{i-1}(a_j-\overline a)&amp;i\in[2,n]\end{cases}$$</p>
 <p>所以</p>
-<p>$$x_i=\begin{cases}x_1&amp;i=1\x_1-c_i&amp;i\in[2,n]\end{cases}$$</p>
+<p>$$x_i=\begin{cases}x_1&amp;i=1\\x_1-c_i&amp;i\in[2,n]\end{cases}$$</p>
 <p>于是答案为</p>
 <p>$$\sum_{i=1}^n|x_i|=\sum_{i=1}^n|x_1-c_i|$$</p>
 <p>这里还用到一个结论：设 a 是一个长度为 n 的序列，则令$\sum_{i=1}^n|x-a_i|$最小的 x 是这个序列的中位数。<del>证明略</del></p>
@@ -862,6 +862,7 @@ int main() {
 <p>一看这数据范围好像要写高精，但是感觉复杂度不太行，一看题解，原来是哈希。枚举所有可能的解，然后计算验证，因为系数太大所以可以模一个数(我膜的是 19260817)，如果在模这个数意义下计算出多项式是 0 那么就假装它是解。这样做大概率是对的，可以多模几个数提高正确率，不过常数也会增加，我写了两个模数就 TLE 了。</p>
 <p>计算多项式可以用秦九韶算法。</p>
 <p>另外，还可以取小质数为模数，然后如果一个数不是解，那么这个数加模数的倍数也不是解，从而降低常数。听说还可以用中国剩余定理优化，但是好像没有题解这样写。</p>
+<p>这题我看了题解，因为没想到可以用哈希做，总之不会做时可以想一些奇怪的乱搞做法，比如哈希。</p>
 <pre><code class="language-cpp">#include&lt;cstdio&gt;
 
 const int MOD = 19260817;
