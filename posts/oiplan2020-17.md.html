@@ -1539,6 +1539,60 @@ int main() {
     for (int i = 1; i &lt;= m; i++) printf(&quot;%d &quot;, f[i]);
     return 0;
 }</code></pre>
+<h4 id="poi2008sta-station">[POI2008]STA-Station</h4>
+<p><a href="https://www.luogu.com.cn/problem/P3478">https://www.luogu.com.cn/problem/P3478</a></p>
+<p>换根 DP 入门题，没啥好写的。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int n, depth[1000100], ans, size[1000100];
+long long dp[1000100], maxdp;
+struct edge { int to, next; };
+struct graph {
+    int ecnt = 1, head[1000100];
+    edge edges[2000100];
+    inline void addedge(int u, int v) {
+        edges[++ecnt].to = v;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+}g;
+
+void dfs1(int x, int lst) {
+    depth[x] = depth[g.edges[lst ^ 1].to] + 1;
+    size[x] = 1;
+    for (int i = g.head[x]; i; i = g.edges[i].next) {
+        if ((i ^ lst) == 1) continue;
+        int &amp;v = g.edges[i].to;
+        dfs1(v, i);
+        size[x] += size[v];
+    }
+}
+void dfs2(int x, int lst) {
+    for (int i = g.head[x]; i; i = g.edges[i].next) {
+        if ((i ^ lst) == 1) continue;
+        int &amp;v = g.edges[i].to;
+        dp[v] = dp[x] + (n - size[v]) - size[v];
+        dfs2(v, i);
+    }
+}
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt; n; i++) {
+        int u, v; scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+        g.addedge(u, v); g.addedge(v, u);
+    }
+    dfs1(1, 0);
+    for (int i = 1; i &lt;= n; i++) dp[1] += depth[i];
+    dfs2(1, 0);
+    for (int i = 1; i &lt;= n; i++)
+        if (maxdp &lt; dp[i]) {
+            maxdp = dp[i];
+            ans = i;
+        }
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
 <a href="../posts.html" class="link" style="display:block; text-align:center;">return</a>
 </div>
 </body>
