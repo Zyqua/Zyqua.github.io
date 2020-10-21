@@ -460,6 +460,157 @@ int main() {
     printf(&quot;%d\n&quot;, ans);
     return 0;
 }</code></pre>
+<h3 id="2020-10-21">2020-10-21</h3>
+<p>子集反演：</p>
+<p>$$g(S)=\sum_{T\subseteq S}f(T)\Leftrightarrow f(S)=\sum_{T\subseteq S}(-1)^{|S|-|T|}g(T)$$</p>
+<p>$$g(S)=\sum_{T\supseteq S}f(T)\Leftrightarrow f(S)=\sum_{T\supseteq S}(-1)^{|T|-|S|}g(T)$$</p>
+<p>证明可以考虑下面两个式子：</p>
+<p>$$\sum_{T\subseteq S}(-1)^{|T|}=\sum_{|T|=0}^{|S|}(-1)^{|T|}\binom{|S|}{|T|}=(1-1)^{|S|}=[S=\varnothing]$$</p>
+<p>$$\sum_{T\subseteq S}(-1)^{|S|-|T|}=\sum_{|T|=0}^{|S|}(-1)^{|S|-|T|}\binom{|S|}{|T|}=(1-1)^{|S|}=[S=\varnothing]$$</p>
+<p>于是得到</p>
+<p>$$\sum_{T\subseteq S}(-1)^{|S|-|T|}g(T)\\=\sum_{U\subseteq S}f(U)\sum_{U\subseteq T\subseteq S}(-1)^{|S|-|T|}\\=\sum_{U\subseteq S}f(U)\sum_{T\subseteq S-U}(-1)^{|S-U|-|T|}\\=\sum_{U\subseteq S}f(U)[S=U]\\=f(S)$$</p>
+<p>$$\sum_{T\supseteq S}(-1)^{|T|-|S|}g(T)\\=\sum_{U\supseteq S}f(U)\sum_{U\supseteq T\supseteq S}(-1)^{|T|-|S|}\\=\sum_{U\supseteq S}f(U)\sum_{U-S\supseteq T}(-1)^{|T|}\\=\sum_{U\supseteq S}f(U)[S=U]\\=f(S)$$</p>
+<p>当$f(S)$的值只与$|S|$有关时，通过子集反演的两个公式分别可以导出二项式反演的两个形式。</p>
+<h4 id="已经没有什么好害怕的了">已经没有什么好害怕的了</h4>
+<p><a href="https://www.luogu.com.cn/problem/P4859">https://www.luogu.com.cn/problem/P4859</a></p>
+<p>若有$x$对满足$a&gt;b$，那么有$x-(n-x)=k$，解得$x=\dfrac{n+k}{2}$，所以当$n+k\equiv 1\pmod 2$时方案数为 0 ，否则可以转化为有$\dfrac{n+k}{2}$对满足$a&gt;b$。</p>
+<p>设$f(i)$表示有恰好 i 对满足条件的方案数，$g(i)$表示钦定 i 对满足条件的计算值，$dp[i][j]$表示 a 数组的前 i 个位置配对了 j 个满足条件的对时配对方案的数量，那么有：</p>
+<p>$$dp[i][j]=dp[i-1][j]+(cnt(i)-(j-1))dp[i-1][j-1]$$</p>
+<p>$$g(i)=\sum_{j=i}^n\binom{j}{i}f(j)\=(n-i)!\cdot dp[n][i]$$</p>
+<p>由二项式反演得</p>
+<p>$$f(i)=\sum_{j=i}^n(-1)^{j-i}\binom{j}{i}g(j)$$</p>
+<p>根据公式计算即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;algorithm&gt;
+
+const int MOD = 1e9 + 9;
+int n, k, a[2010], b[2010], dp[2010][2010], f[2010], g[2010], fac[2010], binom[2010][2010], ans;
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;k);
+    fac[0] = 1;
+    for (int i = 1; i &lt;= n; i++) fac[i] = (long long)fac[i - 1] * i % MOD;
+    binom[0][0] = 1;
+    for (int i = 1; i &lt;= n; i++)
+        for (int j = 0; j &lt;= i; j++) {
+            binom[i][j] = binom[i - 1][j];
+            if (j) binom[i][j] = (binom[i][j] + binom[i - 1][j - 1]) % MOD;
+        }
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;a[i]);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;b[i]);
+    std::sort(a + 1, a + n + 1);
+    std::sort(b + 1, b + n + 1);
+    int cur = 1;
+    dp[0][0] = 1;
+    for (int i = 1; i &lt;= n; i++) {
+        while (cur &lt;= n &amp;&amp; b[cur] &lt; a[i]) cur++;
+        for (int j = 0; j &lt;= i; j++) {
+            dp[i][j] = dp[i - 1][j];
+            if (j) dp[i][j] = (dp[i][j] + (long long)(cur - 1 - (j - 1)) * dp[i - 1][j - 1] % MOD) % MOD;
+        }
+    }
+    for (int i = 0; i &lt;= n; i++) g[i] = (long long)dp[n][i] * fac[n - i] % MOD;
+    if ((n + k) % 2) printf(&quot;0\n&quot;);
+    else for (int j = (n + k) / 2, op = 1; j &lt;= n; j++, op *= -1) ans = (ans + (long long)op * binom[j][(n + k) / 2] * g[j] % MOD + MOD) % MOD;
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h4 id="usaco20febdelegation-p">[USACO20FEB]Delegation P</h4>
+<p><a href="https://www.luogu.com.cn/problem/P6142">https://www.luogu.com.cn/problem/P6142</a></p>
+<p>和赛道修建那题基本一样的，注意特判当前节点是 1 时的情况即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;set&gt;
+
+int n;
+bool ok;
+struct edge { int to, next; };
+struct graph {
+    int ecnt = 1, head[100100];
+    edge edges[200100];
+    inline void addedge(int u, int v) {
+        edges[++ecnt].to = v;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+}g;
+
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+int dfs(int x, int lst, int mid) {
+    if (!ok) return 0;
+    int ans = 0, cnt = 0;
+    std::multiset&lt;int&gt; s;
+    for (int i = g.head[x]; i; i = g.edges[i].next) {
+        if ((i ^ lst) == 1) continue;
+        int &amp;v = g.edges[i].to;
+        s.insert(dfs(v, i, mid) + 1);
+    }
+    if ((x == 1 &amp;&amp; (s.size() &amp; 1)) || (x != 1 &amp;&amp; !(s.size() &amp; 1))) s.insert(0);
+    while (!s.empty() &amp;&amp; ok) {
+        std::multiset&lt;int&gt;::iterator i = s.begin(), p = s.lower_bound(mid - *i);
+        if (i == p) p++;
+        if (x == 1) {
+            if (p == s.end()) ok = false;
+            else s.erase(p);
+        }
+        else {
+            if (p == s.end() &amp;&amp; cnt) ok = false;
+            else if (p == s.end() &amp;&amp; !cnt) ans = *i, cnt = 1;
+            else if (p != s.end()) s.erase(p);
+        }
+        s.erase(i);
+    }
+    return ans;
+}
+inline bool check(int mid) {
+    ok = true;
+    dfs(1, 0, mid);
+    return ok;
+}
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt; n; i++) {
+        int u, v; scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+        g.addedge(u, v); g.addedge(v, u);
+    }
+    int l = 1, r = n;
+    while (l &lt; r) {
+        int mid = l + (r - l &gt;&gt; 1);
+        if (check(mid)) l = mid + 1;
+        else r = mid;
+    }
+    printf(&quot;%d\n&quot;, l - 1);
+    return 0;
+}</code></pre>
+<h4 id="jsoi2011分特产">[JSOI2011]分特产</h4>
+<p><a href="https://www.luogu.com.cn/problem/P5505">https://www.luogu.com.cn/problem/P5505</a></p>
+<p>限制是每个同学都要分到特产，那么可以设$g(i)$表示钦定 i 个同学没有分到，$f(i)$表示恰好 i 个同学没有分到的方案数，那么有：</p>
+<p>$$g(i)=\binom{n}{i}\prod_{j=1}^m\binom{a_j+n-i-1}{n-i-1}\\=\sum_{j=i}^n\binom{j}{i}f(j)$$</p>
+<p>其中$\binom{n}{i}$是枚举哪 i 个同学没有分到，$\binom{a_j+n-i-1}{n-i-1}$的意思是把$a_j$个球分到$n-i$个盒子里，可以有空盒的方案数，根据乘法原理乘起来。</p>
+<p>反演一下得到</p>
+<p>$$f(i)=\sum_{j=i}^n(-1)^{j-i}\binom{j}{i}g(j)$$</p>
+<p>代入 i = 0</p>
+<p>$$f(0)=\sum_{j=0}^n(-1)^jg(j)$$</p>
+<p>根据公式计算即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+const int MOD = 1e9 + 7;
+int n, m, a[1010], binom[2010][2010], g[1010], ans;
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt;= m; i++) scanf(&quot;%d&quot;, &amp;a[i]);
+    for (int i = 0; i &lt;= 2000; i++) binom[i][0] = 1;
+    for (int i = 1; i &lt;= 2000; i++)
+        for (int j = 1; j &lt;= i; j++) binom[i][j] = (binom[i - 1][j - 1] + binom[i - 1][j]) % MOD;
+    for (int i = 0; i &lt;= n; i++) {
+        g[i] = binom[n][i];
+        for (int j = 1; j &lt;= m; j++) g[i] = (long long)g[i] * binom[a[j] + n - i - 1][n - i - 1] % MOD;
+    }
+    for (int j = 0, op = 1; j &lt;= n; j++, op *= -1) ans = (ans + (op * g[j] + MOD) % MOD) % MOD;
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
 <a href="../posts.html" class="link" style="display:block; text-align:center;">return</a>
 </div>
 </body>
