@@ -1,1 +1,1 @@
-这个网站是`qaxyre0ij`本人自己编写的博客。使用了`marked`开源库将`MarkDown`文档转为网页，以及`KaTeX`渲染`LaTeX`。
+�����վ��`qaxyre0ij`�����Լ���д�Ĳ��͡�ʹ����`marked`��Դ�⽫`MarkDown`�ĵ�תΪ��ҳ���Լ�`KaTeX`��Ⱦ`LaTeX`��

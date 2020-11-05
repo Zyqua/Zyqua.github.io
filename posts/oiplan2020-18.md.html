@@ -476,7 +476,7 @@ int main() {
 <p>若有$x$对满足$a&gt;b$，那么有$x-(n-x)=k$，解得$x=\dfrac{n+k}{2}$，所以当$n+k\equiv 1\pmod 2$时方案数为 0 ，否则可以转化为有$\dfrac{n+k}{2}$对满足$a&gt;b$。</p>
 <p>设$f(i)$表示有恰好 i 对满足条件的方案数，$g(i)$表示钦定 i 对满足条件的计算值，$dp[i][j]$表示 a 数组的前 i 个位置配对了 j 个满足条件的对时配对方案的数量，那么有：</p>
 <p>$$dp[i][j]=dp[i-1][j]+(cnt(i)-(j-1))dp[i-1][j-1]$$</p>
-<p>$$g(i)=\sum_{j=i}^n\binom{j}{i}f(j)\=(n-i)!\cdot dp[n][i]$$</p>
+<p>$$g(i)=\sum_{j=i}^n\binom{j}{i}f(j)\\=(n-i)!\cdot dp[n][i]$$</p>
 <p>由二项式反演得</p>
 <p>$$f(i)=\sum_{j=i}^n(-1)^{j-i}\binom{j}{i}g(j)$$</p>
 <p>根据公式计算即可。</p>
@@ -609,6 +609,408 @@ int main() {
     }
     for (int j = 0, op = 1; j &lt;= n; j++, op *= -1) ans = (ans + (op * g[j] + MOD) % MOD) % MOD;
     printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h3 id="2020-10-22">2020-10-22</h3>
+<h4 id="cqoi2011放棋子">[CQOI2011]放棋子</h4>
+<p><a href="https://www.luogu.com.cn/problem/P3158">https://www.luogu.com.cn/problem/P3158</a></p>
+<p>设$f(t,x,y)$表示t个球恰好占用x行y列的方案数，$g(t,x,y)$表示t个球钦定占用x行y列的方案数，那么有：</p>
+<p>$$g(t,x,y)=\binom{xy}{t}\=\sum_{i=1}^x\binom{x}{i}\sum_{j=1}^y\binom{y}{j}f(t,i,j)$$</p>
+<p>二项式反演在高维情况下也成立：</p>
+<p>$$f(t,x,y)=\sum_{i=1}^x(-1)^{x-i}\binom{x}{i}\sum_{j=1}^y(-1)^{y-j}\binom{y}{j}g(t,i,j)$$</p>
+<p>那么就可以$O(n^5)$预处理出$f$。设$dp[t][x][y]$表示前 t 种颜色的球恰好占用了 x 行 y 列的方案数，那么有：</p>
+<p>$$dp[t][x][y]=\sum_{dx=1}^x\sum_{dy=1}^y\binom{x}{dx}\binom{y}{dy}f[a[t]][dx][dy]\cdot dp[t-1][x-dx][y-dy]$$</p>
+<p>再来一波$O(n^5)$ DP 即可。其中两个组合数的意思是枚举当前颜色占用了哪几行哪几列。</p>
+<p>最后的答案就是：</p>
+<p>$$\sum_{x=1}^n\sum_{y=1}^m\binom{n}{x}\binom{m}{y}dp[c][x][y]$$</p>
+<p>其中 x,y 表示枚举所有棋子共占用了几行几列，两个组合数同样表示枚举所有棋子占用了哪几行哪几列。</p>
+<p>另外，在证明二项式反演在二维情况下成立时要设一个中间量 h(具体见 luogu 题解)，而在递推时同时处理出 h 可以使预处理复杂度降一维。时间太紧了以后再仔细研究。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+const int MOD = 1e9 + 9;
+int n, m, c, a[15], dp[11][35][35], f[1010][35][35], binom[910][910], ans;
+bool vis[1010];
+
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+inline int pwr_1(int k) { return k % 2 ? -1 : 1; }
+
+int main() {
+    scanf(&quot;%d%d%d&quot;, &amp;n, &amp;m, &amp;c);
+    for (int i = 1; i &lt;= c; i++) scanf(&quot;%d&quot;, &amp;a[i]);
+    for (int i = 0; i &lt;= n * m; i++) binom[i][0] = 1;
+    for (int i = 1; i &lt;= n * m; i++)
+        for (int j = 1; j &lt;= i; j++) binom[i][j] = (binom[i - 1][j - 1] + binom[i - 1][j]) % MOD;
+    for (int t = 1; t &lt;= c; t++) {
+        if (vis[a[t]]) continue;
+        vis[a[t]] = true;
+        for (int x = 1; x &lt;= n &amp;&amp; x &lt;= a[t]; x++)
+            for (int y = 1; y &lt;= m &amp;&amp; y &lt;= a[t]; y++)
+                for (int i = 1, opx = pwr_1(x - i); i &lt;= x; i++, opx *= -1)
+                    for (int j = 1, opy = pwr_1(y - j); j &lt;= y; j++, opy *= -1)
+                        f[a[t]][x][y] = (f[a[t]][x][y] + ((long long)opx * binom[x][i] * opy * binom[y][j] % MOD * binom[i * j][a[t]] % MOD + MOD) % MOD) % MOD;
+    }
+    dp[0][0][0] = 1;
+    for (int t = 1; t &lt;= c; t++)
+        for (int x = 1; x &lt;= n; x++)
+            for (int y = 1; y &lt;= m; y++)
+                for (int dx = 1; dx &lt;= x; dx++)
+                    for (int dy = 1; dy &lt;= y; dy++)
+                        dp[t][x][y] = (dp[t][x][y] + (long long)dp[t - 1][x - dx][y - dy] * binom[x][dx] % MOD * binom[y][dy] % MOD * f[a[t]][dx][dy] % MOD) % MOD;
+    for (int x = 1; x &lt;= n; x++)
+        for (int y = 1; y &lt;= m; y++) ans = (ans + (long long)dp[c][x][y] * binom[n][x] % MOD * binom[m][y] % MOD) % MOD;
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h4 id="noi-online-2-提高组游戏">[NOI Online #2 提高组]游戏</h4>
+<p><a href="https://www.luogu.com.cn/problem/P6478">https://www.luogu.com.cn/problem/P6478</a></p>
+<p>给出一棵点数$n=2m$的树和两个点数为$n$的点集，对于$k\in[0,m]$，求将两个点集的点分别两两配对，有恰好$k$对满足一个是另一个节点的祖先的方案数。</p>
+<p>设$f(i)$表示恰好 k 对的方案数，$g(i)$表示钦定 k 对的方案数，那么 f 可以由 g 通过二项式反演得到。若能求出选出 k 对的方案数，那么显然 g 可以由这个方案数乘上一个阶乘得到。</p>
+<p>考虑树形 DP，设$dp[x][j]$表示以 x 为根的子树中选出 j 对的方案数，那么这就是一个树形背包，有：</p>
+<p>$$dp[x][j]=\sum_{k=1}^jdp[x][j-k]\cdot dp[v][k]$$</p>
+<p>这样算出来的是不选择当前节点的方案数，还要加上选择当前节点的方案数，也就是</p>
+<p>$$dp[x][j]+=dp[x][j-1]\cdot (cnt-(j-1))$$</p>
+<p>其中 cnt 表示子树中与当前节点不在同一点集的节点数。</p>
+<p>朴素树形背包的复杂度是$O(n^3)$的，可以加个上下界优化，即限制枚举变量的上下界，把复杂度优化到$O(n^2)$。可以参考这篇文章：<a href="https://ouuan.github.io/post/%E6%A0%91%E4%B8%8A%E8%83%8C%E5%8C%85%E7%9A%84%E4%B8%8A%E4%B8%8B%E7%95%8C%E4%BC%98%E5%8C%96/">https://ouuan.github.io/post/%E6%A0%91%E4%B8%8A%E8%83%8C%E5%8C%85%E7%9A%84%E4%B8%8A%E4%B8%8B%E7%95%8C%E4%BC%98%E5%8C%96/</a> </p>
+<p>至于为什么这样可以优化我也不太懂，总之先背下来再说。</p>
+<p>DP 完后，$g(i)=dp[1]<a href="%5Cdfrac%7Bn%7D%7B2%7D-i">i</a>!$，然后直接套上二项式反演即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+const int MOD = 998244353;
+int n, dp[5010][5010], f[2510], g[2510], cnt[5010][2], size[5010], fac[2510], binom[2510][2510];
+char s[5010];
+struct edge { int to, next; };
+struct graph {
+    int ecnt = 1, head[5010];
+    edge edges[10010];
+    inline void addedge(int u, int v) {
+        edges[++ecnt].to = v;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+}gr;
+
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+void dfs(int x, int lst) {
+    size[x] = 1;
+    dp[x][0] = 1;
+    for (int i = gr.head[x]; i; i = gr.edges[i].next) {
+        if ((i ^ lst) == 1) continue;
+        int &amp;v = gr.edges[i].to;
+        dfs(v, i);
+        for (int j = min(size[x] + size[v], n / 2); j &gt;= 1; j--)
+            for (int k = max(j - size[x], 1); k &lt;= size[v] &amp;&amp; k &lt;= j; k++)
+                dp[x][j] = (dp[x][j] + (long long)dp[x][j - k] * dp[v][k] % MOD) % MOD;
+        size[x] += size[v];
+        cnt[x][0] += cnt[v][0]; cnt[x][1] += cnt[v][1];
+    }
+    for (int j = min(size[x], n / 2); j &gt; 0; j--)
+        dp[x][j] = (dp[x][j] + (long long)dp[x][j - 1] * (cnt[x][(s[x] - &#39;0&#39;) ^ 1] - (j - 1)) % MOD) % MOD;
+    cnt[x][s[x] - &#39;0&#39;]++;
+}
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    scanf(&quot;%s&quot;, s + 1);
+    for (int i = 1; i &lt; n; i++) {
+        int u, v; scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+        gr.addedge(u, v); gr.addedge(v, u);
+    }
+    dfs(1, 0);
+    fac[0] = 1;
+    for (int i = 1; i &lt;= n / 2; i++) fac[i] = (long long)fac[i - 1] * i % MOD;
+    for (int i = 0; i &lt;= n / 2; i++) binom[i][0] = 1;
+    for (int i = 1; i &lt;= n / 2; i++)
+        for (int j = 1; j &lt;= i; j++) binom[i][j] = (binom[i - 1][j - 1] + binom[i - 1][j]) % MOD;
+    for (int i = 0; i &lt;= n / 2; i++) g[i] = (long long)dp[1][i] * fac[n / 2 - i] % MOD;
+    for (int i = 0; i &lt;= n / 2; i++)
+        for (int j = i, op = 1; j &lt;= n / 2; j++, op *= -1) f[i] = (f[i] + (op * (long long)binom[j][i] * g[j] % MOD + MOD)) % MOD;
+    for (int i = 0; i &lt;= n / 2; i++) printf(&quot;%d\n&quot;, f[i]);
+    return 0;
+}</code></pre>
+<h4 id="sdoi2017序列计数">[SDOI2017]序列计数</h4>
+<p><a href="https://www.luogu.com.cn/problem/P3702">https://www.luogu.com.cn/problem/P3702</a></p>
+<p>可以用减法公式，即答案等于任意数的方案数减去不用质数的方案数。然后就是一个常见的 DP，设$dp[i][j]$表示前 i 个数的和$\mod p$等于 j 的方案数，那么有：</p>
+<p>$$dp[i][j]=\sum_{k=0}^{p-1}dp[i-1][(j-k)\bmod p]\cdot cnt(k)$$</p>
+<p>令 k 等于 j - k，也就是从枚举 k 变为枚举 j - k，得到：</p>
+<p>$$dp[i][j]=\sum_{k=0}^{p-1}dp[i-1][k]\cdot cnt((j-k)\bmod p)$$</p>
+<p>其中$cnt(x)$表示$[1,m]$中$\mod p$等于 x 的数的个数，可以通过分类讨论$O(1)$算出。</p>
+<p>设$c[k][j]=cnt((j-k)\bmod p)$，那么有:</p>
+<p>$$dp[i][j]=\sum_{k=0}^{p-1}dp[i-1][k]\cdot c[k][j]$$</p>
+<p>这就是矩阵乘法的形式，因此可以通过矩阵快速幂优化 DP，复杂度$O(p^3\log n)$。</p>
+<p>注意不要写错模数。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+const int MOD = 20170408;
+int n, m, p, ans, prime[2000100], pcnt, cntp[110];
+bool isprime[20000100];
+struct matrix {
+    int r, c, a[101][101];
+    int* operator [] (const int &amp;idx) { return &amp;a[idx][0]; } 
+    matrix(int rv = 0, int cv = 0): r(rv), c(cv) { memset(a, 0, sizeof a); }
+    matrix operator * (matrix &amp;b) {
+        matrix ans(r, b.c);
+        for (int i = 0; i &lt; ans.r; i++)
+            for (int j = 0; j &lt; ans.c; j++)
+                for (int k = 0; k &lt; c; k++) ans[i][j] = (ans[i][j] + (long long)a[i][k] * b[k][j] % MOD) % MOD;
+        return ans;
+    }
+    inline void build() { for (int i = 0; i &lt; r; i++) a[i][i] = 1; }
+    inline void clear() { memset(a, 0, sizeof a); }
+}dp, trs;
+
+inline int cnt(int x) {
+    if (x == 0) return m / p;
+    else if (x &lt; m) return (m - x) / p + 1;
+    else if (x == m) return 1;
+    else return 0;
+}
+inline matrix pwr(matrix x, int k) {
+    matrix ans(x.r, x.c); ans.build();
+    for (; k; x = x * x, k &gt;&gt;= 1)
+        if (k &amp; 1) ans = ans * x;
+    return ans;
+}
+
+int main() {
+    scanf(&quot;%d%d%d&quot;, &amp;n, &amp;m, &amp;p);
+    dp.r = p, dp.c = 1; trs.r = trs.c = p;
+    dp[0][0] = 1;
+    for (int i = 0; i &lt; p; i++)
+        for (int j = 0; j &lt; p; j++) trs[i][j] = cnt((j - i + p) % p) % MOD;
+    dp = pwr(trs, n) * dp;
+    ans = dp[0][0];
+    for (int i = 2; i &lt;= m; i++) isprime[i] = true;
+    for (int i = 2; i &lt;= m; i++) {
+        if (isprime[i]) prime[++pcnt] = i, cntp[i % p]++;
+        for (int j = 1; j &lt;= pcnt &amp;&amp; i * prime[j] &lt;= m; j++) {
+            isprime[i * prime[j]] = false;
+            if (!(i % prime[j])) break;
+        }
+    }
+    dp.clear(); trs.clear();
+    dp[0][0] = 1;
+    for (int i = 0; i &lt; p; i++)
+        for (int j = 0; j &lt; p; j++) trs[i][j] = (cnt((j - i + p) % p) - cntp[(j - i + p) % p] + MOD) % MOD;
+    dp = pwr(trs, n) * dp;
+    ans = (ans - dp[0][0] + MOD) % MOD;
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h3 id="2020-10-23">2020-10-23</h3>
+<h4 id="noi-online-2-提高组子序列问题">[NOI Online #2 提高组]子序列问题</h4>
+<p><a href="https://www.luogu.com.cn/problem/P6477">https://www.luogu.com.cn/problem/P6477</a></p>
+<p>有两种我知道的思路，一种是 duyi 神仙的题解里的，考虑$f(l,r)$可以理解为在区间$[l,r]$中选出一个数字的方案数，而$f(l,r)^2$可以理解为在$[l,r]$中选出两个数字且可以重复的方案数，那么可以枚举这两个数字然后计算贡献，令某个数字对区间有贡献当且仅当它是区间中第一个出现的这一种数字，那么可以通过预处理$pre[i]$表示第 i 个数字的上一个相同数字的位置，然后可以通过它计算有贡献的区间个数。</p>
+<p>考虑优化，可以只枚举两个数字中的一个，然后答案(应该)就是：</p>
+<p>$$\sum_{j=1}^n(n-j+1)\left(2\sum_{i=pre[j]+1}^j(i-\max(pre[i],pre[j]))-(j-pre[j])\right)$$</p>
+<p>要维护$\sum_{i=1}^j\max(pre[i],pre[j])$，可以考虑用$pre[j]\cdot j$加上大于$pre[j]$的那些$pre[i]$，再把多算的$pre[j]$减去即可，可以开两个权值树状数组，分别维护个数和和，总复杂度$O(n\log n)$。不过我写完调不出来了，样例都过不去。</p>
+<p>另一种做法是扫描线。扫描线的思想就是对于区间统计的题目只统计其中一个区间端点，然后考虑端点变化时对答案的影响。对于本题可以枚举右端点 r ，然后考虑求出$\sum_{l=1}^nf(l,r)^2$。令第$i$个位置表示$f(i,r)$的信息，那么统计答案时就是直接算平方和，右端点向右移时就是把区间$[pre[r]+1,r]$加一，这个东西可以直接用线段树维护，根据初中数学有如下公式：</p>
+<p>$$\sum(a+v)^2=\sum a^2+2v\sum a+\sum v^2$$</p>
+<p>因此维护区间和和区间平方和以及加法标记即可。</p>
+<p>注意不要爆long long。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;algorithm&gt;
+
+const int MOD = 1e9 + 7;
+int n, a[1000100], vl[1000100], lst[1000100], pre[1000100], ans;
+struct segtreenode { int addtag, sum, sum2; };
+struct segtree {
+    segtreenode nds[4000100];
+    inline int ls(int x) { return x &lt;&lt; 1; }
+    inline int rs(int x) { return x &lt;&lt; 1 | 1; }
+    inline void pushup(int x) {
+        nds[x].sum = (nds[ls(x)].sum + nds[rs(x)].sum) % MOD;
+        nds[x].sum2 = (nds[ls(x)].sum2 + nds[rs(x)].sum2) % MOD;
+    }
+    inline void pushdown(int x, int l, int r) {
+        if (!nds[x].addtag) return;
+        int mid = l + (r - l &gt;&gt; 1), &amp;v = nds[x].addtag;
+        nds[ls(x)].sum2 = (nds[ls(x)].sum2 + ((long long)2 * v * nds[ls(x)].sum % MOD + (long long)v * v % MOD * (mid - l + 1) % MOD) % MOD) % MOD;
+        nds[ls(x)].sum = (nds[ls(x)].sum + (long long)v * (mid - l + 1) % MOD) % MOD;
+        nds[ls(x)].addtag = (nds[ls(x)].addtag + v) % MOD;
+        nds[rs(x)].sum2 = (nds[rs(x)].sum2 + ((long long)2 * v * nds[rs(x)].sum % MOD + (long long)v * v % MOD * (r - mid) % MOD) % MOD) % MOD;
+        nds[rs(x)].sum = (nds[rs(x)].sum + (long long)v * (r - mid) % MOD) % MOD;
+        nds[rs(x)].addtag = (nds[rs(x)].addtag + v) % MOD;
+        v = 0;
+    }
+    void add(int x, int l, int r, int ql, int qr, int v) {
+        if (ql &lt;= l &amp;&amp; r &lt;= qr) {
+            nds[x].sum2 = (nds[x].sum2 + (long long)2 * v * nds[x].sum % MOD + (long long)v * v % MOD * (r - l + 1) % MOD) % MOD;
+            nds[x].sum = (nds[x].sum + (long long)v * (r - l + 1) % MOD) % MOD;
+            nds[x].addtag = (nds[x].addtag + v) % MOD;
+            return;
+        }
+        pushdown(x, l, r);
+        int mid = l + (r - l &gt;&gt; 1);
+        if (ql &lt;= mid) add(ls(x), l, mid, ql, qr, v);
+        if (mid + 1 &lt;= qr) add(rs(x), mid + 1, r, ql, qr, v);
+        pushup(x);
+    }
+    int query(int x, int l, int r, int ql, int qr) {
+        if (ql &lt;= l &amp;&amp; r &lt;= qr) return nds[x].sum2;
+        pushdown(x, l, r);
+        int mid = l + (r - l &gt;&gt; 1), ans = 0;
+        if (ql &lt;= mid) ans = query(ls(x), l, mid, ql, qr);
+        if (mid + 1 &lt;= qr) ans = (ans + query(rs(x), mid + 1, r, ql, qr)) % MOD;
+        return ans;
+    }
+}seg;
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;a[i]), vl[i] = a[i];
+    std::sort(vl + 1, vl + n + 1);
+    int vn = std::unique(vl + 1, vl + n + 1) - vl - 1;
+    for (int i = 1; i &lt;= n; i++) a[i] = std::lower_bound(vl + 1, vl + vn + 1, a[i]) - vl;
+    for (int i = 1; i &lt;= n; i++) pre[i] = lst[a[i]], lst[a[i]] = i;
+    for (int i = 1; i &lt;= n; i++) {
+        seg.add(1, 1, n, pre[i] + 1, i, 1);
+        ans = (ans + seg.query(1, 1, n, 1, n)) % MOD;
+    }
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h3 id="2020-10-24">2020-10-24</h3>
+<h4 id="scoi2014方伯伯的玉米田">[SCOI2014]方伯伯的玉米田</h4>
+<p>随便选一个集合拔掉，相当于随便选一个集合留下来，即任意一个子序列。那么问题就是每次操作可以区间加一，求最多 k 次操作后最长不下降子序列的长度。</p>
+<p>显然对一个区间$[l,r]$进行区间加一操作，可能会使答案增大，也可能减小。增大是因为操作后有可能能接上$[1,l-1]$中的某个序列从而更新答案，减小是因为操作后有可能和$[r+1,n]$中的某个序列断开。那么显然可以贪心，每次直接将操作右端点设为$n$，这样答案就一定不会减小了。</p>
+<p>于是可以 DP，设$dp[i][j]$表示前 i 个位置，第 i 个位置被增加了 j 次的最长不下降子序列长度，那么有：</p>
+<p>$$dp[i][j]=\max_{k=1}^{i-1}\max_{l=0}^jdp[k][l]+1\ (h[k]+l\le h[i]+j)$$</p>
+<p>可以用二维树状数组优化一下。把 i 滚动掉，第一维存 j ，第二维存$h[i]+j$，那么显然要求的就是二维前缀最大值，用二维树状数组维护即可，复杂度$O(nk\log(nk))$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int n, k, a[10100], ans;
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+struct ft {
+    int n, m, ft[510][6010];
+    inline int lowbit(int x) { return x &amp; -x; }
+    inline void assign(int x, int y, int v) {
+        for (int i = x + 1; i &lt;= n; i += lowbit(i))
+            for (int j = y; j &lt;= m; j += lowbit(j)) ft[i][j] = max(ft[i][j], v);
+    }
+    inline int query(int x, int y) {
+        int ans = 0;
+        for (int i = x + 1; i &gt;= 1; i -= lowbit(i))
+            for (int j = y; j &gt;= 1; j -= lowbit(j)) ans = max(ans, ft[i][j]);
+        return ans;
+    }
+}ft;
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;k);
+    ft.n = k + 1;
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;a[i]), ft.m = max(ft.m, a[i] + k);
+    for (int i = 1; i &lt;= n; i++)
+        for (int j = k; j &gt;= 0; j--) {
+            int v = ft.query(j, a[i] + j) + 1;
+            ans = max(ans, v);
+            ft.assign(j, a[i] + j, v);
+        }
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h3 id="2020-10-25">2020-10-25</h3>
+<h4 id="scoi2009粉刷匠">[SCOI2009]粉刷匠</h4>
+<p><a href="https://www.luogu.com.cn/problem/P4158">https://www.luogu.com.cn/problem/P4158</a></p>
+<p>之前在 cf 上见过做法类似的题，当时还以为也就绿题或蓝题难度，没想到在 luogu 是紫的(好水)。</p>
+<p>每行是独立的，所有可以对每行分别考虑。设$f[i][j][k]$表示第 i 行前 j 个位置刷了 k 次最多能刷对几个位置，然后这就是一个背包，预处理两种颜色的前缀和(用来算区间里有几个位置是这种颜色，从而算出刷某个区间为某个颜色能刷对几个位置)，然后直接$O(nm^2t)$ DP 即可。</p>
+<p>但 t 的范围比较大，这样会 TLE。显然 n 个位置最多只会刷 n 次，所以可以把 k 的枚举上界从 t 改为 m ，复杂度优化到$O(nm^3)$，可行。</p>
+<p>求出 f 之后，设$g[i][j]$表示前 i 行共刷了 j 次的答案，还是背包，直接 DP 即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+int n, m, t, a[55][55], cnt[55][55][2], f[55][55][2510], g[55][2510];
+
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+
+int main() {
+    scanf(&quot;%d%d%d&quot;, &amp;n, &amp;m, &amp;t);
+    for (int i = 1; i &lt;= n; i++)
+        for (int j = 1; j &lt;= m; j++) scanf(&quot;%1d&quot;, &amp;a[i][j]), cnt[i][j][a[i][j]]++;
+    for (int i = 1; i &lt;= n; i++)
+        for (int j = 1; j &lt;= m; j++) cnt[i][j][0] += cnt[i][j - 1][0], cnt[i][j][1] += cnt[i][j - 1][1];
+    memset(f, -0x3f, sizeof f);
+    for (int i = 1; i &lt;= n; i++) {
+        f[i][0][0] = 0;
+        for (int j = 1; j &lt;= m; j++)
+            for (int k = 0; k &lt;= m; k++) {
+                f[i][j][k] = f[i][j - 1][k];
+                for (int l = 0; l &lt; j; l++)
+                    if (k) f[i][j][k] = max(f[i][j][k], f[i][l][k - 1] + max(cnt[i][j][0] - cnt[i][l][0], cnt[i][j][1] - cnt[i][l][1]));
+            }
+    }
+    memset(g, -0x3f, sizeof g);
+    g[0][0] = 0;
+    for (int i = 1; i &lt;= n; i++)
+        for (int j = 0; j &lt;= t; j++)
+            for (int k = 0; k &lt;= j; k++) g[i][j] = max(g[i][j], g[i - 1][j - k] + f[i][m][k]);
+    printf(&quot;%d\n&quot;, g[n][t]);
+    return 0;
+}</code></pre>
+<h4 id="scoi2009游戏">[SCOI2009]游戏</h4>
+<p><a href="https://www.luogu.com.cn/problem/P4161">https://www.luogu.com.cn/problem/P4161</a></p>
+<p>将每个数向它对应的数连有向边，那么图上会出现若干个简单环，而变回原序列所需的次数显然就是环的大小的最小公倍数。问题转化为若干和为 n 的数的可能的 lcm 的个数。考虑把 lcm 质因数分解为$\prod_{i=1}^mp_i^{k_i}$，则这个 lcm 能被凑出来当且仅当$\sum_{i=1}^np_i^{k_i}\le n$。因此可以线性筛预处理 n 以内的所有质数，然后设$dp[j]$表示质数幂和等于 j 的方案数，这就是一个背包问题，直接 DP 即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int n, prime[1010], pcnt;
+long long dp[1010], ans;
+bool isprime[1010];
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 2; i &lt;= n; i++) isprime[i] = true;
+    for (int i = 2; i &lt;= n; i++) {
+        if (isprime[i]) prime[++pcnt] = i;
+        for (int j = 1; j &lt;= pcnt &amp;&amp; i * prime[j] &lt;= n; j++) {
+            isprime[i * prime[j]] = false;
+            if (!(i % prime[j])) break;
+        }
+    }
+    dp[0] = 1;
+    for (int i = 1; i &lt;= pcnt; i++)
+        for (int j = n; j &gt;= 1; j--)
+            for (int pk = prime[i]; pk &lt;= j; pk *= prime[i]) dp[j] += dp[j - pk];
+    for (int i = 0; i &lt;= n; i++) ans += dp[i];
+    printf(&quot;%lld\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h4 id="noi1999棋盘分割">[NOI1999]棋盘分割</h4>
+<p><a href="https://www.luogu.com.cn/problem/P5752">https://www.luogu.com.cn/problem/P5752</a></p>
+<p>显然只要使$\sum_{i=1}^n(x_i-\overline x)^2$最小，观察一下$\overline x$的公式$\overline x=\dfrac{\sum_{i=1}^nx_i}{n}$，发现上面的和式就是所有格子的和，所以$\overline x$可以直接算出来，然后直接五维 DP，设$dp[i][x1][y1][x2][y2]$表示分割了 i 次，当前没分割的矩形左上角和右下角坐标分别为$(x1,y1),(x2,y2)$时$\sum_{j=1}^i(x_j-\overline x)^2$的最小值，转移只要枚举在哪分割即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;cmath&gt;
+
+int n, a[9][9], suma[9][9];
+double dp[15][9][9][9][9], avg;
+
+inline int sum(int x1, int y1, int x2, int y2) { return suma[x2][y2] - suma[x1 - 1][y2] - suma[x2][y1 - 1] + suma[x1 - 1][y1 - 1]; }
+inline double min(double a, double b) { return a &lt; b ? a : b; }
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt;= 8; i++)
+        for (int j = 1; j &lt;= 8; j++) scanf(&quot;%d&quot;, &amp;a[i][j]), suma[i][j] = a[i][j] + suma[i - 1][j] + suma[i][j - 1] - suma[i - 1][j - 1], avg += a[i][j];
+    avg /= n;
+    memset(dp, 0x42, sizeof dp);
+    for (int i = 1; i &lt;= n; i++)
+        for (int x1 = 1; x1 &lt;= 8; x1++)
+            for (int y1 = 1; y1 &lt;= 8; y1++)
+                for (int x2 = x1; x2 &lt;= 8; x2++)
+                    for (int y2 = y1; y2 &lt;= 8; y2++) {
+                        if (i == 1) dp[i][x1][y1][x2][y2] = (sum(x1, y1, x2, y2) - avg) * (sum(x1, y1, x2, y2) - avg);
+                        else {
+                            dp[i][x1][y1][x2][y2] = 1e9;
+                            for (int x = x1; x &lt; x2; x++)
+                                dp[i][x1][y1][x2][y2] = min(dp[i][x1][y1][x2][y2], min(dp[i - 1][x1][y1][x][y2] + (sum(x + 1, y1, x2, y2) - avg) * (sum(x + 1, y1, x2, y2) - avg),
+                                                                                        dp[i - 1][x + 1][y1][x2][y2] + (sum(x1, y1, x, y2) - avg) * (sum(x1, y1, x, y2) - avg)));
+                            for (int y = y1; y &lt; y2; y++)
+                                dp[i][x1][y1][x2][y2] = min(dp[i][x1][y1][x2][y2], min(dp[i - 1][x1][y1][x2][y] + (sum(x1, y + 1, x2, y2) - avg) * (sum(x1, y + 1, x2, y2) - avg), 
+                                                                                        dp[i - 1][x1][y + 1][x2][y2] + (sum(x1, y1, x2, y) - avg) * (sum(x1, y1, x2, y) - avg)));
+                        }
+                    }
+    printf(&quot;%.3lf\n&quot;, sqrt(dp[n][1][1][8][8] / n));
     return 0;
 }</code></pre>
 <a href="../posts.html" class="link" style="display:block; text-align:center;">return</a>

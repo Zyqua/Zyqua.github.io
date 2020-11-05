@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+        <html>
+            <head>
+                <meta charset="utf-8"/>
+                <title>n-kw && n-c by others</title>
+                <link rel="stylesheet" type="text/css" href="../styles.css"/>
+                <link rel="stylesheet" type="text/css" href="../markdownStyles.css"/>
+                <link rel="stylesheet" href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css">
+                <script defer src="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.js"></script>
+                <script>
+                var katex_config = {
+                    delimiters: 
+                    [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false}
+                    ]
+                };
+                </script>
+                <script defer src="https://cdn.bootcss.com/KaTeX/0.11.1/contrib/auto-render.min.js" onload="renderMathInElement(document.body,katex_config)"></script>
+            </head>
+            <body>
+                <div class="body">
+                <p class="title">striving & singing</p><p>$$\sum_{x_1=l_1}^{r_1}\sum_{x_2=l_2}^{r_2}...\sum_{x_n=l_n}^{r_n}\sum_{a_1+a_2+...+a_n=c}\prod_{i=1}^n x_i^{a_i}$$</p>
+<p>$$\sum_{a_1+a_2+...+a_n=c}\sum_{x_1=l_1}^{r_1}x_1^{a_1}\sum_{x_2=l_2}^{r_2}x_2^{a_2}...\sum_{x_n=l_n}^{r_n}x_n^{a_n}$$</p>
+<p>$$dp[i][j]=\sum_{k=0}^{j}dp[i-1][j-k]\sum_{x=l_i}^{r_i}x^{k}$$</p>
+<p>$$n=pb+q\s=p+q$$</p>
+<p>$$n-s=pb-p=p(b-1)\b=\dfrac{n-s}{p}+1$$</p>
+<a href="../posts.html" class="link" style="display:block; text-align:center;">return</a>
+</div>
+</body>
+</html>

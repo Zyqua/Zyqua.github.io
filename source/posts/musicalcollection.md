@@ -1,767 +1,767 @@
-title: musicalcollection
-date: 2020-01-09
-weight: 20200109
+musicalcollection
+2020-01-09
+20200109
 <!--more-->
-æœ¬äººçš„ä¸¤å¤§çˆ±å¥½ï¼Œä¸€æ˜¯OIäºŒæ˜¯å¬éŸ³ä¹ã€‚è¿™ç¯‡æ–‡ç« ç”¨æ¥æ¸…ç‚¹ä¸¤å¹´æ¥å‘æ˜åˆ°çš„æ‰€æœ‰å¥½çš„éŸ³ä¹ã€‚ç°åœ¨ä¸å†æŒ‰ç…§æ´¾åˆ«å’Œä½œè€…åˆ†ç±»ï¼Œè€Œæ˜¯ä»¥ä¸€å¼ ä¸“è¾‘ä¸ºå•ä½æŒ‰ç…§æˆ‘ä¸ªäººçš„å–œå¥½ç¨‹åº¦æ’åˆ—ã€‚æ¯å¼ ä¸“è¾‘ä¼šæœ‰ä¸€ä¸ªæ›²ç›®åˆ—è¡¨ï¼Œå‰é¢æœ‰ğŸ‘è¡¨ç¤ºè¿™é¦–å•æ›²åœ¨"æˆ‘å–œæ¬¢çš„éŸ³ä¹"æ­Œå•é‡Œã€‚
+±¾ÈËµÄÁ½´ó°®ºÃ£¬Ò»ÊÇOI¶şÊÇÌıÒôÀÖ¡£ÕâÆªÎÄÕÂÓÃÀ´ÇåµãÁ½ÄêÀ´·¢¾òµ½µÄËùÓĞºÃµÄÒôÀÖ¡£ÏÖÔÚ²»ÔÙ°´ÕÕÅÉ±ğºÍ×÷Õß·ÖÀà£¬¶øÊÇÒÔÒ»ÕÅ×¨¼­Îªµ¥Î»°´ÕÕÎÒ¸öÈËµÄÏ²ºÃ³Ì¶ÈÅÅÁĞ¡£Ã¿ÕÅ×¨¼­»áÓĞÒ»¸öÇúÄ¿ÁĞ±í£¬Ç°ÃæÓĞ??±íÊ¾ÕâÊ×µ¥ÇúÔÚ"ÎÒÏ²»¶µÄÒôÀÖ"¸èµ¥Àï¡£
 
-é•¿ç¯‡å¤§è®ºï¼Œç»†èŠ‚æœ‰å¾…è¡¥å……ã€‚
-#### ã€ŠLift Your Skinny Fists Like Antennas to Heavenã€‹
-ä½œè€…: Godspeed You! Black Emperor
+³¤Æª´óÂÛ£¬Ï¸½ÚÓĞ´ı²¹³ä¡£
+#### ¡¶Lift Your Skinny Fists Like Antennas to Heaven¡·
+×÷Õß: Godspeed You! Black Emperor
 
 <img src="http://p1.music.126.net/57tYS9j1eU9MdyntHY6bdg==/6665239488369506.jpg?param=150y150" class="musiccover"></img>
 
-- ğŸ‘ã€ŠStormã€‹
-- ğŸ‘ã€ŠStaticã€‹
-- ğŸ‘ã€ŠSleepã€‹
-- ğŸ‘ã€ŠAntennas To Heavenã€‹
+- ??¡¶Storm¡·
+- ??¡¶Static¡·
+- ??¡¶Sleep¡·
+- ??¡¶Antennas To Heaven¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠSlow Riot For New Zero Kanadaã€‹
-ä½œè€…: Godspeed You! Black Emperor
+#### ¡¶Slow Riot For New Zero Kanada¡·
+×÷Õß: Godspeed You! Black Emperor
 
 <img src="http://p1.music.126.net/_cCKiV9dF5nz0gQnTAS1xw==/1790004930031783.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠMoyaã€‹
-- ğŸ‘ã€ŠBBF3ã€‹
+- ¡¶Moya¡·
+- ??¡¶BBF3¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠFâ™¯ Aâ™¯ âˆã€‹
-ä½œè€…: Godspeed You! Black Emperor
+#### ¡¶F? A? ¡Ş¡·
+×÷Õß: Godspeed You! Black Emperor
 
 <img src="http://p2.music.126.net/7Er5stEqNets7x2EV_5y3Q==/109951163484580625.jpg?param=150y150" class="musiccover"></img>
 
-- ğŸ‘ã€ŠThe Dead Flag Bluesã€‹
-- ğŸ‘ã€ŠEast Hastingsã€‹
-- ğŸ‘ã€ŠProvidenceã€‹
+- ??¡¶The Dead Flag Blues¡·
+- ??¡¶East Hastings¡·
+- ??¡¶Providence¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠF#A#âˆã€‹[1995-1997]
-ä½œè€…: Godspeed You! Black Emperor
+#### ¡¶F#A#¡Ş¡·[1995-1997]
+×÷Õß: Godspeed You! Black Emperor
 
 <img src="http://p1.music.126.net/OdnaPz3TE2L-IeTjgXG7ww==/3294136839164520.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠNervous, Sad, Poor...ã€‹
-- ã€ŠBleak, Uncertain, Beautiful...ã€‹
+- ¡¶Nervous, Sad, Poor...¡·
+- ¡¶Bleak, Uncertain, Beautiful...¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠGive Me Beauty... Or Give Me Death!ã€‹
-ä½œè€…: Ef
+#### ¡¶Give Me Beauty... Or Give Me Death!¡·
+×÷Õß: Ef
 
 <img src="http://p2.music.126.net/uP_LWu-RmHiBK_ZVrN2L6w==/109951163367903365.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠEttã€‹
-- ã€ŠHello Scotlandã€‹
-- ğŸ‘ã€ŠFinal Touch / Hidden Agendaã€‹
-- ã€ŠHe Came, He Stayed, He fellã€‹
-- ğŸ‘ã€ŠTomorrow My Friend...ã€‹
-- ã€ŠWe'll Meet in the Endã€‹
+- ¡¶Ett¡·
+- ¡¶Hello Scotland¡·
+- ??¡¶Final Touch / Hidden Agenda¡·
+- ¡¶He Came, He Stayed, He fell¡·
+- ??¡¶Tomorrow My Friend...¡·
+- ¡¶We'll Meet in the End¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠEnjoy Eternal Blissã€‹
-ä½œè€…: Yndi Halda
+#### ¡¶Enjoy Eternal Bliss¡·
+×÷Õß: Yndi Halda
 
 <img src="http://p2.music.126.net/y2a74MduRhl7s4ANPAn_cg==/109951163371785523.jpg?param=150y150" class="musiccover"></img>
 
-- ğŸ‘ã€ŠDash And Blastã€‹
-- ğŸ‘ã€ŠWe Flood Empty Lakesã€‹
-- ğŸ‘ã€ŠA Song For Starlit Beachesã€‹
-- ğŸ‘ã€ŠIlluminate My Heart, My Darling!ã€‹
+- ??¡¶Dash And Blast¡·
+- ??¡¶We Flood Empty Lakes¡·
+- ??¡¶A Song For Starlit Beaches¡·
+- ??¡¶Illuminate My Heart, My Darling!¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠAllelujah! Don't Bend! Ascend!ã€‹
-ä½œè€…: Godspeed You! Black Emperor
+#### ¡¶Allelujah! Don't Bend! Ascend!¡·
+×÷Õß: Godspeed You! Black Emperor
 
 <img src="http://p2.music.126.net/B17s2GP88_IUMQ2JuZAA1g==/109951163500484365.jpg?param=150y150" class="musiccover"></img>
 
-- ğŸ‘ã€ŠMladicã€‹
-- ã€ŠTheir Helicopters Singã€‹
-- ğŸ‘ã€ŠWe Drift Like Worried Fireã€‹
-- ã€ŠStrung Like Lights At Thee Printemps Erableã€‹
+- ??¡¶Mladic¡·
+- ¡¶Their Helicopters Sing¡·
+- ??¡¶We Drift Like Worried Fire¡·
+- ¡¶Strung Like Lights At Thee Printemps Erable¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠHow Lonely Sits the Cityã€‹
-ä½œè€…: The Ascent of Everest
+#### ¡¶How Lonely Sits the City¡·
+×÷Õß: The Ascent of Everest
 
 <img src="http://p2.music.126.net/u5QrM_xO98T5Up3sQdpmcg==/109951163500118997.jpg?param=150y150" class="musiccover"></img>
 
-- ğŸ‘ã€ŠAlas, Alas! The Breath of Life!ã€‹
-- ã€ŠAs the City Burned We Trembled for We Saw the Making of Their Undoing in Our Own Heartsã€‹
-- ğŸ‘ã€ŠMolotovã€‹
-- ã€ŠA Threnody for the Victims of Nov 2ndã€‹
-- ğŸ‘ã€ŠIf I Could Move Mountainsã€‹
+- ??¡¶Alas, Alas! The Breath of Life!¡·
+- ¡¶As the City Burned We Trembled for We Saw the Making of Their Undoing in Our Own Hearts¡·
+- ??¡¶Molotov¡·
+- ¡¶A Threnody for the Victims of Nov 2nd¡·
+- ??¡¶If I Could Move Mountains¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠçŸ¢çš„ç›´æ˜ 2014ã€‹
-ä½œè€…: Nao'ymt
+#### ¡¶Ê¸µÄÖ±Ã÷ 2014¡·
+×÷Õß: Nao'ymt
 
 <img src="http://p2.music.126.net/qmreN0T_FiiaE2O4F_AsKA==/3238061746944282.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠComplicatedã€‹
-- ã€ŠColdã€‹
-- ã€ŠAll Disappearã€‹
-- ã€ŠSunriseã€‹
-- ğŸ‘ã€ŠOne Day We Will Be Togetherã€‹
-- ã€ŠWanderingã€‹
-- ã€ŠBeautifulã€‹
-- ã€ŠScenarioã€‹
-- ğŸ‘ã€ŠFrequencyã€‹
-- ã€ŠSpring Reminds Me of Youã€‹
-- ã€ŠFirefilesã€‹
-- ã€Š14.428ã€‹
-- ã€ŠSomeday I Will Dieã€‹
-- ã€ŠUdumbaraã€‹
-- ã€ŠAugust Rainã€‹
-- ã€ŠHourglassã€‹
-- ã€ŠIrreplaceableã€‹
-- ã€ŠPaper Worldã€‹
-- ã€ŠMonsterã€‹
-- ã€ŠReminiscenceã€‹
-- ã€ŠOne Day We Will Be Together Againã€‹
+- ¡¶Complicated¡·
+- ¡¶Cold¡·
+- ¡¶All Disappear¡·
+- ¡¶Sunrise¡·
+- ??¡¶One Day We Will Be Together¡·
+- ¡¶Wandering¡·
+- ¡¶Beautiful¡·
+- ¡¶Scenario¡·
+- ??¡¶Frequency¡·
+- ¡¶Spring Reminds Me of You¡·
+- ¡¶Firefiles¡·
+- ¡¶14.428¡·
+- ¡¶Someday I Will Die¡·
+- ¡¶Udumbara¡·
+- ¡¶August Rain¡·
+- ¡¶Hourglass¡·
+- ¡¶Irreplaceable¡·
+- ¡¶Paper World¡·
+- ¡¶Monster¡·
+- ¡¶Reminiscence¡·
+- ¡¶One Day We Will Be Together Again¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠHurtbreak Wonderlandã€‹
-ä½œè€…: world's end girlfriend
+#### ¡¶Hurtbreak Wonderland¡·
+×÷Õß: world's end girlfriend
 
 <img src="http://p2.music.126.net/myiA41agEubVTkrf2cdiVA==/731175232493552.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠWanderingã€‹
-- ğŸ‘ã€ŠBirthday Resistanceã€‹
-- ğŸ‘ã€Š100 Years Of Chokeã€‹
-- ã€ŠGrass Arkã€‹
-- ã€ŠGhost Of A Horse Under The Chandelierã€‹
-- ã€ŠThe Octuple Personnality And Eleven Crowsã€‹
-- ã€ŠBreath Or Castle Balladã€‹
-- ğŸ‘ã€ŠBless Yourself Bleedã€‹
-- ã€ŠDance For Borderline Miscanthusã€‹
-- ã€ŠRiver Was Filled With Storiesã€‹
+- ¡¶Wandering¡·
+- ??¡¶Birthday Resistance¡·
+- ??¡¶100 Years Of Choke¡·
+- ¡¶Grass Ark¡·
+- ¡¶Ghost Of A Horse Under The Chandelier¡·
+- ¡¶The Octuple Personnality And Eleven Crows¡·
+- ¡¶Breath Or Castle Ballad¡·
+- ??¡¶Bless Yourself Bleed¡·
+- ¡¶Dance For Borderline Miscanthus¡·
+- ¡¶River Was Filled With Stories¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠLuciferian Towersã€‹
-ä½œè€…: Godspeed You! Black Emperor
+#### ¡¶Luciferian Towers¡·
+×÷Õß: Godspeed You! Black Emperor
 
 <img src="http://p2.music.126.net/o3gqGY-DwuFc6vzzFz1Zyw==/109951163471299711.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠUndoing a Luciferian Towersã€‹
-- ğŸ‘ã€ŠBosses Hangã€‹
-- ã€ŠFam/Famineã€‹
-- ğŸ‘ã€ŠAnthem For No Stateã€‹
+- ¡¶Undoing a Luciferian Towers¡·
+- ??¡¶Bosses Hang¡·
+- ¡¶Fam/Famine¡·
+- ??¡¶Anthem For No State¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠUnnoticable In A Tiny Town, Invisable In The Cityã€‹
-ä½œè€…: Youth Pictures of Florence Henderson
+#### ¡¶Unnoticable In A Tiny Town, Invisable In The City¡·
+×÷Õß: Youth Pictures of Florence Henderson
 
 <img src="http://p1.music.126.net/0pCCsH0PaMiT_AQoc8s3Iw==/6637751697685519.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠVan Gogh Kept Painting Himself Because He Was The Only Model He Hadã€‹
-- ã€ŠYet We Continue To Build There, The Structureã€‹
-- ã€ŠHow Odd To See These Lamps Still Burningã€‹
-- ğŸ‘ã€ŠI'Ve Got A Picture Of You Bossã€‹
-- ğŸ‘ã€ŠA List Not To Be Read At Your Weddingã€‹
-- ğŸ‘ã€ŠWe May Be Remembered By What We Did When We Sat Downã€‹
+- ¡¶Van Gogh Kept Painting Himself Because He Was The Only Model He Had¡·
+- ¡¶Yet We Continue To Build There, The Structure¡·
+- ¡¶How Odd To See These Lamps Still Burning¡·
+- ??¡¶I'Ve Got A Picture Of You Boss¡·
+- ??¡¶A List Not To Be Read At Your Wedding¡·
+- ??¡¶We May Be Remembered By What We Did When We Sat Down¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠAsunder, Sweet and Other Distressã€‹
-ä½œè€…: Godspeed You! Black Emperor
+#### ¡¶Asunder, Sweet and Other Distress¡·
+×÷Õß: Godspeed You! Black Emperor
 
 <img src="http://p2.music.126.net/wiajzksvZ3BsTURwjabiIQ==/7726268208954958.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠPeasantry or 'Light!Inside of Light!'ã€‹
-- ã€ŠLambs' Breathã€‹
-- ã€ŠAsunder, Sweetã€‹
-- ğŸ‘ã€ŠPiss Crowns Are Trebledã€‹
+- ¡¶Peasantry or 'Light!Inside of Light!'¡·
+- ¡¶Lambs' Breath¡·
+- ¡¶Asunder, Sweet¡·
+- ??¡¶Piss Crowns Are Trebled¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠYanqui U.X.O.ã€‹
-ä½œè€…: Godspeed You! Black Emperor
+#### ¡¶Yanqui U.X.O.¡·
+×÷Õß: Godspeed You! Black Emperor
 
 <img src="http://p1.music.126.net/vkAtLMfyi7q1siJLVL9PaQ==/109951163500918707.jpg?param=150y150" class="musiccover"></img>
 
-- ğŸ‘ã€Š09-15-00ã€‹
-- ã€Š09-15-00(cont.)ã€‹
-- ã€ŠRockets fall on Rocket Fallsã€‹
-- ğŸ‘ã€Š\*\*\*\*\*\*\*\*\*\*\*\*=redeemerã€‹
-- ã€Š\*\*\*\*\*\*\*\*\*\*\*\*=redeemer(cont.)ã€‹
+- ??¡¶09-15-00¡·
+- ¡¶09-15-00(cont.)¡·
+- ¡¶Rockets fall on Rocket Falls¡·
+- ??¡¶\*\*\*\*\*\*\*\*\*\*\*\*=redeemer¡·
+- ¡¶\*\*\*\*\*\*\*\*\*\*\*\*=redeemer(cont.)¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠGraceã€‹
-ä½œè€…: Hakura Nakamura
+#### ¡¶Grace¡·
+×÷Õß: Hakura Nakamura
 
 <img src="http://p2.music.126.net/sM0gbClGYFr4r6NXy_77_Q==/857619069688801.jpg?param=150y150" class="musiccover"></img>
-- ã€ŠEvery Dayã€‹
-- ã€ŠArneã€‹
-- ã€ŠOpusã€‹
-- ã€ŠRalgoã€‹
-- ã€ŠElmã€‹
-- ã€ŠLuzã€‹
-- ã€ŠLangã€‹
-- ã€ŠCieloã€‹
-- ã€ŠElm\2ã€‹
-- ã€ŠSignã€‹
-- ã€ŠLampã€‹
-- ã€ŠGraceã€‹
-- ã€ŠCadenzaã€‹
+- ¡¶Every Day¡·
+- ¡¶Arne¡·
+- ¡¶Opus¡·
+- ¡¶Ralgo¡·
+- ¡¶Elm¡·
+- ¡¶Luz¡·
+- ¡¶Lang¡·
+- ¡¶Cielo¡·
+- ¡¶Elm\2¡·
+- ¡¶Sign¡·
+- ¡¶Lamp¡·
+- ¡¶Grace¡·
+- ¡¶Cadenza¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠTiny Silver Hammersã€‹
-ä½œè€…: Godspeed You! Black Emperor
+#### ¡¶Tiny Silver Hammers¡·
+×÷Õß: Godspeed You! Black Emperor
 
 <img src="http://p2.music.126.net/OkuLK99DPPspmk0SaUQCgg==/1693247906787910.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠTiny Silver Hammers (Part 1)ã€‹
-- ã€ŠTiny Silver Hammers (Part 2)ã€‹
+- ¡¶Tiny Silver Hammers (Part 1)¡·
+- ¡¶Tiny Silver Hammers (Part 2)¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠUnder Summerã€‹
-ä½œè€…: Yndi Halda
+#### ¡¶Under Summer¡·
+×÷Õß: Yndi Halda
 
 <img src="http://p1.music.126.net/D11QYVk4fihryqRa2jwJBw==/109951163471238241.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠTogether Those Leavesã€‹
-- ğŸ‘ã€ŠGolden Threads from the Sunã€‹
-- ã€ŠHelenaã€‹
-- ã€ŠThis Very Flightã€‹
+- ¡¶Together Those Leaves¡·
+- ??¡¶Golden Threads from the Sun¡·
+- ¡¶Helena¡·
+- ¡¶This Very Flight¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠChapter One: Had We Known Betterã€‹
-ä½œè€…: Industries Of The Blind
+#### ¡¶Chapter One: Had We Known Better¡·
+×÷Õß: Industries Of The Blind
 
 <img src="http://p2.music.126.net/ccQHtuC6LkDDak3GFnFDsw==/717981092981109.jpg?param=150y150" class="musiccover"></img>
 
-- ğŸ‘ã€ŠI just wanted to make you something beautifulã€‹
-- ã€ŠWaiting and waltzing in airport terminalsã€‹
-- ğŸ‘ã€ŠThe light weren't that bright, but our eyes were so tiredã€‹
+- ??¡¶I just wanted to make you something beautiful¡·
+- ¡¶Waiting and waltzing in airport terminals¡·
+- ??¡¶The light weren't that bright, but our eyes were so tired¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠHymn to the Immortal Windã€‹
-ä½œè€…: MONO
+#### ¡¶Hymn to the Immortal Wind¡·
+×÷Õß: MONO
 
 <img src="http://p2.music.126.net/cioulQjNJ0Z8vP9TDfMJow==/833429813854422.jpg?param=150y150" class="musiccover"></img>
 
-- ğŸ‘ã€ŠAshes In The Snowã€‹
-- ã€ŠBurial At Seaã€‹
-- ã€ŠSilent Flight, Sleeping Downã€‹
-- ğŸ‘ã€ŠPure As Snow (Trails of the Winter Storm)ã€‹
-- ã€ŠFollow The Mapã€‹
-- ã€ŠThe Battle To Heavenã€‹
-- ã€ŠEverlasting Lightã€‹
+- ??¡¶Ashes In The Snow¡·
+- ¡¶Burial At Sea¡·
+- ¡¶Silent Flight, Sleeping Down¡·
+- ??¡¶Pure As Snow (Trails of the Winter Storm)¡·
+- ¡¶Follow The Map¡·
+- ¡¶The Battle To Heaven¡·
+- ¡¶Everlasting Light¡·
 <div class="clearfix"></div><br/>
 
-#### ã€Šsongs by the tumbled seaã€‹
-ä½œè€…: the tumbled sea
+#### ¡¶songs by the tumbled sea¡·
+×÷Õß: the tumbled sea
 
 <img src="http://p1.music.126.net/HU-oKS4YftUM26gwZ8puGA==/109951163403578122.jpg?param=150y150" class="musiccover"></img>
 
-- ã€Š97202ã€‹
-- ã€ŠWalkingã€‹
-- ğŸ‘ã€Šemily's songã€‹
-- ã€Šchildren building this rainman out of snowã€‹
-- ã€ŠA song for staying in.ã€‹
-- ã€Ša growing recognition of the genius of birds.ã€‹
-- ã€Šsleepsã€‹
-- ã€Šmayã€‹
-- ğŸ‘ã€Šwe're turning into regular peopleã€‹
-- ã€Šdovesã€‹
-- ã€Ša love songã€‹
-- ã€Šthe people you never knew aboutã€‹
-- ã€Šuntitled for piano and violinsã€‹
-- ã€Šuntitled for pianoã€‹
+- ¡¶97202¡·
+- ¡¶Walking¡·
+- ??¡¶emily's song¡·
+- ¡¶children building this rainman out of snow¡·
+- ¡¶A song for staying in.¡·
+- ¡¶a growing recognition of the genius of birds.¡·
+- ¡¶sleeps¡·
+- ¡¶may¡·
+- ??¡¶we're turning into regular people¡·
+- ¡¶doves¡·
+- ¡¶a love song¡·
+- ¡¶the people you never knew about¡·
+- ¡¶untitled for piano and violins¡·
+- ¡¶untitled for piano¡·
 <div class="clearfix"></div><br/>
 
-#### ã€Šmelody/summerã€‹
-ä½œè€…: the tumbled sea
+#### ¡¶melody/summer¡·
+×÷Õß: the tumbled sea
 
 <img src="http://p1.music.126.net/PHUbxy53vtWvIApxVV1pWw==/2946691184922936.jpg?param=150y150" class="musiccover"></img>
 
-- ã€Šsummer iiã€‹
-- ã€Šsummer vã€‹
-- ã€Šsummer iiiã€‹
-- ã€Šsummer ivã€‹
-- ã€Šmelody iã€‹
-- ã€Šmelody iiã€‹
-- ã€Šmelody iiiã€‹
-- ã€ŠÃ˜ã€‹
-- ã€Š\\\\ã€‹
-- ã€Šmelody ivã€‹
-- ã€Šsummer viã€‹
+- ¡¶summer ii¡·
+- ¡¶summer v¡·
+- ¡¶summer iii¡·
+- ¡¶summer iv¡·
+- ¡¶melody i¡·
+- ¡¶melody ii¡·
+- ¡¶melody iii¡·
+- ¡¶?¡·
+- ¡¶\\\\¡·
+- ¡¶melody iv¡·
+- ¡¶summer vi¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠIn Today Already Walks Tomorrowã€‹
-ä½œè€…: Sleepmakeswaves
+#### ¡¶In Today Already Walks Tomorrow¡·
+×÷Õß: Sleepmakeswaves
 
 <img src="http://p1.music.126.net/Z-ihou2VFqbeLesPFKeGbg==/2533274790655230.jpg?param=150y150" class="musiccover"></img>
 
-- ğŸ‘ã€Ši will write peace on your wings and you will fly over the worldã€‹
-- ã€Šexits to nowhereã€‹
-- ğŸ‘ã€Šone day you will teach me to let go of my fearsã€‹
-- ğŸ‘ã€Šso that the children will always shout her nameã€‹
-- ã€ŠIt's Dark, It's Cold, It's Winterã€‹
-- ã€Šwhat we cannot speak of, must be passed over in silenceã€‹
+- ??¡¶i will write peace on your wings and you will fly over the world¡·
+- ¡¶exits to nowhere¡·
+- ??¡¶one day you will teach me to let go of my fears¡·
+- ??¡¶so that the children will always shout her name¡·
+- ¡¶It's Dark, It's Cold, It's Winter¡·
+- ¡¶what we cannot speak of, must be passed over in silence¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠPlains of the Purple Buffaloã€‹
-ä½œè€…: \*shels
+#### ¡¶Plains of the Purple Buffalo¡·
+×÷Õß: \*shels
 
 <img src="http://p1.music.126.net/VOSwwdbJKQj0cZENKdRk2Q==/787250325529135.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠJourney to the Plainsã€‹
-- ã€ŠPlains of the Purple Buffalo (Part 1)ã€‹
-- ã€ŠPlains of the Purple Buffalo (Part 2)ã€‹
-- ã€ŠSearching for Zihuatanejoã€‹
-- ã€ŠVision Questã€‹
-- ã€ŠAtollã€‹
-- ã€ŠButterfiles on Luci's Wayã€‹
-- ã€ŠCrown of Eagle Feathersã€‹
-- ã€ŠBastien's Angelsã€‹
-- ã€ŠConquerorã€‹
+- ¡¶Journey to the Plains¡·
+- ¡¶Plains of the Purple Buffalo (Part 1)¡·
+- ¡¶Plains of the Purple Buffalo (Part 2)¡·
+- ¡¶Searching for Zihuatanejo¡·
+- ¡¶Vision Quest¡·
+- ¡¶Atoll¡·
+- ¡¶Butterfiles on Luci's Way¡·
+- ¡¶Crown of Eagle Feathers¡·
+- ¡¶Bastien's Angels¡·
+- ¡¶Conqueror¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠPalmless Prayer / Mass Murder Refrainã€‹
-ä½œè€…: MONO / world's end girlfriend
+#### ¡¶Palmless Prayer / Mass Murder Refrain¡·
+×÷Õß: MONO / world's end girlfriend
 
 <img src="http://p2.music.126.net/u4I5PI3mCckdzHCBQqanlw==/109951163472905109.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠTrailer 1ã€‹
-- ã€ŠTrailer 2ã€‹
-- ã€ŠTrailer 3ã€‹
-- ã€ŠTrailer 4ã€‹
-- ğŸ‘ã€ŠTrailer 5ã€‹
+- ¡¶Trailer 1¡·
+- ¡¶Trailer 2¡·
+- ¡¶Trailer 3¡·
+- ¡¶Trailer 4¡·
+- ??¡¶Trailer 5¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠI have written a wicked book, and feel spotless as the lambã€‹
-ä½œè€…: made by grey
+#### ¡¶I have written a wicked book, and feel spotless as the lamb¡·
+×÷Õß: made by grey
 
 <img src="http://p2.music.126.net/anJ19ow_CDzTHsGlG6KyRA==/1909851697550964.jpg?param=150y150" class="musiccover"></img>
 
-- ã€Šsunrays will make you see the cloudsã€‹
-- ã€Šnothing burns twiceã€‹
-- ã€Šs.i.a.(skype is akward)ã€‹
-- ğŸ‘ã€Šlittle secretsã€‹
+- ¡¶sunrays will make you see the clouds¡·
+- ¡¶nothing burns twice¡·
+- ¡¶s.i.a.(skype is akward)¡·
+- ??¡¶little secrets¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠStrawberryã€‹
-ä½œè€…: Soul
+#### ¡¶Strawberry¡·
+×÷Õß: Soul
 
 <img src="http://p2.music.126.net/Mv1-aBQI-VdFInMkqUqhwQ==/2483796767170021.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠStrawberryã€‹
-- ã€ŠLittle Princeã€‹
-- ã€ŠAccident By The Seaã€‹
-- ã€ŠI've Given All And I'm Now Nothingã€‹
-- ã€ŠNarniaã€‹
-- ã€ŠThe Less The Betterã€‹
-- ğŸ‘ã€ŠSummer Endsã€‹
+- ¡¶Strawberry¡·
+- ¡¶Little Prince¡·
+- ¡¶Accident By The Sea¡·
+- ¡¶I've Given All And I'm Now Nothing¡·
+- ¡¶Narnia¡·
+- ¡¶The Less The Better¡·
+- ??¡¶Summer Ends¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠThis World Is Not A Cold Dead Placeã€‹
-ä½œè€…: Explosions In The Sky
+#### ¡¶This World Is Not A Cold Dead Place¡·
+×÷Õß: Explosions In The Sky
 
 <img src="http://p2.music.126.net/eHACx3CmoV4FEG4hvuog5A==/710284511552010.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠFirst Breath After Comaã€‹
-- ğŸ‘ã€ŠThe Only Moment We Were Aloneã€‹
-- ğŸ‘ã€ŠSix Days At The Bottom Of The Oceanã€‹
-- ã€ŠMemorialã€‹
-- ğŸ‘ã€ŠYour Hand In Mineã€‹
+- ¡¶First Breath After Coma¡·
+- ??¡¶The Only Moment We Were Alone¡·
+- ??¡¶Six Days At The Bottom Of The Ocean¡·
+- ¡¶Memorial¡·
+- ??¡¶Your Hand In Mine¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠFrengersã€‹
-ä½œè€…: Mew
+#### ¡¶Frengers¡·
+×÷Õß: Mew
 
 <img src="http://p2.music.126.net/cXv4HxpVXNXPnjG9fA2twQ==/6659741929650881.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠAm I Wry? Noã€‹
-- ã€Š156ã€‹
-- ã€ŠSnow Brigadeã€‹
-- ã€ŠSymmetryã€‹
-- ã€ŠBehind the Drapesã€‹
-- ã€ŠHer Voice Is Beyond Her Yearsã€‹
-- ã€ŠEight Flew Over, One Was Destroyedã€‹
-- ã€ŠShe Came Home for Christmasã€‹
-- ã€ŠShespiderã€‹
-- ğŸ‘ã€ŠComforting Soundsã€‹
+- ¡¶Am I Wry? No¡·
+- ¡¶156¡·
+- ¡¶Snow Brigade¡·
+- ¡¶Symmetry¡·
+- ¡¶Behind the Drapes¡·
+- ¡¶Her Voice Is Beyond Her Years¡·
+- ¡¶Eight Flew Over, One Was Destroyed¡·
+- ¡¶She Came Home for Christmas¡·
+- ¡¶Shespider¡·
+- ??¡¶Comforting Sounds¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠEulogy for Evolutionã€‹
-ä½œè€…: Ã“lafur Arnalds
+#### ¡¶Eulogy for Evolution¡·
+×÷Õß: ¨®lafur Arnalds
 
 <img src="http://p1.music.126.net/UmeWt9qDVQCbGKffFuHmqg==/109951164434722332.jpg?param=150y150" class="musiccover"></img>
 
-- ã€Š0040ã€‹
-- ã€Š0048 / 0729ã€‹
-- ã€Š0952ã€‹
-- ã€Š1440ã€‹
-- ã€Š1953ã€‹
-- ğŸ‘ã€Š3055ã€‹
-- ã€Š3326ã€‹
-- ã€Š3704 / 3837ã€‹
+- ¡¶0040¡·
+- ¡¶0048 / 0729¡·
+- ¡¶0952¡·
+- ¡¶1440¡·
+- ¡¶1953¡·
+- ??¡¶3055¡·
+- ¡¶3326¡·
+- ¡¶3704 / 3837¡·
 <div class="clearfix"></div><br/>
 
-#### ã€Š...And They Have Escaped the Weight of Darknessã€‹
-ä½œè€…: Ã“lafur Arnalds
+#### ¡¶...And They Have Escaped the Weight of Darkness¡·
+×÷Õß: ¨®lafur Arnalds
 
 <img src="http://p2.music.126.net/2SxDD26Ax-o89_NJH_oCUA==/109951164435369171.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠÃ¾Ãš Ert SÃ³linã€‹
-- ã€ŠÃ¾Ãš Ert JÃ¶rÃ°inã€‹
-- ã€ŠTungliÃ°ã€‹
-- ã€ŠLoftiÃ° VerÃ°ur Skyndilega Kaltã€‹
-- ã€ŠKjurrtã€‹
-- ã€ŠGleypa Okkurã€‹
-- ğŸ‘ã€ŠHÃ¦gt, Kemur LjÃ³siÃ°ã€‹
-- ã€ŠUndan Huluã€‹
-- ã€ŠÃ¾au Hafa SloppiÃ° Undan Ã¾unga Myrkursinsã€‹
-- ã€ŠEndalaus Iã€‹
-- ã€ŠHrattã€‹
-- ã€ŠEndalaus IIã€‹
+- ¡¶t¨² Ert S¨®lin¡·
+- ¡¶t¨² Ert J?rein¡·
+- ¡¶Tunglie¡·
+- ¡¶Loftie Vereur Skyndilega Kalt¡·
+- ¡¶Kjurrt¡·
+- ¡¶Gleypa Okkur¡·
+- ??¡¶H?gt, Kemur Lj¨®sie¡·
+- ¡¶Undan Hulu¡·
+- ¡¶tau Hafa Sloppie Undan tunga Myrkursins¡·
+- ¡¶Endalaus I¡·
+- ¡¶Hratt¡·
+- ¡¶Endalaus II¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠAtlas: Oceansã€‹
-ä½œè€…: Sleeping at Last
+#### ¡¶Atlas: Oceans¡·
+×÷Õß: Sleeping at Last
 
 <img src="http://p2.music.126.net/pKP-uoAUHA5wNwjfsK-cHQ==/5883486720419457.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠPacificã€‹
-- ğŸ‘ã€ŠAtlanticã€‹
-- ã€ŠIndianã€‹
-- ã€ŠSouthernã€‹
-- ã€ŠArcticã€‹
+- ¡¶Pacific¡·
+- ??¡¶Atlantic¡·
+- ¡¶Indian¡·
+- ¡¶Southern¡·
+- ¡¶Arctic¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠReanimationã€‹
-ä½œè€…: Lights & Motion
+#### ¡¶Reanimation¡·
+×÷Õß: Lights & Motion
 
 <img src="http://p2.music.126.net/da3skyhYCE1nhi6kLum3NA==/2571757697399885.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠRequiemã€‹
-- ã€ŠHomeã€‹
-- ã€ŠAerialsã€‹
-- ã€ŠDriftã€‹
-- ğŸ‘ã€ŠThe Marchã€‹
-- ã€ŠVictory Roseã€‹
-- ã€ŠEpilogueã€‹
-- ã€ŠFracturedã€‹
-- ã€ŠTexasã€‹
-- ã€ŠFaded Fluorescenceã€‹
-- ã€ŠDepartureã€‹
-- ã€ŠReanimationã€‹
-- ã€ŠDream Awayã€‹
+- ¡¶Requiem¡·
+- ¡¶Home¡·
+- ¡¶Aerials¡·
+- ¡¶Drift¡·
+- ??¡¶The March¡·
+- ¡¶Victory Rose¡·
+- ¡¶Epilogue¡·
+- ¡¶Fractured¡·
+- ¡¶Texas¡·
+- ¡¶Faded Fluorescence¡·
+- ¡¶Departure¡·
+- ¡¶Reanimation¡·
+- ¡¶Dream Away¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠIn, Never Outã€‹
-ä½œè€…: Pg.Lost
+#### ¡¶In, Never Out¡·
+×÷Õß: Pg.Lost
 
 <img src="http://p1.music.126.net/BPe5BjaX9JBqqauxlGgkqQ==/109951163390250650.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠPrahanienã€‹
-- ã€ŠJuraã€‹
-- ã€ŠHeart of Heartsã€‹
-- ã€ŠStill Alrightã€‹
-- ğŸ‘ã€ŠCrystallineã€‹
-- ã€ŠGomezã€‹
+- ¡¶Prahanien¡·
+- ¡¶Jura¡·
+- ¡¶Heart of Hearts¡·
+- ¡¶Still Alright¡·
+- ??¡¶Crystalline¡·
+- ¡¶Gomez¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠMr. Dogã€‹
-ä½œè€…: Overhead, The Albatross
+#### ¡¶Mr. Dog¡·
+×÷Õß: Overhead, The Albatross
 
 <img src="http://p2.music.126.net/gh1_LIB4QDQTJCYgBau6iQ==/901599534832557.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠPigonometryã€‹
-- ğŸ‘ã€ŠFlubirdsã€‹
+- ¡¶Pigonometry¡·
+- ??¡¶Flubirds¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠLearning To Growlã€‹
-ä½œè€…: Overhead, The Albatross
+#### ¡¶Learning To Growl¡·
+×÷Õß: Overhead, The Albatross
 
 <img src="http://p2.music.126.net/Ib-_oNmaqZKhoDRFyADKpg==/3437073350286429.jpg?param=150y150" class="musiccover"></img>
 
-- ğŸ‘ã€ŠIndie Roseã€‹
-- ã€ŠTelekinetic Forest Guardã€‹
-- ã€ŠTheme For A Promiseã€‹
-- ã€ŠDaekuã€‹
-- ã€ŠHBGã€‹
-- ã€ŠLeave It To My Ghostã€‹
-- ã€ŠParoxysmã€‹
-- ã€ŠBaraã€‹
-- ã€ŠBig River Manã€‹
+- ??¡¶Indie Rose¡·
+- ¡¶Telekinetic Forest Guard¡·
+- ¡¶Theme For A Promise¡·
+- ¡¶Daeku¡·
+- ¡¶HBG¡·
+- ¡¶Leave It To My Ghost¡·
+- ¡¶Paroxysm¡·
+- ¡¶Bara¡·
+- ¡¶Big River Man¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠFirst Light / Signal to Groundã€‹
-ä½œè€…: In Transmission
+#### ¡¶First Light / Signal to Ground¡·
+×÷Õß: In Transmission
 
 <img src="http://p2.music.126.net/gPn0eFhQyaooz_9fTEaViA==/2533274791664238.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠI'll Be Hereã€‹
-- ã€ŠWhen the Earth Explodesã€‹
-- ã€ŠAnd When There's Nothing Leftã€‹
-- ğŸ‘ã€ŠAll I See Isã€‹
-- ã€Š...ã€‹
-- ğŸ‘ã€ŠIt Starts with a Beginningã€‹
-- ã€ŠCollections Createã€‹
-- ã€ŠWhat's Left Behindã€‹
-- ã€ŠWe Resonateã€‹
-- ã€ŠEndless Blackã€‹
+- ¡¶I'll Be Here¡·
+- ¡¶When the Earth Explodes¡·
+- ¡¶And When There's Nothing Left¡·
+- ??¡¶All I See Is¡·
+- ¡¶...¡·
+- ??¡¶It Starts with a Beginning¡·
+- ¡¶Collections Create¡·
+- ¡¶What's Left Behind¡·
+- ¡¶We Resonate¡·
+- ¡¶Endless Black¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠDeparture Songsã€‹
-ä½œè€…: We Lost The Sea
+#### ¡¶Departure Songs¡·
+×÷Õß: We Lost The Sea
 
 <img src="http://p2.music.126.net/9EODaxCU2PuWgQPKH_lNTQ==/7935175419387645.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠA Gallant Gentlemanã€‹
-- ã€ŠBogatyriã€‹
-- ã€ŠThe Last Dive Of David Shawã€‹
-- ã€ŠChallenger part1 - Flightã€‹
-- ã€ŠChallenger part 2 - A Swan Songã€‹
+- ¡¶A Gallant Gentleman¡·
+- ¡¶Bogatyri¡·
+- ¡¶The Last Dive Of David Shaw¡·
+- ¡¶Challenger part1 - Flight¡·
+- ¡¶Challenger part 2 - A Swan Song¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠOur Last Hope Lost Hopeã€‹
-ä½œè€…: Our Last Hope Lost Hope
+#### ¡¶Our Last Hope Lost Hope¡·
+×÷Õß: Our Last Hope Lost Hope
 
 <img src="http://p2.music.126.net/qGKFufnFzHud7aRuB4Crxw==/669602581324442.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠGodsstationã€‹
-- ã€ŠAlternative endingã€‹
-- ã€ŠJonas' jiveã€‹
-- ã€ŠSÃ¶sjÃ¶ 1ã€‹
-- ã€Š"And from this chasm, with ceaseless turmoil seething"ã€‹
-- ã€ŠTo make it all worth while (Chaplin's last dance)ã€‹
+- ¡¶Godsstation¡·
+- ¡¶Alternative ending¡·
+- ¡¶Jonas' jive¡·
+- ¡¶S?sj? 1¡·
+- ¡¶"And from this chasm, with ceaseless turmoil seething"¡·
+- ¡¶To make it all worth while (Chaplin's last dance)¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠAbout Everything And Moreã€‹
-ä½œè€…: Dorena
+#### ¡¶About Everything And More¡·
+×÷Õß: Dorena
 
 <img src="http://p2.music.126.net/OAU2R3tRZjjYVk1I1b7nAg==/734473767362735.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠThe Morning Busã€‹
-- ã€ŠFrom The Window Of My Roomã€‹
-- ã€ŠAt Seaã€‹
-- ã€ŠIn Silenceã€‹
-- ã€ŠWe'll Never Meet This Young Againã€‹
-- ã€ŠStars In The Ceilingã€‹
-- ã€ŠNever Alone, Alwangs Lonesomeã€‹
-- ã€ŠLet Us Liveã€‹
+- ¡¶The Morning Bus¡·
+- ¡¶From The Window Of My Room¡·
+- ¡¶At Sea¡·
+- ¡¶In Silence¡·
+- ¡¶We'll Never Meet This Young Again¡·
+- ¡¶Stars In The Ceiling¡·
+- ¡¶Never Alone, Alwangs Lonesome¡·
+- ¡¶Let Us Live¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠSometimesã€‹
-ä½œè€…: Goldmund
+#### ¡¶Sometimes¡·
+×÷Õß: Goldmund
 
 <img src="http://p1.music.126.net/WsXwopZZBokoUd7NG0G36w==/109951163470970521.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠAs Old Roadsã€‹
-- ã€ŠSometimesã€‹
-- ã€ŠIs Asã€‹
-- ã€ŠSignals No. 1ã€‹
-- ã€ŠGetting Lighterã€‹
-- ã€ŠA Word I Giveã€‹
-- ã€ŠAngelã€‹
-- ã€ŠCascadeã€‹
-- ã€ŠToo Much Stillã€‹
-- ã€ŠTravellingã€‹
-- ã€ŠIn the Byreã€‹
-- ã€ŠThe Hidden Observerã€‹
-- ã€ŠThe Wind Wingsã€‹
-- ã€ŠTo Be Fair and Trueã€‹
-- ã€ŠTurncoatã€‹
-- ã€ŠVisionã€‹
-- ã€ŠWindmillsã€‹
+- ¡¶As Old Roads¡·
+- ¡¶Sometimes¡·
+- ¡¶Is As¡·
+- ¡¶Signals No. 1¡·
+- ¡¶Getting Lighter¡·
+- ¡¶A Word I Give¡·
+- ¡¶Angel¡·
+- ¡¶Cascade¡·
+- ¡¶Too Much Still¡·
+- ¡¶Travelling¡·
+- ¡¶In the Byre¡·
+- ¡¶The Hidden Observer¡·
+- ¡¶The Wind Wings¡·
+- ¡¶To Be Fair and True¡·
+- ¡¶Turncoat¡·
+- ¡¶Vision¡·
+- ¡¶Windmills¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠAlinaã€‹
-ä½œè€…: Arvo PÃ¤rt
+#### ¡¶Alina¡·
+×÷Õß: Arvo P?rt
 
 <img src="http://p1.music.126.net/0mS4egKWou09UQ5-5OZfnQ==/801543976692888.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠSpiegel im Spiegelã€‹
-- ã€ŠFÃ¼r Alinaã€‹
-- ğŸ‘ã€ŠSpiegel im Spiegelã€‹
-- ã€ŠFÃ¼r Alinaã€‹
-- ã€ŠSpiegel im Spiegelã€‹
+- ¡¶Spiegel im Spiegel¡·
+- ¡¶F¨¹r Alina¡·
+- ??¡¶Spiegel im Spiegel¡·
+- ¡¶F¨¹r Alina¡·
+- ¡¶Spiegel im Spiegel¡·
 <div class="clearfix"></div><br/>
 
-#### ã€Šlovewellã€‹
-ä½œè€…: Soulostar
+#### ¡¶lovewell¡·
+×÷Õß: Soulostar
 
 <img src="http://p1.music.126.net/Qwdlx_359nJps2b1A8Mdpg==/5694370720322357.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠA First Helloã€‹
-- ã€ŠLady Loveã€‹
-- ã€ŠOrigamiã€‹
-- ã€ŠSunset Flowã€‹
-- ğŸ‘ã€ŠDreamstateã€‹
-- ã€ŠIn Timeã€‹
-- ğŸ‘ã€ŠThe Quiet Stormã€‹
-- ã€ŠCastles (interlude)ã€‹
-- ã€ŠThese Nightsã€‹
-- ã€ŠPerfection Within Youã€‹
-- ã€ŠFighterã€‹
-- ã€ŠHome in Heavenã€‹
-- ã€ŠA Beautiful Farewellã€‹
-- ã€ŠLove Wellã€‹
+- ¡¶A First Hello¡·
+- ¡¶Lady Love¡·
+- ¡¶Origami¡·
+- ¡¶Sunset Flow¡·
+- ??¡¶Dreamstate¡·
+- ¡¶In Time¡·
+- ??¡¶The Quiet Storm¡·
+- ¡¶Castles (interlude)¡·
+- ¡¶These Nights¡·
+- ¡¶Perfection Within You¡·
+- ¡¶Fighter¡·
+- ¡¶Home in Heaven¡·
+- ¡¶A Beautiful Farewell¡·
+- ¡¶Love Well¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠOtherworldã€‹
-ä½œè€…: Soulostar
+#### ¡¶Otherworld¡·
+×÷Õß: Soulostar
 
 <img src="http://p1.music.126.net/LeucwtFfHIFeUxuDDgTyTA==/1760318116070865.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠStaring Overã€‹
-- ã€ŠThe Calmã€‹
-- ã€ŠClock Handsã€‹
-- ã€ŠDreams of a Golden Stateã€‹
-- ã€ŠWalk the Skyã€‹
-- ğŸ‘ã€ŠRainy Day Reminiscenceã€‹
-- ã€ŠSolaceã€‹
-- ã€ŠAutumn Falls (Interlude)ã€‹
-- ã€ŠElectric Emotionã€‹
-- ã€ŠSpaceshipã€‹
-- ã€ŠOtherworld (I.T.R.)ã€‹
-- ã€ŠTell Meã€‹
-- ã€ŠLife is Loveã€‹
-- ã€ŠStory of a Boy and a Girlã€‹
+- ¡¶Staring Over¡·
+- ¡¶The Calm¡·
+- ¡¶Clock Hands¡·
+- ¡¶Dreams of a Golden State¡·
+- ¡¶Walk the Sky¡·
+- ??¡¶Rainy Day Reminiscence¡·
+- ¡¶Solace¡·
+- ¡¶Autumn Falls (Interlude)¡·
+- ¡¶Electric Emotion¡·
+- ¡¶Spaceship¡·
+- ¡¶Otherworld (I.T.R.)¡·
+- ¡¶Tell Me¡·
+- ¡¶Life is Love¡·
+- ¡¶Story of a Boy and a Girl¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠThe Stolen Viewã€‹
-ä½œè€…: Leech
+#### ¡¶The Stolen View¡·
+×÷Õß: Leech
 
 <img src="http://p1.music.126.net/ArBD9-cf-zgBwN9UMUqYVA==/109951163364969385.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠSilent State Optimizerã€‹
-- ã€ŠThe Man With The Hammerã€‹
-- ã€ŠZiipfeã€‹
-- ğŸ‘ã€ŠInspiralã€‹
-- ã€ŠI Was Reversedã€‹
-- ã€ŠTotem & Tabuã€‹
+- ¡¶Silent State Optimizer¡·
+- ¡¶The Man With The Hammer¡·
+- ¡¶Ziipfe¡·
+- ??¡¶Inspiral¡·
+- ¡¶I Was Reversed¡·
+- ¡¶Totem & Tabu¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠYoung Mountainã€‹
-ä½œè€…: This Will Destroy You
+#### ¡¶Young Mountain¡·
+×÷Õß: This Will Destroy You
 
 <img src="http://p2.music.126.net/gzwuyyxNpaG3yRv-jye9kA==/109951163299231395.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠQuietã€‹
-- ã€ŠThe World Is Our ___ã€‹
-- ã€ŠI Believe In Your Victoryã€‹
-- ã€ŠGrandfather Clockã€‹
-- ã€ŠHappiness: We're All In It Togetherã€‹
-- ã€ŠThere Are Some Remedies Worse Than The Diseaseã€‹
+- ¡¶Quiet¡·
+- ¡¶The World Is Our ___¡·
+- ¡¶I Believe In Your Victory¡·
+- ¡¶Grandfather Clock¡·
+- ¡¶Happiness: We're All In It Together¡·
+- ¡¶There Are Some Remedies Worse Than The Disease¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠWildernessã€‹
-ä½œè€…: Release The Long Ships
+#### ¡¶Wilderness¡·
+×÷Õß: Release The Long Ships
 
 <img src="http://p2.music.126.net/62Y4EOKBTk5MmUFhjNy8dQ==/109951163418385523.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠMist Pillarsã€‹
-- ã€ŠSnowã€‹
-- ã€ŠSo Murmuredthe Wide Seasã€‹
-- ã€ŠAetherã€‹
-- ã€ŠI Am the Sunã€‹
-- ğŸ‘ã€ŠThe Heart of the Mountainã€‹
-- ã€ŠI Have Never Seen the Lightã€‹
-- ã€ŠThe Heart of the Mountain (Piano Cover By heklAa)ã€‹
+- ¡¶Mist Pillars¡·
+- ¡¶Snow¡·
+- ¡¶So Murmuredthe Wide Seas¡·
+- ¡¶Aether¡·
+- ¡¶I Am the Sun¡·
+- ??¡¶The Heart of the Mountain¡·
+- ¡¶I Have Never Seen the Light¡·
+- ¡¶The Heart of the Mountain (Piano Cover By heklAa)¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠNorthã€‹
-ä½œè€…: I Spell it Natrue
+#### ¡¶North¡·
+×÷Õß: I Spell it Natrue
 
 <img src="http://p1.music.126.net/qv8mMbuYO2ORR17fMudkQQ==/109951163299546772.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠTitle Shotã€‹
-- ã€ŠThe Courage to Leaveã€‹
-- ã€ŠHands of Timeã€‹
-- ã€ŠRoamã€‹
-- ã€ŠIf Nothing Goes Right, Go Leftã€‹
-- ã€ŠThe View from Hereã€‹
-- ã€ŠRise and Fallã€‹
-- ã€ŠExplore the Worldã€‹
-- ã€ŠArrivalsã€‹
-- ã€ŠOf, Relating to, Or Resembling a Colossusã€‹
+- ¡¶Title Shot¡·
+- ¡¶The Courage to Leave¡·
+- ¡¶Hands of Time¡·
+- ¡¶Roam¡·
+- ¡¶If Nothing Goes Right, Go Left¡·
+- ¡¶The View from Here¡·
+- ¡¶Rise and Fall¡·
+- ¡¶Explore the World¡·
+- ¡¶Arrivals¡·
+- ¡¶Of, Relating to, Or Resembling a Colossus¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠWhale Fallã€‹
-ä½œè€…: Whale Fall
+#### ¡¶Whale Fall¡·
+×÷Õß: Whale Fall
 
 <img src="http://p1.music.126.net/RXUvr32WaPp8wnyGWj6Gaw==/674000627869226.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠIntroã€‹
-- ã€ŠOnsenã€‹
-- ã€ŠKodiakã€‹
-- ã€ŠThe Apartmentã€‹
-- ã€ŠSwaggerã€‹
-- ã€ŠOld Countyã€‹
-- ã€ŠJulia, Train, Slow Downã€‹
-- ã€ŠClickã€‹
-- ã€ŠSustantivoã€‹
-- ã€ŠYou Go Up, I Go Downã€‹
-- ã€ŠDepth of Fieldã€‹
-- ğŸ‘ã€ŠRumi's Nationã€‹
+- ¡¶Intro¡·
+- ¡¶Onsen¡·
+- ¡¶Kodiak¡·
+- ¡¶The Apartment¡·
+- ¡¶Swagger¡·
+- ¡¶Old County¡·
+- ¡¶Julia, Train, Slow Down¡·
+- ¡¶Click¡·
+- ¡¶Sustantivo¡·
+- ¡¶You Go Up, I Go Down¡·
+- ¡¶Depth of Field¡·
+- ??¡¶Rumi's Nation¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠSamsaraã€‹
-ä½œè€…: Samsara
+#### ¡¶Samsara¡·
+×÷Õß: Samsara
 
 <img src="http://p1.music.126.net/tuUro47Eeri6yg6uz7Kuug==/1651466464931715.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠF Sharpã€‹
-- ã€ŠAnthony's songã€‹
-- ã€ŠLumpy Spudã€‹
-- ã€ŠHillsã€‹
+- ¡¶F Sharp¡·
+- ¡¶Anthony's song¡·
+- ¡¶Lumpy Spud¡·
+- ¡¶Hills¡·
 <div class="clearfix"></div><br/>
 
-#### ã€ŠWho We Wereã€‹
-ä½œè€…: Circadian Eyes
+#### ¡¶Who We Were¡·
+×÷Õß: Circadian Eyes
 
 <img src="http://p2.music.126.net/8mzelZ57ItubNqBwUVqQpQ==/912594651097177.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠWho We Wereã€‹
-- ã€ŠThe Days of Snowã€‹
-- ã€ŠLife in Slow Motionã€‹
-- ğŸ‘ã€ŠSearchlightsã€‹
-- ã€ŠMiles Away, She Sleepsã€‹
-- ã€ŠGoodbyeã€‹
-- ã€ŠAstronautsã€‹
-- ã€ŠReaching Handsã€‹
-- ã€ŠWe Felt Time Passã€‹
-- ã€ŠAnd We Carved Our Names into the Treesã€‹
+- ¡¶Who We Were¡·
+- ¡¶The Days of Snow¡·
+- ¡¶Life in Slow Motion¡·
+- ??¡¶Searchlights¡·
+- ¡¶Miles Away, She Sleeps¡·
+- ¡¶Goodbye¡·
+- ¡¶Astronauts¡·
+- ¡¶Reaching Hands¡·
+- ¡¶We Felt Time Pass¡·
+- ¡¶And We Carved Our Names into the Trees¡·
 <div class="clearfix"></div><br/>
 
-## å…¶ä»–
-ä¸è®¡å…¥æ’åºã€‚
+## ÆäËû
+²»¼ÆÈëÅÅĞò¡£
 ### Matryoshka
-#### ã€ŠLaideronnetteã€‹
-ä½œè€…: Matryoshka
+#### ¡¶Laideronnette¡·
+×÷Õß: Matryoshka
 
 <img src="http://p2.music.126.net/GPfR7PyHcb6_2NkFqrWhhA==/2518981139257695.jpg?param=150y150" class="musiccover"></img>
 
-- ã€ŠMonotonous Purgatoryã€‹
-- ã€ŠNoctambulistã€‹
-- ğŸ‘ã€ŠSacred Play Secret Placeã€‹
-- ã€ŠInstant Immortalã€‹
-- ã€ŠCut All Treesã€‹
-- ã€ŠButterflysoupã€‹
-- ã€ŠHallucinatory Haloã€‹
-- ã€ŠOblivionã€‹
-- ã€ŠNiedolaã€‹
-- ã€ŠGentle Afternoonã€‹
+- ¡¶Monotonous Purgatory¡·
+- ¡¶Noctambulist¡·
+- ??¡¶Sacred Play Secret Place¡·
+- ¡¶Instant Immortal¡·
+- ¡¶Cut All Trees¡·
+- ¡¶Butterflysoup¡·
+- ¡¶Hallucinatory Halo¡·
+- ¡¶Oblivion¡·
+- ¡¶Niedola¡·
+- ¡¶Gentle Afternoon¡·
 <div class="clearfix"></div><br/>
 
 ### Baq5
-#### ã€ŠFILE CORRUPTEDã€‹
-ä½œè€…: Baq5
+#### ¡¶FILE CORRUPTED¡·
+×÷Õß: Baq5
 
 <img src="http://p1.music.126.net/cJk7AOhpdVVUtE_4H8WtoA==/3418381655358490.jpg?param=150y150" class="musiccover"></img>
 
-- ã€Šwhen it rainsã€‹
-- ã€Šeternal grooveã€‹
-- ã€Šridiciously long soundcloud song titleã€‹
-- ã€Šromanceã€‹
-- ã€Šstay dandyã€‹
-- ã€Šthe squidã€‹
-- ã€Šforeverã€‹
-- ã€Šdreamcastã€‹
-- ã€Šflying to spaceã€‹
-- ã€Šæ—¥æœ¬ã®ã‚¿ã‚¤ãƒˆãƒ«whateverã€‹
-- ğŸ‘ã€Šthe incredible food grooveã€‹
-- ã€Šwhen i'm with youã€‹
-- ã€Šstay goldã€‹
+- ¡¶when it rains¡·
+- ¡¶eternal groove¡·
+- ¡¶ridiciously long soundcloud song title¡·
+- ¡¶romance¡·
+- ¡¶stay dandy¡·
+- ¡¶the squid¡·
+- ¡¶forever¡·
+- ¡¶dreamcast¡·
+- ¡¶flying to space¡·
+- ¡¶ÈÕ±¾¤Î¥¿¥¤¥È¥ëwhatever¡·
+- ??¡¶the incredible food groove¡·
+- ¡¶when i'm with you¡·
+- ¡¶stay gold¡·
 <div class="clearfix"></div><br/>
