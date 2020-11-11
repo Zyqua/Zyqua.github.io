@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+        <html>
+            <head>
+                <meta charset="utf-8"/>
+                <title>n-kw && n-c by others</title>
+                <link rel="stylesheet" type="text/css" href="../styles.css"/>
+                <link rel="stylesheet" type="text/css" href="../markdownStyles.css"/>
+                <link rel="stylesheet" href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css">
+                <script defer src="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.js"></script>
+                <script>
+                var katex_config = {
+                    delimiters: 
+                    [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false}
+                    ]
+                };
+                </script>
+                <script defer src="https://cdn.bootcss.com/KaTeX/0.11.1/contrib/auto-render.min.js" onload="renderMathInElement(document.body,katex_config)"></script>
+            </head>
+            <body>
+                <div class="body">
+                <p class="title">striving & singing</p><h3 id="2020-11-09">2020-11-09</h3>
+<h4 id="入阵曲">入阵曲</h4>
+<p><a href="https://www.luogu.com.cn/problem/P3941">https://www.luogu.com.cn/problem/P3941</a></p>
+<p>常用套路，把一个矩形拆为两个前缀和之差，然后用桶记录$\bmod k$得到的值对应的前缀和有几个即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int n, m, d, a[410][410], cnt[1000100], sum[410][410];
+long long ans;
+
+int main() {
+    scanf(&quot;%d%d%d&quot;, &amp;n, &amp;m, &amp;d);
+    for (int i = 1; i &lt;= n; ++i)
+        for (int j = 1; j &lt;= m; ++j) scanf(&quot;%d&quot;, &amp;sum[i][j]), sum[i][j] = (sum[i][j] + sum[i - 1][j] + sum[i][j - 1] - sum[i - 1][j - 1] + d) % d;
+    cnt[0] = 1;
+    for (int i = 1; i &lt;= m; ++i)
+        for (int j = i; j &lt;= m; ++j) {
+            for (int k = 1; k &lt;= n; ++k) {
+                ans += cnt[(sum[k][j] - sum[k][i - 1] + d) % d];
+                ++cnt[(sum[k][j] - sum[k][i - 1] + d) % d];
+            }
+            for (int k = 1; k &lt;= n; ++k) --cnt[(sum[k][j] - sum[k][i - 1] + d) % d];
+        }
+    printf(&quot;%lld\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h4 id="将军令">将军令</h4>
+<p><a href="https://www.luogu.com.cn/problem/P3942">https://www.luogu.com.cn/problem/P3942</a></p>
+<p>经典题，可以树形 DP，不过好像不太好写，贪心要更好写一些。每次取出没被覆盖的点中深度最大的一个，然后以它的 k 级父亲为中心覆盖即可。判断一个点有没有被覆盖可以开一个数组$dis[x]$表示 x 的子树中所有覆盖中心与 x 的距离最短是多少即可。两种做法总复杂度都是$O(nk)$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+
+int n, k, t, depth[100100], p[100100], dis[100100], f[100100], ans;
+struct edge { int to, next; };
+struct graph {
+    int ecnt = 1, head[100100];
+    edge edges[200100];
+    inline void addedge(int u, int v) {
+        edges[++ecnt].to = v;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+}g;
+
+void dfs(int x, int lst) {
+    f[x] = g.edges[lst ^ 1].to;
+    depth[x] = depth[f[x]] + 1;
+    for (int i = g.head[x]; i; i = g.edges[i].next) {
+        if ((i ^ lst) == 1) continue;
+        dfs(g.edges[i].to, i);
+    }
+}
+inline bool cmp(int i, int j) { return depth[i] &gt; depth[j]; }
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+
+int main() {
+    scanf(&quot;%d%d%d&quot;, &amp;n, &amp;k, &amp;t);
+    for (int i = 1; i &lt; n; ++i) {
+        int u, v; scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+        g.addedge(u, v); g.addedge(v, u);
+    }
+    dfs(1, 0);
+    for (int i = 1; i &lt;= n; ++i) p[i] = i;
+    std::sort(p + 1, p + n + 1, cmp);
+    memset(dis, 0x3f, sizeof(int) * (n + 1));
+    for (int i = 1; i &lt;= n; ++i) {
+        int x = p[i];
+        bool ok = false;
+        int d = 0, ca = x;
+        for (; d &lt;= k &amp;&amp; !ok; ++d, ca = f[ca]) if (dis[ca] + d &lt;= k) ok = true;
+        if (ok) continue;
+        for (d = k, ca = x; d &gt;= 0; --d, ca = f[ca]) dis[ca] = min(dis[ca], d);
+        for (d = 1; d &lt;= k; ++d, ca = f[ca]) dis[ca] = min(dis[ca], d);
+        ++ans;
+    }
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h4 id="星空">星空</h4>
+<p><a href="https://www.luogu.com.cn/problem/P3943">https://www.luogu.com.cn/problem/P3943</a></p>
+<p>首先可以把序列差分一下，这样每次操作就转化为把一个长度为$b_i+1$的区间的两个端点取反。目标是把所有的 0 变为 1。把两个 1 取反是没有意义的，而把一个 0 和一个 1 取反相当于把 0 移动到了 1 的位置，把两个 0 取反相当于两个 0 移动到一起时会抵消为 1。</p>
+<p>于是可以状压 DP，设$dp[s]$表示状态为 s 时需要的最少操作次数，其中 s 表示所有的 0 的位置上的状态，即是 0 还是 1。枚举把哪两个 0 变为 1 即可。根据愤怒的小鸟那题的 trick 可以固定把第一个 0 变为 1，然后枚举另一个 0 ，这样就把 DP 的复杂度从$O(2^kk^2)$降到了$O(2^kk)$。</p>
+<p>另外还要预处理把某两个 0 变为 1 需要的最少操作次数，直接 bfs 即可。看起来好像还能用完全背包，但实际上完全背包是错的，因为在操作时要求操作的区间不能越界，而完全背包只考虑距离之差没有考虑越界的情况，会导致答案错误。</p>
+<p>总复杂度$O(nmk+2^kk)$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;queue&gt;
+
+int n, k, m, a[20], acnt, b[65], cost[20][40010], dp[66000];
+bool flag[40010], vis[40010];
+std::queue&lt;int&gt; q;
+
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+void bfs(int s) {
+    memset(vis, 0, sizeof(bool) * (n + 1));
+    cost[s][a[s]] = 0;
+    q.push(a[s]);
+    while (!q.empty()) {
+        int x = q.front();
+        q.pop();
+        if (vis[x]) continue;
+        vis[x] = true;
+        for (int i = 1; i &lt;= m; ++i) {
+            if (x + b[i] - 1 &lt;= n &amp;&amp; cost[s][x + b[i] - 1] &gt; cost[s][x] + 1) {
+                cost[s][x + b[i] - 1] = cost[s][x] + 1;
+                q.push(x + b[i] - 1);
+            }
+            if (x - b[i] + 1 &gt;= 1 &amp;&amp; cost[s][x - b[i] + 1] &gt; cost[s][x] + 1) {
+                cost[s][x - b[i] + 1] = cost[s][x] + 1;
+                q.push(x - b[i] + 1);
+            }
+        }
+    }
+}
+
+int main() {
+    scanf(&quot;%d%d%d&quot;, &amp;n, &amp;k, &amp;m);
+    for (int i = 1; i &lt;= k; ++i) scanf(&quot;%d&quot;, &amp;a[i]), flag[a[i]] = !flag[a[i]], flag[a[i] + 1] = !flag[a[i] + 1];
+    ++n;
+    for (int i = 1; i &lt;= n; ++i) if (flag[i]) a[++acnt] = i;
+    k = acnt;
+    for (int i = 1; i &lt;= m; ++i) scanf(&quot;%d&quot;, &amp;b[i]), ++b[i];
+    memset(cost, 0x3f, sizeof cost);
+    for (int i = 1; i &lt;= k; ++i) bfs(i);
+    memset(dp, 0x3f, sizeof dp);
+    dp[0] = 0;
+    for (int s = 1; s &lt; (1 &lt;&lt; k); ++s) {
+        int x = 0;
+        for (int i = 1; i &lt;= k; ++i)
+            if (s &amp; (1 &lt;&lt; i - 1)) {
+                if (!x) x = i;
+                else dp[s] = min(dp[s], dp[s ^ (1 &lt;&lt; x - 1) ^ (1 &lt;&lt; i - 1)] + cost[x][a[i]]);
+            }
+    }
+    printf(&quot;%d\n&quot;, dp[(1 &lt;&lt; k) - 1]);
+    return 0;
+}</code></pre>
+<h4 id="hnoi2009最小圈">[HNOI2009]最小圈</h4>
+<p><a href="https://www.luogu.com.cn/problem/P3199">https://www.luogu.com.cn/problem/P3199</a></p>
+<p>前几天模拟赛的原题。需要注意的是 bfs 式 spfa 会被卡飞，需要写复杂度错误的 dfs 式 spfa 才能通过。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;queue&gt;
+
+const double eps = 1e-10;
+int n, m;
+double minw = 0x3fffffff, maxw = -0x3fffffff, dis[3010];
+bool vis[3010];
+struct edge { int to, next; double w; };
+struct graph {
+    int ecnt = 1, head[3010];
+    edge edges[10010];
+    inline void addedge(int u, int v, double w) {
+        edges[++ecnt].to = v;
+        edges[ecnt].w = w;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+}g;
+std::queue&lt;int&gt; q;
+
+inline double min(double a, double b) { return a &lt; b ? a : b; }
+inline double max(double a, double b) { return a &gt; b ? a : b; }
+bool dfs(int x, const double mid) {
+    if (vis[x]) return true;
+    vis[x] = true;
+    for (int i = g.head[x]; i; i = g.edges[i].next) {
+        int &amp;v = g.edges[i].to; double w = g.edges[i].w - mid;
+        if (dis[v] &gt; dis[x] + w) {
+            dis[v] = dis[x] + w;
+            if (dfs(v, mid)) { vis[x] = false; return true; }
+        }
+    }
+    vis[x] = false;
+    return false;
+}
+inline bool check(double mid) {
+    memset(dis, 0, sizeof(double) * (n + 1));
+    for (int i = 1; i &lt;= n; ++i) if (dfs(i, mid)) return true;
+    return false;
+}
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt;= m; ++i) {
+        int u, v; double w; scanf(&quot;%d%d%lf&quot;, &amp;u, &amp;v, &amp;w);
+        g.addedge(u, v, w);
+        minw = min(minw, w); maxw = max(maxw, w);
+    }
+    double l = minw, r = maxw + eps;
+    while (l + eps &lt; r) {
+        double mid = l + (r - l) / 2;
+        if (check(mid)) r = mid;
+        else l = mid + eps;
+    }
+    printf(&quot;%.8lf\n&quot;, l);
+    return 0;
+}</code></pre>
+<a href="../posts.html" class="link" style="display:block; text-align:center;">return</a>
+</div>
+</body>
+</html>

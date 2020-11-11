@@ -20,11 +20,483 @@
             </head>
             <body>
                 <div class="body">
-                <p class="title">striving & singing</p><p>$$\sum_{x_1=l_1}^{r_1}\sum_{x_2=l_2}^{r_2}...\sum_{x_n=l_n}^{r_n}\sum_{a_1+a_2+...+a_n=c}\prod_{i=1}^n x_i^{a_i}$$</p>
-<p>$$\sum_{a_1+a_2+...+a_n=c}\sum_{x_1=l_1}^{r_1}x_1^{a_1}\sum_{x_2=l_2}^{r_2}x_2^{a_2}...\sum_{x_n=l_n}^{r_n}x_n^{a_n}$$</p>
+                <p class="title">striving & singing</p><h3 id="2020-11-02">2020-11-02</h3>
+<h4 id="arc059c-キャンディーとn人の子供--children-and-candies">[ARC059C] キャンディーとN人の子供 / Children and Candies</h4>
+<p><a href="https://www.luogu.com.cn/problem/AT2021">https://www.luogu.com.cn/problem/AT2021</a></p>
+<p>直接推一下式子：</p>
+<p>$$\sum_{x_1=l_1}^{r_1}\sum_{x_2=l_2}^{r_2}...\sum_{x_n=l_n}^{r_n}\sum_{a_1+a_2+...+a_n=c}\prod_{i=1}^n x_i^{a_i}$$</p>
+<p>$$=\sum_{a_1+a_2+...+a_n=c}\sum_{x_1=l_1}^{r_1}x_1^{a_1}\sum_{x_2=l_2}^{r_2}x_2^{a_2}...\sum_{x_n=l_n}^{r_n}x_n^{a_n}$$</p>
+<p>对于这种若干变量之和为定值的求值，可以用背包解决。设$dp[i][j]$表示前 i 个变量之和等于 j 时的这个式子的值，有：</p>
 <p>$$dp[i][j]=\sum_{k=0}^{j}dp[i-1][j-k]\sum_{x=l_i}^{r_i}x^{k}$$</p>
-<p>$$n=pb+q\s=p+q$$</p>
-<p>$$n-s=pb-p=p(b-1)\b=\dfrac{n-s}{p}+1$$</p>
+<p>直接预处理 k 次幂然后递推即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+const int MOD = 1e9 + 7;
+int n, c, dp[410][410], pwrsum[410][410], l[410], r[410], maxr;
+
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;c);
+    for (int i = 1; i &lt;= n; ++i) scanf(&quot;%d&quot;, &amp;l[i]);
+    for (int i = 1; i &lt;= n; ++i) scanf(&quot;%d&quot;, &amp;r[i]), maxr = max(maxr, r[i]);
+    for (int i = 1; i &lt;= maxr; ++i) pwrsum[0][i] = 1;
+    for (int i = 1; i &lt;= c; ++i)
+        for (int j = 1; j &lt;= maxr; ++j) pwrsum[i][j] = (long long)pwrsum[i - 1][j] * j % MOD;
+    for (int i = 0; i &lt;= c; ++i)
+        for (int j = 1; j &lt;= maxr; ++j) pwrsum[i][j] = (pwrsum[i][j - 1] + pwrsum[i][j]) % MOD;
+    dp[0][0] = 1;
+    for (int i = 1; i &lt;= n; ++i)
+        for (int j = 0; j &lt;= c; ++j)
+            for (int k = 0; k &lt;= j; ++k) dp[i][j] = (dp[i][j] + (long long)dp[i - 1][j - k] * (pwrsum[k][r[i]] - pwrsum[k][l[i] - 1] + MOD) % MOD) % MOD;
+    printf(&quot;%d\n&quot;, dp[n][c]);
+    return 0;
+}</code></pre>
+<h4 id="arc059d-バイナリハック--unhappy-hacking">[ARC059D] バイナリハック / Unhappy Hacking</h4>
+<p><a href="https://www.luogu.com.cn/problem/AT2022">https://www.luogu.com.cn/problem/AT2022</a></p>
+<p>只要两个字符串的长度相同，那么得到这两个字符串的方案数就是相同的。于是可以设$dp[i][j]$表示操作了 i 次后字符串的长度为 j 的方案数，因为长度为 j 的字符串有$2^j$种所以递推完后把答案除以$2^j$即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+const int MOD = 1e9 + 7;
+int n, m, dp[5010][5010];
+char s[5010];
+
+inline int pwr(int x, int k) {
+    int ans = 1;
+    for (; k; x = (long long)x * x % MOD, k &gt;&gt;= 1)
+        if (k &amp; 1) ans = (long long)ans * x % MOD;
+    return ans;
+}
+inline int inv(int a) { return pwr(a, MOD - 2); }
+
+int main() {
+    scanf(&quot;%d%s&quot;, &amp;n, s + 1);
+    m = strlen(s + 1);
+    dp[0][0] = 1;
+    for (int i = 1; i &lt;= n; ++i) {
+        dp[i][0] = (dp[i - 1][0] + dp[i - 1][1]) % MOD;
+        for (int j = 1; j &lt;= n; ++j) dp[i][j] = (dp[i - 1][j - 1] * 2 % MOD + dp[i - 1][j + 1]) % MOD;
+    }
+    printf(&quot;%lld\n&quot;, (long long)dp[n][m] * inv(pwr(2, m)) % MOD);
+    return 0;
+}</code></pre>
+<h4 id="arc060b-桁和--digit-sum">[ARC060B] 桁和 / Digit Sum</h4>
+<p><a href="https://www.luogu.com.cn/problem/AT2038">https://www.luogu.com.cn/problem/AT2038</a></p>
+<p>对于这个数据范围，复杂度只能是$O(\log n)$，$O(\sqrt n)$之类的。于是不难想到当$b&gt;\sqrt n$时，n 在 b 进制下是一个两位数。两位数好像只是算得快一些，似乎没什么性质。然后我就想不出来了。</p>
+<p>可以把这个两位数设出来。设它是$n=pb+q$，那么显然$s=p+q$。两式相减可以得出$n-s=p(b-1)$，即$b=\dfrac{n-s}{p}+1$。因为 b 是整数，所以可以枚举$n-s$的所有因子 p ，然后验证是否可行即可，复杂度$O(\sqrt n)$。</p>
+<p>当$b\le \sqrt n$时，可以直接暴力验证。总复杂度$O(\sqrt n\log n)$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+const long long INF = 0x7fffffffffffffff;
+long long n, s, ans = INF;
+bool ok;
+
+inline bool check(int b) {
+    long long x = n, sum = 0;
+    while (x) sum += x % b, x /= b;
+    return sum == s;
+}
+inline long long min(long long a, long long b) { return a &lt; b ? a : b; }
+
+int main() {
+    scanf(&quot;%lld%lld&quot;, &amp;n, &amp;s);
+    for (int i = 2; (long long)i * i &lt;= n; ++i)
+        if (check(i)) ans = min(ans, i);
+    for (long long p = 1; p * p &lt;= n - s; ++p) {
+        if ((n - s) % p) continue;
+        long long b = (n - s) / p + 1, q = n - p * b;
+        if (b &gt; (double)n / b &amp;&amp; p &gt;= 0 &amp;&amp; p &lt; b &amp;&amp; q &gt;= 0 &amp;&amp; q &lt; b &amp;&amp; p + q == s) ans = min(ans, b);
+        b = p + 1, q = n - p * b;
+        if (b &gt; (double)n / b &amp;&amp; p &gt;= 0 &amp;&amp; p &lt; b &amp;&amp; q &gt;= 0 &amp;&amp; q &lt; b &amp;&amp; p + q == s) ans = min(ans, b);
+    }
+    if (n == s) ans = min(ans, n + 1);
+    if (ans != INF) printf(&quot;%lld\n&quot;, ans);
+    else printf(&quot;-1\n&quot;);
+    return 0;
+}</code></pre>
+<h4 id="arc060c-高橋君とホテル--tak-and-hotels">[ARC060C] 高橋君とホテル / Tak and Hotels</h4>
+<p><a href="https://www.luogu.com.cn/problem/AT2039">https://www.luogu.com.cn/problem/AT2039</a></p>
+<p>一次行程等价于把序列分为尽量少的段，使得每段的和都大于等于 l，所以从左到右和从右到左是等价的。倍增预处理向右走 2 的幂天后到达的位置即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;algorithm&gt;
+
+int n, l, q, pos[100100], nxt[100100][18];
+
+inline void swap(int &amp;a, int &amp;b) { int t = a; a = b; b = t; }
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt;= n; ++i) scanf(&quot;%d&quot;, &amp;pos[i]);
+    scanf(&quot;%d&quot;, &amp;l);
+    for (int i = n; i &gt;= 1; --i) {
+        nxt[i][0] = std::upper_bound(pos + 1, pos + n + 1, pos[i] + l) - 1 - pos;
+        for (int j = 1; j &lt; 18; ++j) nxt[i][j] = nxt[nxt[i][j - 1]][j - 1];
+    }
+    scanf(&quot;%d&quot;, &amp;q);
+    while (q--) {
+        int a, b, ans = 0; scanf(&quot;%d%d&quot;, &amp;a, &amp;b);
+        if (a &gt; b) swap(a, b);
+        for (int j = 17; j &gt;= 0; --j)
+            if (nxt[a][j] &lt; b) a = nxt[a][j], ans += (1 &lt;&lt; j);
+        printf(&quot;%d\n&quot;, ans + 1);
+    }
+    return 0;
+}</code></pre>
+<h3 id="2020-11-03">2020-11-03</h3>
+<h4 id="图的遍历">图的遍历</h4>
+<p><a href="https://www.luogu.com.cn/problem/P3916">https://www.luogu.com.cn/problem/P3916</a></p>
+<p>考虑把过程反过来，让编号最大的点反过来遍历这个点。于是可以建一个反图，然后倒序枚举所有点为起点，把能到达的所有没被标记过的点标记一下即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int n, m, ans[100100];
+struct edge { int to, next; };
+struct graph {
+    int ecnt, head[100100];
+    edge edges[200100];
+    inline void addedge(int u, int v) {
+        edges[++ecnt].to = v;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+}g;
+
+void dfs(int x, int s) {
+    if (ans[x]) return;
+    ans[x] = s;
+    for (int i = g.head[x]; i; i = g.edges[i].next) dfs(g.edges[i].to, s);
+}
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt;= m; ++i) {
+        int u, v; scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+        g.addedge(v, u);
+    }
+    for (int x = n; x &gt;= 1; --x) dfs(x, x);
+    for (int i = 1; i &lt;= n; ++i) printf(&quot;%d &quot;, ans[i]);
+    return 0;
+}</code></pre>
+<p>下面是今天校内模拟赛的题。</p>
+<h4 id="a-game">A. game</h4>
+<p>设$f[i][j][k][l]$表示两个数组分别取到$[i,j],[k,l]$时当前手的最高分，$g[i][j][k][l]$表示最优决策，枚举当前手和对手的决策并分情况讨论即可。</p>
+<p>其实可以像在矩阵上搜索一样开几个常量数组来简化代码，不过考场上没想到。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+int t, n, a[23], b[23], df[23][23][23][23];
+long long f[23][23][23][23];
+
+inline long long max(long long a, long long b) { return a &gt; b ? a : b; }
+
+int main() {
+    freopen(&quot;game.in&quot;, &quot;r&quot;, stdin);
+    freopen(&quot;game.out&quot;, &quot;w&quot;, stdout);
+    scanf(&quot;%d&quot;, &amp;t);
+    while (t--) {
+        memset(f, 0, sizeof f); memset(df, 0, sizeof df);
+        scanf(&quot;%d&quot;, &amp;n);
+        for (int i = 1; i &lt;= n; ++i) scanf(&quot;%d&quot;, &amp;a[i]);
+        for (int i = 1; i &lt;= n; ++i) scanf(&quot;%d&quot;, &amp;b[i]);
+        for (int i = 1; i &lt;= n; ++i)
+            for (int k = 1; k &lt;= n; ++k) {
+                f[i][i][k][k - 1] = a[i], df[i][i][k][k - 1] = 1;
+                f[i][i - 1][k][k] = b[k], df[i][i - 1][k][k] = 3;
+            }
+        for (int la = 0; la &lt;= n; ++la)
+            for (int lb = 0; lb &lt;= n; ++lb) {
+                if (!la &amp;&amp; !lb) continue;
+                for (int i = 1; i + la - 1 &lt;= n; ++i)
+                    for (int k = 1; k + lb - 1 &lt;= n; ++k) {
+                        int j = i + la - 1, l = k + lb - 1;
+                        //a[i+1,j] b[k,l]
+                        if (df[i + 1][j][k][l] == 1) {
+                            if (f[i][j][k][l] &lt; f[i + 2][j][k][l] + a[i])
+                                f[i][j][k][l] = f[i + 2][j][k][l] + a[i], df[i][j][k][l] = 1;
+                        }
+                        else if (df[i + 1][j][k][l] == 2) {
+                            if (f[i][j][k][l] &lt; f[i + 1][j - 1][k][l] + a[i])
+                                f[i][j][k][l] = f[i + 1][j - 1][k][l] + a[i], df[i][j][k][l] = 1;
+                        }
+                        else if (df[i + 1][j][k][l] == 3) {
+                            if (f[i][j][k][l] &lt; f[i + 1][j][k + 1][l] + a[i])
+                                f[i][j][k][l] = f[i + 1][j][k + 1][l] + a[i], df[i][j][k][l] = 1;
+                        }
+                        else if (df[i + 1][j][k][l] == 4) {
+                            if (f[i][j][k][l] &lt; f[i + 1][j][k][l - 1] + a[i])
+                                f[i][j][k][l] = f[i + 1][j][k][l - 1] + a[i], df[i][j][k][l] = 1;
+                        }
+                        //a[i,j-1] b[k,l]
+                        if (df[i][j - 1][k][l] == 1) {
+                            if (f[i][j][k][l] &lt; f[i + 1][j - 1][k][l] + a[j])
+                                f[i][j][k][l] = f[i + 1][j - 1][k][l] + a[j], df[i][j][k][l] = 2;
+                        }
+                        else if (df[i][j - 1][k][l] == 2) {
+                            if (f[i][j][k][l] &lt; f[i][j - 2][k][l] + a[j])
+                                f[i][j][k][l] = f[i][j - 2][k][l] + a[j], df[i][j][k][l] = 2;
+                        }
+                        else if (df[i][j - 1][k][l] == 3) {
+                            if (f[i][j][k][l] &lt; f[i][j - 1][k + 1][l] + a[j])
+                                f[i][j][k][l] = f[i][j - 1][k + 1][l] + a[j], df[i][j][k][l] = 2;
+                        }
+                        else if (df[i][j - 1][k][l] == 4) {
+                            if (f[i][j][k][l] &lt; f[i][j - 1][k][l - 1] + a[j])
+                                f[i][j][k][l] = f[i][j - 1][k][l - 1] + a[j], df[i][j][k][l] = 2;
+                        }
+                        //a[i,j] b[k+1,l]
+                        if (df[i][j][k + 1][l] == 1) {
+                            if (f[i][j][k][l] &lt; f[i + 1][j][k + 1][l] + b[k])
+                                f[i][j][k][l] = f[i + 1][j][k + 1][l] + b[k], df[i][j][k][l] = 3;
+                        }
+                        else if (df[i][j][k + 1][l] == 2) {
+                            if (f[i][j][k][l] &lt; f[i][j - 1][k + 1][l] + b[k])
+                                f[i][j][k][l] = f[i][j - 1][k + 1][l] + b[k], df[i][j][k][l] = 3;
+                        }
+                        else if (df[i][j][k + 1][l] == 3) {
+                            if (f[i][j][k][l] &lt; f[i][j][k + 2][l] + b[k])
+                                f[i][j][k][l] = f[i][j][k + 2][l] + b[k], df[i][j][k][l] = 3;
+                        }
+                        else if (df[i][j][k + 1][l] == 4) {
+                            if (f[i][j][k][l] &lt; f[i][j][k + 1][l - 1] + b[k])
+                                f[i][j][k][l] = f[i][j][k + 1][l - 1] + b[k], df[i][j][k][l] = 3;
+                        }
+                        //a[i,j] b[k,l-1]
+                        if (df[i][j][k][l - 1] == 1) {
+                            if (f[i][j][k][l] &lt; f[i + 1][j][k][l - 1] + b[l])
+                                f[i][j][k][l] = f[i + 1][j][k][l - 1] + b[l], df[i][j][k][l] = 4;
+                        }
+                        else if (df[i][j][k][l - 1] == 2) {
+                            if (f[i][j][k][l] &lt; f[i][j - 1][k][l - 1] + b[l])
+                                f[i][j][k][l] = f[i][j - 1][k][l - 1] + b[l], df[i][j][k][l] = 4;
+                        }
+                        else if (df[i][j][k][l - 1] == 3) {
+                            if (f[i][j][k][l] &lt; f[i][j][k + 1][l - 1] + b[l])
+                                f[i][j][k][l] = f[i][j][k + 1][l - 1] + b[l], df[i][j][k][l] = 4;
+                        }
+                        else if (df[i][j][k][l - 1] == 4) {
+                            if (f[i][j][k][l] &lt; f[i][j][k][l - 2] + b[l])
+                                f[i][j][k][l] = f[i][j][k][l - 2] + b[l], df[i][j][k][l] = 4;
+                        }
+                    }
+            }
+        printf(&quot;%lld\n&quot;, f[1][n][1][n]);
+    }
+    return 0;
+}</code></pre>
+<h4 id="b-binary">B. binary</h4>
+<p>可以对每个位置算一下对答案的贡献，推完式子后直接二进制高精算一下即可，不过在做高精加减法时要把加减的位置标记一下然后在最后统一处理，这样复杂度才是$O(n)$的。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+int t, n, ans[2000100], len;
+char s[1000100];
+
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+
+int main() {
+    freopen(&quot;binary.in&quot;, &quot;r&quot;, stdin);
+    freopen(&quot;binary.out&quot;, &quot;w&quot;, stdout);
+    scanf(&quot;%d&quot;, &amp;t);
+    while (t--) {
+        memset(ans, 0, sizeof(int) * (len + 1)); len = 0;
+        scanf(&quot;%s&quot;, s + 1);
+        n = strlen(s + 1);
+        for (int i = 1; i &lt;= n; ++i) {
+            if (s[i] == &#39;1&#39;) for (int j = 0; (1 &lt;&lt; j) &lt;= i; ++j)
+                if (i &amp; (1 &lt;&lt; j))
+                    ans[n - i + 1 + j]++, ans[j]--, len = max(len, n - i + 1 + j);
+        }
+        for (int i = 0; i &lt;= len; ++i) {
+            if (ans[i] &lt; 0) {
+                int d = (-ans[i] &gt;&gt; 1) + (-ans[i] &amp; 1);
+                ans[i] += d &lt;&lt; 1; ans[i + 1] -= d;
+                if (ans[i + 1] == 0 &amp;&amp; i + 1 == len) len--;
+            }
+            else if (ans[i] &gt; 1) {
+                int d = (ans[i] &gt;&gt; 1);
+                ans[i] -= d &lt;&lt; 1; ans[i + 1] += d;
+                if (ans[i + 1] != 0 &amp;&amp; i == len) len++;
+            }
+        }
+        for (int i = len; i &gt;= 0; --i) printf(&quot;%d&quot;, ans[i]);
+        printf(&quot;\n&quot;);
+    }
+    return 0;
+}</code></pre>
+<h4 id="c-string">C. string</h4>
+<p>用 manacher 或二分+哈希预处理出所有极长回文串，然后$O(n)$ DP 即可。</p>
+<h4 id="d-tree">D. tree</h4>
+<p>树上启发式合并，然而我不会。</p>
+<h3 id="2020-11-04">2020-11-04</h3>
+<p>下面又是今天校内模拟赛的题。</p>
+<h4 id="a-a">A. a</h4>
+<p>直接算一下前缀和然后输出答案即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+int n, m;
+long long sum[100100];
+
+int main() {
+    freopen(&quot;a.in&quot;, &quot;r&quot;, stdin);
+    freopen(&quot;a.out&quot;, &quot;w&quot;, stdout);
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt;= n; ++i) scanf(&quot;%lld&quot;, &amp;sum[i]), sum[i] += sum[i - 1];
+    for (int i = 1; i &lt;= n; ++i) printf(&quot;%lld &quot;, sum[i] / m - sum[i - 1] / m);
+    return 0;
+}</code></pre>
+<h4 id="b-b">B. b</h4>
+<p>把每个物品和商人的组合预处理出来，把价值作为位置，物品编号作为颜色，然后问题转化为求数轴上包含所有颜色的点的最小区间长度，直接双指针即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;utility&gt;
+#include&lt;algorithm&gt;
+
+int n, p[7], vcnt, cnt[100100], ccnt, ans = 2e9;
+std::pair&lt;int, int&gt; v[600100];
+
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+
+int main() {
+    freopen(&quot;b.in&quot;, &quot;r&quot;, stdin);
+    freopen(&quot;b.out&quot;, &quot;w&quot;, stdout);
+    scanf(&quot;%d&quot;, &amp;n);
+    scanf(&quot;%d%d%d%d%d%d&quot;, &amp;p[1], &amp;p[2], &amp;p[3], &amp;p[4], &amp;p[5], &amp;p[6]);
+    for (int i = 1; i &lt;= n; ++i) {
+        int x; scanf(&quot;%d&quot;, &amp;x);
+        for (int j = 1; j &lt;= 6; ++j) v[++vcnt] = std::make_pair(x - p[j], i);
+    }
+    std::sort(v + 1, v + vcnt + 1);
+    int cur = 0;
+    for (int i = 1; i &lt;= vcnt; ++i) {
+        while (ccnt &lt; n &amp;&amp; cur &lt; vcnt) {
+            ++cnt[v[++cur].second];
+            if (cnt[v[cur].second] == 1) ccnt++;
+        }
+        if (ccnt == n) ans = min(ans, v[cur].first - v[i].first);
+        --cnt[v[i].second];
+        if (cnt[v[i].second] == 0) ccnt--;
+    }
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h4 id="c-c">C. c</h4>
+<p><a href="https://www.luogu.com.cn/problem/AT1999">https://www.luogu.com.cn/problem/AT1999</a></p>
+<p>把序列从大到小排序，然后画成一个柱状图，然后两种操作就相当于把最下面一行或者最左边一列切掉，等价于以左下角为起点每次向上或向右走，边界的点是必败点。然后有个规律是$y=x$这条对角线上的所有状态相同(边界点除外)，可以用反证法证明：</p>
+<p>假设一个点是 0，它的右上角是 1，那么情况是：</p>
+<pre><code>? ? ?
+1 1 ?
+0 1 ?</code></pre><p>因为 1 的后继状态中一定存在一个 0，所以左上角和右下角都是 0。因为 0 的后继状态一定都是 1，所以可以推出这个矩阵是这样的：</p>
+<pre><code>0 1 ?
+1 1 1
+0 1 0</code></pre><p>正中间的 1 的两个后继状态都是 1，显然不合法。</p>
+<p>还有另一种情况，即一个点是 1，它的右上角是 0：</p>
+<pre><code>? 1 ?
+? 0 1
+1 ? ?</code></pre><p>由于 0 的前驱状态一定都是 1，所以可以推出：</p>
+<pre><code>? 1 ?
+1 0 1
+1 1 ?</code></pre><p>这种情况显然也不合法。因此得证。</p>
+<h4 id="d-d">D. d</h4>
+<p>对于每个子树，求出所有点的编号有几个连续段。</p>
+<p>据说可以树上启发式合并，不过我不会。不难想到维护有几个连续段可以用线段树，于是直接写个线段树合并即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+int t, n, root, ans[100100], rt[100100];
+struct edge { int to, next; };
+struct graph {
+    int ecnt = 1, head[100100];
+    edge edges[200100];
+    inline void addedge(int u, int v) {
+        edges[++ecnt].to = v;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+    inline void clear() { memset(head, 0, sizeof(int) * (n + 1)); memset(edges, 0, sizeof(edge) * (ecnt + 1)); ecnt = 1; }
+}g;
+struct segtreenode { int ans, ls, rs; bool lext, rext; };
+struct segtree {
+    int cnt;
+    segtreenode nds[8000100];
+    inline void pushup(int x) {
+        nds[x].lext = nds[nds[x].ls].lext; nds[x].rext = nds[nds[x].rs].rext;
+        nds[x].ans = nds[nds[x].ls].ans + nds[nds[x].rs].ans;
+        if (nds[nds[x].ls].rext &amp;&amp; nds[nds[x].rs].lext) nds[x].ans--;
+    }
+    inline int insert(int x, int l, int r, int q) {
+        if (!x) x = ++cnt;
+        if (l == r) { nds[x].lext = nds[x].rext = true; nds[x].ans = 1; return x; }
+        int mid = l + (r - l &gt;&gt; 1);
+        if (q &lt;= mid) nds[x].ls = insert(nds[x].ls, l, mid, q);
+        if (mid + 1 &lt;= q) nds[x].rs = insert(nds[x].rs, mid + 1, r, q);
+        pushup(x);
+        return x;
+    }
+    inline int query(int x, int l, int r, int ql, int qr) {
+        if (ql &lt;= l &amp;&amp; r &lt;= qr) return nds[x].ans;
+        int mid = l + (r - l &gt;&gt; 1), ans = 0;
+        if (ql &lt;= mid) ans = query(nds[x].ls, l, mid, ql, qr);
+        if (mid + 1 &lt;= qr) ans += query(nds[x].rs, mid + 1, r, ql, qr);
+        if (ql &lt;= mid &amp;&amp; mid + 1 &lt;= qr &amp;&amp; nds[nds[x].ls].rext &amp;&amp; nds[nds[x].rs].lext) ans--;
+        return ans;
+    }
+    inline int merge(int x, int y, int l, int r) {
+        if (!x || !y) return x ^ y;
+        if (l == r) {
+            nds[x].lext = nds[x].rext = (nds[x].lext || nds[y].lext);
+            if (nds[x].lext) nds[x].ans = 1;
+            return x;
+        }
+        int mid = l + (r - l &gt;&gt; 1);
+        nds[x].ls = merge(nds[x].ls, nds[y].ls, l, mid);
+        nds[x].rs = merge(nds[x].rs, nds[y].rs, mid + 1, r);
+        pushup(x);
+        return x;
+    }
+    inline void clear() { memset(nds, 0, sizeof(segtreenode) * (cnt + 1)); cnt = 0; }
+}seg;
+
+void dfs(int x, int lst) {
+    rt[x] = seg.insert(rt[x], 1, n, x);
+    for (int i = g.head[x]; i; i = g.edges[i].next) {
+        if ((i ^ lst) == 1) continue;
+        int &amp;v = g.edges[i].to;
+        dfs(v, i);
+        rt[x] = seg.merge(rt[x], rt[v], 1, n);
+    }
+    ans[x] = seg.query(rt[x], 1, n, 1, n);
+}
+
+int main() {
+    freopen(&quot;d.in&quot;, &quot;r&quot;, stdin);
+    freopen(&quot;d.out&quot;, &quot;w&quot;, stdout);
+    scanf(&quot;%d&quot;, &amp;t);
+    while (t--) {
+        scanf(&quot;%d%d&quot;, &amp;n, &amp;root);
+        g.clear(); seg.clear();
+        memset(ans, 0, sizeof(int) * (n + 1)); memset(rt, 0, sizeof(int) * (n + 1));
+        for (int i = 1; i &lt; n; ++i) {
+            int u, v; scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+            g.addedge(u, v); g.addedge(v, u);
+        }
+        dfs(root, 0);
+        for (int x = 1; x &lt;= n; ++x) printf(&quot;%d &quot;, ans[x]);
+        printf(&quot;\n&quot;);
+    }
+    return 0;
+}</code></pre>
+<h3 id="2020-11-05">2020-11-05</h3>
+<p>下面又是今天校内模拟赛的题。</p>
+<h4 id="a-a-1">A. A</h4>
+<p>打表发现答案就是$n+1$，直接输出即可。</p>
+<h4 id="b-b-1">B. B</h4>
+<p><a href="https://www.luogu.com.cn/problem/P3199">https://www.luogu.com.cn/problem/P3199</a></p>
+<p>对于 01 分数规划问题，可以用二分求解，即二分平均数是几，然后问题变为判断是否存在环使得</p>
+<p>$$\dfrac{\sum w}{s}\ge mid$$</p>
+<p>稍微变一下式子，可以得到：</p>
+<p>$$\sum(w-mid)\ge0$$</p>
+<p>于是直接二分+spfa判负环即可。</p>
+<h4 id="c-c-1">C. C</h4>
+<p>根据常规套路把操作都倒过来，于是删除操作就变为了合并操作，直接线段树合并+并查集维护单点修改以及连通块第 k 大即可，不过我太菜了写挂了。</p>
 <a href="../posts.html" class="link" style="display:block; text-align:center;">return</a>
 </div>
 </body>

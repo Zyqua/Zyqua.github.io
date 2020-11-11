@@ -200,7 +200,7 @@ int main() {
 <p><a href="https://www.luogu.com.cn/problem/P4163">https://www.luogu.com.cn/problem/P4163</a></p>
 <p>十分套路的状压，设$dp[s][i]$表示由状态 s 里的所有数组成的排列中模 d 等于 i 个方案数，那么直接枚举在末尾接上哪个数，使用刷表法更新即可。虽然我不喜欢刷表法，但是这题填表法似乎不太好做。</p>
 <p>然而给出的数字里有重复，需要去重，直接计一下每种数的个数，然后除以对应的阶乘即可。</p>
-<p>虽然总感觉只是接在末尾不太对，但这样确实是对的，而且不管第二维的话复杂度是$O(2^nn)$，相比$O(n!)$要优得多，有点神奇。</p>
+<p>常常用状压来代替枚举排列，这样可以把复杂度从阶乘降到 2 的幂，其本质在于状压通过状态划分把某些状态合并在了一起并统一计算，从而达到降到复杂度的效果。</p>
 <pre><code class="language-cpp">#include&lt;cstdio&gt;
 #include&lt;cstring&gt;
 
@@ -377,9 +377,643 @@ int main() {
     else printf(&quot;-1\n&quot;);
     return 0;
 }</code></pre>
-<p>$$x^n=\sum_{i=0}^n\begin{Bmatrix}n\i\end{Bmatrix}\binom{x}{i}i!$$</p>
-<p>$$x^n=\sum_{i=0}^n\begin{Bmatrix}n\i\end{Bmatrix}x^{\underline i}$$</p>
-<p>$$\sum_{i=1}^n\binom{n}{i}i^k\=\sum_{i=1}^n\binom{n}{i}\sum_{j=0}^k\begin{Bmatrix}k\j\end{Bmatrix}\binom{i}{j}j!\=\sum_{j=0}^k\begin{Bmatrix}k\j\end{Bmatrix}j!\sum_{i=1}^n\binom{n}{i}\binom{i}{j}\=\sum_{j=1}^k\begin{Bmatrix}k\j\end{Bmatrix}j!\sum_{i=1}^n\binom{n}{j}\binom{n-j}{i-j}\=\sum_{j=1}^k\begin{Bmatrix}k\j\end{Bmatrix}\binom{n}{j}j!\sum_{i=0}^{n-j}\binom{n-j}{i}\=\sum_{j=1}^k\begin{Bmatrix}k\j\end{Bmatrix}\binom{n}{j}j!\cdot 2^{n-j}$$</p>
+<h4 id="devu-and-flowers">Devu and Flowers</h4>
+<p><a href="https://www.luogu.com.cn/problem/CF451E">https://www.luogu.com.cn/problem/CF451E</a></p>
+<p>容斥经典题，有 n 种颜色，每种颜色有$a_i$个球，求取出 s 个球的方案数。考虑弱化版，若$\forall i\in[1,n],s\le a_i$，也就是说任何位置无论怎么选都可行，那么方案数就是$\dbinom{s+n-1}{n-1}$。</p>
+<p>当$\exist i\in[1,n],s&gt;a_i$时，可以容斥计算。设$b_i$表示第 i 种颜色取出了几个球，$S$表示所有$b_i&gt;a_i$即不合法的颜色集合，$f(S)$表示$S$对应的方案数，$g(S)$表示钦定状态为$S$时的方案数，那么有：</p>
+<p>$$g(S)=\sum_{T\supseteq S}f(S)$$</p>
+<p>反演一下可以得到：</p>
+<p>$$f(S)=\sum_{T\supseteq S}(-1)^{|T|-|S|}g(T)$$</p>
+<p>而$g(S)$可以快速计算：</p>
+<p>$$g(S)=\binom{s-\sum_{i\in S}(a_i+1)+n-1}{n-1}$$</p>
+<p>因为第 i 种颜色一定不合法，至少选了$a_i+1$个，那么就把总球数减去$a_i+1$，表示先把这些球选上，那么这个颜色剩余的球就随便选了，转化为了没有任何限制的方案数即上面的弱化版。枚举所有状态，然后计算即可。</p>
+<p>这个组合数看起来有点大不好算，实际上由于$n-1$很小，所以可以把$\dbinom{n}{m}=\dfrac{n!}{m!(n-m)!}$拆为$\dfrac{1}{m!}\cdot \dfrac{n!}{(n-m)!}$，不算计算逆元的复杂度的话两者都可以$O(m)$计算，所以没问题。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+const int MOD = 1e9 + 7;
+int n, ans;
+long long m, a[21];
+
+inline long long min(long long a, long long b) { return a &lt; b ? a : b; }
+void exgcd(int a, int b, int &amp;x, int &amp;y) {
+    if (!b) { x = 1; y = 0; return; }
+    exgcd(b, a % b, y, x);
+    y -= a / b * x;
+}
+inline int inv(int a) { int x, y; exgcd(a, MOD, x, y); return (x % MOD + MOD) % MOD; }
+int binom(long long n, long long m) {
+    if (n &lt; m) return 0;
+    if (n &lt; MOD &amp;&amp; m &lt; MOD) {
+        m = min(m, n - m);
+        int a = 1, b = 1;
+        for (int i = 1; i &lt;= m; i++) a = (long long)a * i % MOD, b = (long long)b * (n - i + 1) % MOD;
+        return (long long)inv(a) * b % MOD;
+    }
+    return (long long)binom(n / MOD, m / MOD) * binom(n % MOD, m % MOD) % MOD;
+}
+inline int pwr_1(int k) { return (k &amp; 1) ? -1 : 1; }
+
+int main() {
+    scanf(&quot;%d%lld&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%lld&quot;, &amp;a[i]);
+    for (int s = 0; s &lt; (1 &lt;&lt; n); s++) {
+        long long k = n + m - 1;
+        int pc = 0;
+        for (int i = 1; i &lt;= n; i++)
+            if (s &amp; (1 &lt;&lt; i - 1)) k -= a[i] + 1, pc++;
+        ans = ((ans + pwr_1(pc) * binom(k, n - 1)) % MOD + MOD) % MOD;
+    }
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h3 id="2020-10-29">2020-10-29</h3>
+<h4 id="team-work">Team Work</h4>
+<p><a href="https://www.luogu.com.cn/problem/CF932E">https://www.luogu.com.cn/problem/CF932E</a></p>
+<p>关于第二类斯特林数，有一个常用的性质：</p>
+<p>$$x^n=\sum_{i=0}^n\begin{Bmatrix}n\\i\end{Bmatrix}\binom{x}{i}i!=\sum_{i=0}^n\begin{Bmatrix}n\\i\end{Bmatrix}x^{\underline i}$$</p>
+<p>根据这个性质，将幂拆开，推一下式子。</p>
+<p>$$\sum_{i=1}^n\binom{n}{i}i^k\\=\sum_{i=1}^n\binom{n}{i}\sum_{j=0}^k\begin{Bmatrix}k\\j\end{Bmatrix}\binom{i}{j}j!\\=\sum_{j=0}^k\begin{Bmatrix}k\\j\end{Bmatrix}j!\sum_{i=1}^n\binom{n}{i}\binom{i}{j}\\=\sum_{j=1}^k\begin{Bmatrix}k\\j\end{Bmatrix}j!\sum_{i=1}^n\binom{n}{j}\binom{n-j}{i-j}\\=\sum_{j=1}^k\begin{Bmatrix}k\\j\end{Bmatrix}\binom{n}{j}j!\sum_{i=0}^{n-j}\binom{n-j}{i}\\=\sum_{j=1}^k\begin{Bmatrix}k\\j\end{Bmatrix}\binom{n}{j}j!\cdot 2^{n-j}$$</p>
+<p>然后$O(k^2)$预处理一下第二类斯特林数即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+const int MOD = 1e9 + 7;
+int n, k, s[5010][5010], ans;
+
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+void exgcd(int a, int b, int &amp;x, int &amp;y) {
+    if (!b) { x = 1; y = 0; return; }
+    exgcd(b, a % b, y, x);
+    y -= a / b * x;
+}
+inline int inv(int a) { int x, y; exgcd(a, MOD, x, y); return (x % MOD + MOD) % MOD; }
+inline int binom(int n, int m) {
+    if (n &lt; m) return 0;
+    m = min(m, n - m);
+    int a = 1, b = 1;
+    for (int i = 1; i &lt;= m; i++) a = (long long)a * i % MOD, b = (long long)b * (n - i + 1) % MOD;
+    return (long long)inv(a) * b % MOD;
+}
+inline int pwr(int x, int k) {
+    if (k &lt; 0) return 0;
+    int ans = 1;
+    for (; k; x = (long long)x * x % MOD, k &gt;&gt;= 1)
+        if (k &amp; 1) ans = (long long)ans * x % MOD;
+    return ans;
+}
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;k);
+    s[0][0] = 1;
+    for (int i = 1; i &lt;= k; i++)
+        for (int j = 1; j &lt;= i; j++) s[i][j] = (s[i - 1][j - 1] + (long long)j * s[i - 1][j] % MOD) % MOD;
+    for (int i = 1, fac = 1; i &lt;= k; i++, fac = (long long)fac * i % MOD)
+        ans = (ans + (long long)s[k][i] * binom(n, i) % MOD * fac % MOD * pwr(2, n - i) % MOD) % MOD;
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h4 id="noi-online-1-提高组序列">[NOI Online #1 提高组]序列</h4>
+<p><a href="https://www.luogu.com.cn/problem/P6185">https://www.luogu.com.cn/problem/P6185</a></p>
+<p>首先可以令$a_i=a_i-b_i$，那么问题变为将 a 序列全部变为 0 。不难看出对于第二种操作，无论怎么操作和都不会变，那么对于每个第二种操作将两个位置连无向边，这样只要连通块内的和是 0 就可以了，于是可以把一个连通块看作一个点，接下来只需要考虑第一种操作。</p>
+<p>对于第一种操作，也在两个端点所属的连通块之间连一条无向边。然后若得到的图是二分图，那么只有两侧节点权值之和相等时才可行。若不是二分图，那么所有节点权值之和是偶数时才可行。对于每个连通分量，判断是否是二分图并统计权值和即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+int t, n, m, a[100100], col[100100];
+long long lw, rw, w[100100];
+bool vis[100100];
+struct usetnode { int fa; long long w; };
+struct uset {
+    usetnode nds[100100];
+    int find(int x) {
+        if (nds[x].fa == x) return x;
+        return nds[x].fa = find(nds[x].fa);
+    }
+    inline void merge(int x, int y) {
+        x = find(x), y = find(y);
+        if (x == y) return;
+        nds[y].fa = x;
+        nds[x].w += nds[y].w;
+    }
+    inline void init() { for (int i = 1; i &lt;= n; i++) nds[i].fa = i, nds[i].w = a[i]; }
+    inline long long getw(int x) { return nds[find(x)].w; }
+}uset;
+struct edge { int to, next; };
+struct graph {
+    int ecnt, head[100100];
+    edge edges[200100];
+    inline void addedge(int u, int v) {
+        edges[++ecnt].to = v;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+    inline void clear() { memset(head, 0, sizeof(int) * (n + 1)); memset(edges, 0, sizeof(edge) * (ecnt + 1)); ecnt = 1; }
+}g;
+struct operation { int opt, u, v; }opts[100100];
+
+bool dfs(int x, int c, int lst) {
+    col[x] = c;
+    if (c == 1) lw += w[x];
+    else rw += w[x];
+    bool ok = true;
+    for (int i = g.head[x]; i; i = g.edges[i].next) {
+        if ((i ^ lst) == 1) continue;
+        int &amp;v = g.edges[i].to;
+        if (col[v] == c) ok = false;
+        if (!col[v] &amp;&amp; !dfs(v, -c, i)) ok = false;
+    }
+    return ok;
+}
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;t);
+    while (t--) {
+        memset(col, 0, sizeof(int) * (n + 1)); memset(vis, 0, sizeof(bool) * (n + 1)); memset(w, 0, sizeof(long long) * (n + 1));
+        g.clear();
+        scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+        for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;a[i]);
+        for (int i = 1; i &lt;= n; i++) {
+            int b; scanf(&quot;%d&quot;, &amp;b);
+            a[i] -= b;
+        }
+        uset.init();
+        for (int i = 1; i &lt;= m; i++) {
+            scanf(&quot;%d%d%d&quot;, &amp;opts[i].opt, &amp;opts[i].u, &amp;opts[i].v);
+            if (opts[i].opt == 2) uset.merge(opts[i].u, opts[i].v);
+        }
+        for (int i = 1; i &lt;= m; i++)
+            if (opts[i].opt == 1)
+                g.addedge(uset.find(opts[i].u), uset.find(opts[i].v)), g.addedge(uset.find(opts[i].v), uset.find(opts[i].u));
+        for (int i = 1; i &lt;= n; i++) w[uset.find(i)] = uset.getw(i);
+        bool ans = true;
+        for (int i = 1; i &lt;= n; i++)
+            if (!col[uset.find(i)]) {
+                lw = rw = 0;
+                if (dfs(uset.find(i), 1, 0) &amp;&amp; lw != rw) ans = false;
+                else if ((lw + rw) &amp; 1) ans = false;
+            }
+        if (ans) printf(&quot;YES\n&quot;);
+        else printf(&quot;NO\n&quot;);
+    }
+    return 0;
+}</code></pre>
+<h4 id="usaco07margold-balanced-lineup-g">[USACO07MAR]Gold Balanced Lineup G</h4>
+<p><a href="https://www.luogu.com.cn/problem/P1360">https://www.luogu.com.cn/problem/P1360</a></p>
+<p>一个常见的套路：把区间和拆为前缀和之差。然后不难想到一个所有数都相等的数列的差分数组除第一个位置外全部是 0 ，那么若两个前缀和的差是一个均衡时期，这两个前缀和的差分数组除第一位外一定相等。对于每天的前缀和算一下差分，然后哈希统计答案即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstdlib&gt;
+#include&lt;ctime&gt;
+
+int n, m, sum[100100][31], dif[100100][31], ans;
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+template&lt;int mod&gt; struct hashtable {
+    const int MOD = mod;
+    int head[mod], next[100100], val[100100], cnt, w[31];
+    inline void init() {
+        srand((unsigned long long)mod * time(NULL));
+        for (int i = 1; i &lt; m; i++) w[i] = rand();
+    }
+    inline int h(int *dif) {
+        int ans = 0;
+        for (int i = 1; i &lt; m; i++) ans = (ans + (long long)w[i] * ((dif[i] + MOD) % MOD) % MOD) % MOD;
+        return ans;
+    }
+    inline void insert(int x, int v) {
+        val[++cnt] = v;
+        next[cnt] = head[x];
+        head[x] = cnt;
+    }
+    inline int find(int x) {
+        int ans = 0x3fffffff;
+        for (int i = head[x]; i; i = next[i]) ans = min(ans, val[i]);
+        return ans;
+    }
+};
+hashtable&lt;19260817&gt; h1; hashtable&lt;1000007&gt; h2;
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    h1.init(); h2.init();
+    h1.insert(0, 0); h2.insert(0, 0);
+    for (int i = 1; i &lt;= n; i++) {
+        int x; scanf(&quot;%d&quot;, &amp;x);
+        for (int j = 0; j &lt; m; j++) {
+            if (x &amp; (1 &lt;&lt; j)) sum[i][j] = sum[i - 1][j] + 1;
+            else sum[i][j] = sum[i - 1][j];
+            if (j) dif[i][j] = sum[i][j] - sum[i][j - 1];
+        }
+        int hv1 = h1.h(&amp;dif[i][0]), hv2 = h2.h(&amp;dif[i][0]);
+        int lst1 = h1.find(hv1), lst2 = h2.find(hv2);
+        if (lst1 == lst2) ans = max(ans, i - lst1);
+        h1.insert(hv1, i); h2.insert(hv2, i);
+    }
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h3 id="2020-10-30">2020-10-30</h3>
+<h4 id="usaco07opencity-horizon-s">[USACO07OPEN]City Horizon S</h4>
+<p><a href="https://www.luogu.com.cn/problem/P2061">https://www.luogu.com.cn/problem/P2061</a></p>
+<p>有两种思路，都挺妙的。一种是把所有操作按照$h_i$从小到大排序，那么依次进行区间赋值即可，可以离散化后用线段树维护。</p>
+<p>另一种是先离散化，然后对每个坐标维护覆盖它的所有区间。考虑依次遍历每个坐标，然后一个区间$[l,r)$可以把它拆为在坐标 l 加入这个区间，在坐标 r 删除这个区间，使用<code>std::multiset</code>维护即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;set&gt;
+#include&lt;algorithm&gt;
+
+int n, cnt, vl[80100];
+long long ans;
+struct operation {
+    int type, x, h;
+    operation(int tv = 0, int xv = 0, int hv = 0): type(tv), x(xv), h(hv) {}
+    bool operator &lt; (const operation &amp;b) const { return x &lt; b.x; }
+}opts[80100];
+std::multiset&lt;int&gt; s;
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt;= n; i++) {
+        int l, r, h; scanf(&quot;%d%d%d&quot;, &amp;l, &amp;r, &amp;h);
+        opts[++cnt] = operation(1, l, h); vl[cnt] = l;
+        opts[++cnt] = operation(2, r, h); vl[cnt] = r;
+    }
+    std::sort(vl + 1, vl + cnt + 1);
+    int vn = std::unique(vl + 1, vl + cnt + 1) - vl - 1;
+    for (int i = 1; i &lt;= cnt; i++) opts[i].x = std::lower_bound(vl + 1, vl + vn + 1, opts[i].x) - vl;
+    std::sort(opts + 1, opts + cnt + 1);
+    int cur = 1;
+    for (int i = 1; i &lt;= vn; i++) {
+        for (; cur &lt;= cnt &amp;&amp; opts[cur].x &lt;= i; cur++) {
+            if (opts[cur].type == 1) s.insert(opts[cur].h);
+            else if (opts[cur].type == 2) s.erase(s.find(opts[cur].h));
+        }
+        if (i != vn &amp;&amp; !s.empty()) ans += (long long)*(--s.end()) * (vl[i + 1] - vl[i]);
+    }
+    printf(&quot;%lld\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h4 id="usaco09decdizzy-cows-g">[USACO09DEC]Dizzy Cows G</h4>
+<p><a href="https://www.luogu.com.cn/problem/P2017">https://www.luogu.com.cn/problem/P2017</a></p>
+<p>看到没有环，不难联想到拓扑排序。可以对每条有向边记录入度，然后执行拓扑排序，对于每条没标记过的无向边标记一下方向即可，若没有遍历全部节点则没有可行方案。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;queue&gt;
+#include&lt;algorithm&gt;
+
+int n, m1, m2, deg[100100], cnt, ecnt;
+struct edge { int to, next, w; bool tag; };
+struct graph {
+    int ecnt = 1, head[100100];
+    edge edges[400100];
+    inline void addedge(int u, int v, int w) {
+        edges[++ecnt].to = v;
+        edges[ecnt].w = w;
+        edges[ecnt].next = head[u];
+        head[u] = ecnt;
+    }
+    inline int type(int i) { return edges[i].to &amp;&amp; edges[i ^ 1].to ? 2 : 1; }
+    inline int havetag(int i) { return edges[i].tag || edges[i ^ 1].tag; }
+}g;
+std::queue&lt;int&gt; q;
+struct undiredge {
+    int u, v, w;
+    undiredge(int uv = 0, int vv = 0, int wv = 0): u(uv), v(vv), w(wv) {}
+    bool operator &lt; (const undiredge &amp;b) const { return w &lt; b.w; }
+}edges[100100];
+
+inline void topo() {
+    for (int i = 1; i &lt;= n; i++) if (!deg[i]) q.push(i);
+    while (!q.empty()) {
+        int x = q.front();
+        q.pop();
+        cnt++;
+        for (int i = g.head[x]; i; i = g.edges[i].next) {
+            int &amp;v = g.edges[i].to;
+            if (g.type(i) == 2 &amp;&amp; !g.havetag(i)) g.edges[i].tag = true;
+            else {
+                deg[v]--;
+                if (!deg[v]) q.push(v);
+            }
+        }
+    }
+}
+
+int main() {
+    scanf(&quot;%d%d%d&quot;, &amp;n, &amp;m1, &amp;m2);
+    for (int i = 1; i &lt;= m1; i++) {
+        int u, v; scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+        g.addedge(u, v, 0); g.addedge(0, 0, 0);
+        deg[v]++;
+    }
+    for (int i = 1; i &lt;= m2; i++) {
+        int u, v; scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+        g.addedge(u, v, i); g.addedge(v, u, i);
+    }
+    topo();
+    if (cnt == n) {
+        for (int x = 1; x &lt;= n; x++) for (int i = g.head[x]; i; i = g.edges[i].next) 
+            if (g.edges[i].tag) edges[++ecnt] = undiredge(x, g.edges[i].to, g.edges[i].w);
+        std::sort(edges + 1, edges + ecnt + 1);
+        for (int i = 1; i &lt;= ecnt; i++) printf(&quot;%d %d\n&quot;, edges[i].u, edges[i].v);
+    }
+    else printf(&quot;-1\n&quot;);
+    return 0;
+}</code></pre>
+<h4 id="usaco09febfair-shuttle-g">[USACO09FEB]Fair Shuttle G</h4>
+<p><a href="https://www.luogu.com.cn/problem/P1607">https://www.luogu.com.cn/problem/P1607</a></p>
+<p>考虑一个经典问题，选择尽量多的区间使得每个位置最多被一个区间覆盖。有两种做法，一种是线性 DP，另一种是贪心，先把所有区间按照右端点从小到大排序，然后能选就选。这样做正确的原因是假设当前区间能选但不选，这样下一个选择的区间相当于充当了当前这个区间的贡献，但右端点比当前区间大，显然不优。</p>
+<p>本题也可以这样做，用线段树维护区间最值即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;algorithm&gt;
+
+int k, n, c, sumw, ans;
+struct section {
+    int l, r, w;
+    section(int lv = 0, int rv = 0, int wv = 0): l(lv), r(rv), w(wv) {}
+    bool operator &lt; (const section &amp;b) const {
+        if (r != b.r) return r &lt; b.r;
+        return l &gt; b.l;
+    }
+}sec[50010];
+inline int min(int a, int b) { return a &lt; b ? a : b; }
+inline int max(int a, int b) { return a &gt; b ? a : b; }
+struct segtreenode { int maxw, addtag; };
+struct segtree {
+    segtreenode nds[80100];
+    inline int ls(int x) { return x &lt;&lt; 1; }
+    inline int rs(int x) { return x &lt;&lt; 1 | 1; }
+    inline void pushup(int x) { nds[x].maxw = max(nds[ls(x)].maxw, nds[rs(x)].maxw); }
+    inline void pushdown(int x) {
+        if (!nds[x].addtag) return;
+        nds[ls(x)].maxw += nds[x].addtag; nds[ls(x)].addtag += nds[x].addtag;
+        nds[rs(x)].maxw += nds[x].addtag; nds[rs(x)].addtag += nds[x].addtag;
+        nds[x].addtag = 0;
+    }
+    inline void add(int x, int l, int r, int ql, int qr, int v) {
+        if (ql &gt; qr) return;
+        if (ql &lt;= l &amp;&amp; r &lt;= qr) {
+            nds[x].maxw += v;
+            nds[x].addtag += v;
+            return;
+        }
+        pushdown(x);
+        int mid = l + (r - l &gt;&gt; 1);
+        if (ql &lt;= mid) add(ls(x), l, mid, ql, qr, v);
+        if (mid + 1 &lt;= qr) add(rs(x), mid + 1, r, ql, qr, v);
+        pushup(x);
+    }
+    inline int query(int x, int l, int r, int ql, int qr) {
+        if (ql &lt;= l &amp;&amp; r &lt;= qr) return nds[x].maxw;
+        pushdown(x);
+        int mid = l + (r - l &gt;&gt; 1), ans = 0;
+        if (ql &lt;= mid) ans = max(ans, query(ls(x), l, mid, ql, qr));
+        if (mid + 1 &lt;= qr) ans = max(ans, query(rs(x), mid + 1, r, ql, qr));
+        return ans;
+    }
+}seg;
+
+int main() {
+    scanf(&quot;%d%d%d&quot;, &amp;k, &amp;n, &amp;c);
+    for (int i = 1; i &lt;= k; i++) scanf(&quot;%d%d%d&quot;, &amp;sec[i].l, &amp;sec[i].r, &amp;sec[i].w);
+    std::sort(sec + 1, sec + k + 1);
+    for (int i = 1; i &lt;= k; i++) {
+        int v = seg.query(1, 1, n, sec[i].l, sec[i].r);
+        if (v &lt; c) {
+            int d = min(c - v, sec[i].w);
+            seg.add(1, 1, n, sec[i].l, sec[i].r - 1, d);
+            ans += d;
+        }
+    }
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h4 id="noi-online-1-提高组最小环">[NOI Online #1 提高组]最小环</h4>
+<p><a href="https://www.luogu.com.cn/problem/P6187">https://www.luogu.com.cn/problem/P6187</a></p>
+<p>一共会有$\gcd(n,k)$个独立的环，每个环的大小为$\dfrac{n}{\gcd(n,k)}$。由排序不等式可以得出，将大的数放在尽量相邻的位置是更优的。所以对于每个环，依次把当前最大的数放入即可。</p>
+<p>首先将序列排序，然后显然每$\dfrac{n}{\gcd(n,k)}$个数会放入一个环中，通过想象可以得出，除开头结尾外都是每隔一个位置放在一起，直接计算即可。</p>
+<p>因为答案只与$\dfrac{n}{\gcd(n,k)}$有关，所以可以记忆化一下，这样只会对 n 的每个约数计算一次，复杂度$O(n\sqrt n)$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;algorithm&gt;
+
+int n, m, a[200100];
+long long ans[200100];
+
+int gcd(int a, int b) {
+    if (!b) return a;
+    return gcd(b, a % b);
+}
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;a[i]), ans[0] += (long long)a[i] * a[i];
+    std::sort(a + 1, a + n + 1);
+    while (m--) {
+        int k; scanf(&quot;%d&quot;, &amp;k);
+        int t = gcd(n, k), s = n / t;
+        if (!k) t = 0;
+        if (!ans[t]) {
+            for (int i = 1; i &lt;= n; i += s) {
+                for (int j = i; j &lt; i + s - 2; j++) ans[t] += (long long)a[j] * a[j + 2];
+                ans[t] += (long long)a[i] * a[i + 1] + (long long)a[i + s - 2] * a[i + s - 1];
+            }
+        }
+        printf(&quot;%lld\n&quot;, ans[t]);
+    }
+    return 0;
+}</code></pre>
+<h3 id="2020-10-31">2020-10-31</h3>
+<h4 id="arc058b-いろはちゃんとマス目--iroha-and-a-grid">[ARC058B] いろはちゃんとマス目 / Iroha and a Grid</h4>
+<p><a href="https://www.luogu.com.cn/problem/AT1974">https://www.luogu.com.cn/problem/AT1974</a></p>
+<p>以$x=B$和$x=B+1$两条直线为分界线，将过程划分为三个阶段。首先可以从$(1,1)$走到$(x,y)\ (1\le x\le H-A,y=B)$，然后再从$(x,y)$走到$(x,y+1)$，然后再从$(x,y)\ (1\le x\le H-A,y=B+1)$走到$(H,W)$。将方案数相乘即可，即：</p>
+<p>$$\sum_{x=1}^{H-A}\binom{x+B-2}{x-1}\binom{H-x+W-B-1}{H-x}$$</p>
+<p>限制在第二个阶段从$(x,y)$走到$(x,y+1)$的原因是若直接算从起点走到$(x,y)\ (1\le x\le H-A,y=B+1)$的方案数，这个坐标可能由它上面的坐标即$(x-1,y)$走过来，这样的话再去算从它走到$(H,W)$的方案数也会算上它向下走的方案，这样就会重复。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+const int MOD = 1e9 + 7;
+int r, c, a, b, fac[200100], invfac[200100], ans;
+
+void exgcd(int a, int b, int &amp;x, int &amp;y) {
+    if (!b) { x = 1; y = 0; return; }
+    exgcd(b, a % b, y, x);
+    y -= a / b * x;
+}
+inline int inv(int a) { int x, y; exgcd(a, MOD, x, y); return (x % MOD + MOD) % MOD; }
+inline int binom(int n, int m) {
+    if (n &lt; m) return 0;
+    return (long long)fac[n] * invfac[m] % MOD * invfac[n - m] % MOD;
+}
+
+int main() {
+    scanf(&quot;%d%d%d%d&quot;, &amp;r, &amp;c, &amp;a, &amp;b);
+    fac[0] = 1;
+    for (int i = 1; i &lt;= r + c; ++i) fac[i] = (long long)fac[i - 1] * i % MOD;
+    invfac[r + c] = inv(fac[r + c]);
+    for (int i = r + c - 1; i &gt;= 0; --i) invfac[i] = (long long)invfac[i + 1] * (i + 1) % MOD;
+    for (int x = 1; x &lt;= r - a; ++x) ans = (ans + (long long)binom(x + b - 2, x - 1) * binom(r - x + c - b - 1, r - x) % MOD) % MOD;
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h3 id="arc058c-和風いろはちゃん--iroha-and-haiku">[ARC058C] 和風いろはちゃん / Iroha and Haiku</h3>
+<p><a href="https://www.luogu.com.cn/problem/AT1975">https://www.luogu.com.cn/problem/AT1975</a></p>
+<p>对于这种存在至少一个某种特殊对象的计数，可以用减法公式转化为总方案数减去不存在这种特殊对象的方案数，因为是存在至少一个，这样的话直接枚举哪里存在并计算有时候容易重复计数，然后可能就得容斥，而不存在只可能存在 0 个，这个条件有时候很好处理。</p>
+<p>那么对于本题，总方案数就是$10^N$。不存在俳句的方案数可以状压计算。</p>
+<p>考虑将一个数 x 划分为 n 个数的和$x=\sum_{i=1}^n a_i$，可以想象成有 x 个位置和 n 种颜色，依次考虑所有颜色，对于第 i 种颜色，从第一个还没染色的位置开始向后染色$a_i$个位置。若对于任意三个数$i+j+k=x$，存在前缀的长度等于 i，紧接着中间一段的长度等于 j，剩下的后缀长度等于 k，那么第$i$和第$i+1$个位置、第$i+j$和第$i+j+1$个位置、第$n$和第$n+1$个位置的颜色一定不相同。</p>
+<p>转化为二进制，将下一个位置的颜色与自身不相同的位置设为 1，那么一个俳句对应的 01 串的第$X$位、第$X+Y$位和第$X+Y+Z$位为 1，而其他位为 0。将一个数列转为 01 串，依次考虑每个$a_i$，先在末尾加上$a_i-1$个 0，再加上 1 个 1，若俳句对应的 01 串是数列对应的 01 串的子集，则存在至少一个俳句。可以状压 DP，设$dp[i][s]$表示长度为 i 的数列转为 01 串后最后$X+Y+Z$位是 s 时不存在俳句的方案数，直接转移即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+
+const int MOD = 1e9 + 7;
+int n, x, y, z, dp[41][140100], ans = 1;
+
+int main() {
+    scanf(&quot;%d%d%d%d&quot;, &amp;n, &amp;x, &amp;y, &amp;z);
+    int lim = 1 &lt;&lt; x + y + z, haiku = (1 &lt;&lt; x + y + z - 1) | (1 &lt;&lt; y + z - 1) | (1 &lt;&lt; z - 1);
+    dp[0][0] = 1;
+    for (int i = 1; i &lt;= n; ++i) {
+        for (int ls = 0; ls &lt; lim; ++ls) {
+            if ((ls &amp; haiku) == haiku) continue;
+            for (int j = 1; j &lt;= 10; ++j) {
+                int ns = ((ls &lt;&lt; j) | (1 &lt;&lt; j - 1)) &amp; (lim - 1);
+                if ((ns &amp; haiku) == haiku) continue;
+                dp[i][ns] = (dp[i][ns] + dp[i - 1][ls]) % MOD;
+            }
+        }
+    }
+    for (int i = 1; i &lt;= n; ++i) ans = (long long)ans * 10 % MOD;
+    for (int s = 0; s &lt; lim; ++s) ans = (ans - dp[n][s] + MOD) % MOD;
+    printf(&quot;%d\n&quot;, ans);
+    return 0;
+}</code></pre>
+<h4 id="lorry">Lorry</h4>
+<p><a href="https://www.luogu.com.cn/problem/CF3B">https://www.luogu.com.cn/problem/CF3B</a></p>
+<p>考虑只有一种重量时，显然优先拿价值大的更优。扩展到本题的情况，核心思想是两个重量为 1 的物品可以合并为一个重量为 2 的物品。那么将没被拿出的物品中价值最大的两个 1 的价值的和以及价值最大的一个 2 的价值比较，取更优的那个决策。当剩余容量为 1 时需要特判取一个 1 还是放弃一个 1 并取最优的 2。</p>
+<p>还可以直接枚举两种重量的物品分别选了多少个，排序后预处理前缀和然后$O(1)$计算价值和即可。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;algorithm&gt;
+#include&lt;utility&gt;
+#include&lt;functional&gt;
+
+int n, m, v1cnt, v2cnt, ans;
+std::pair&lt;int, int&gt; v1[100100], v2[100100];
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt;= n; ++i) {
+        int t, v; scanf(&quot;%d%d&quot;, &amp;t, &amp;v);
+        if (t == 1) v1[++v1cnt] = std::make_pair(v, i);
+        else v2[++v2cnt] = std::make_pair(v, i);
+    }
+    std::sort(v1 + 1, v1 + v1cnt + 1, std::greater&lt;std::pair&lt;int, int&gt; &gt;());
+    std::sort(v2 + 1, v2 + v2cnt + 1, std::greater&lt;std::pair&lt;int, int&gt; &gt;());
+    int cur1 = 1, cur2 = 1;
+    for (; m; ) {
+        if (cur1 &lt;= v1cnt &amp;&amp; cur2 &lt;= v2cnt) {
+            if (m == 1) {
+                if (cur1 == 1 || v1[cur1].first &gt;= v2[cur2].first - v1[cur1 - 1].first) ans += v1[cur1++].first;
+                else ans += v2[cur2++].first - v1[--cur1].first;
+                --m;
+            }
+            else {
+                if (v1[cur1].first + v1[cur1 + 1].first &gt;= v2[cur2].first) ans += v1[cur1].first + v1[cur1 + 1].first, cur1 += 2;
+                else ans += v2[cur2++].first;
+                m -= 2;
+            }
+        }
+        else if (cur1 &lt;= v1cnt) ans += v1[cur1++].first, --m;
+        else if (cur2 &lt;= v2cnt) {
+            if (m &gt; 1) ans += v2[cur2++].first, m -= 2;
+            else {
+                if (cur1 &gt; 1 &amp;&amp; v2[cur2].first &gt;= v1[cur1 - 1].first) ans += v2[cur2++].first - v1[--cur1].first, --m;
+                else break;
+            }
+        }
+        else break;
+    }
+    printf(&quot;%d\n&quot;, ans);
+    for (int i = 1; i &lt; cur1 &amp;&amp; i &lt;= v1cnt; ++i) printf(&quot;%d &quot;, v1[i].second);
+    for (int i = 1; i &lt; cur2 &amp;&amp; i &lt;= v2cnt; ++i) printf(&quot;%d &quot;, v2[i].second);
+    return 0;
+}</code></pre>
+<h4 id="least-cost-bracket-sequence">Least Cost Bracket Sequence</h4>
+<p><a href="https://www.luogu.com.cn/problem/CF3D">https://www.luogu.com.cn/problem/CF3D</a></p>
+<p>合法括号序列的性质是转化为 1 和 -1 的序列后任意一个位置的前缀和大于等于 0 ，且最后一位的前缀和等于 0。对于一个位置，对它产生影响的只有它前面的那些位置。可以先钦定所有问号都是右括号，然后从前到后依次遍历序列并维护前缀和，对于一个问号如果它的前缀和小于 0 ，那就把这个位置对应的前缀中代价最小的一个问号从右括号改成左括号。可以直接用堆维护，复杂度$O(n\log n)$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;queue&gt;
+#include&lt;functional&gt;
+#include&lt;utility&gt;
+
+int n, k, a[50010], b[50010];
+long long ans;
+char s[50100];
+std::priority_queue&lt;std::pair&lt;int, int&gt;, std::vector&lt;std::pair&lt;int, int&gt; &gt;, std::greater&lt;std::pair&lt;int, int&gt; &gt; &gt; q;
+
+int main() {
+    scanf(&quot;%s&quot;, s + 1);
+    n = strlen(s + 1);
+    for (int i = 1; i &lt;= n; ++i) if (s[i] == &#39;?&#39;) scanf(&quot;%d%d&quot;, &amp;a[i], &amp;b[i]);
+    int sum = 0;
+    for (int i = 1; i &lt;= n; ++i) {
+        if (s[i] == &#39;(&#39;) ++sum;
+        else if (s[i] == &#39;)&#39;) --sum;
+        else if (s[i] == &#39;?&#39;) {
+            ans += b[i];
+            s[i] = &#39;)&#39;;
+            q.push(std::make_pair(a[i] - b[i], i));
+            --sum;
+        }
+        while (!q.empty() &amp;&amp; sum &lt; 0) {
+            ans += q.top().first;
+            s[q.top().second] = &#39;(&#39;;
+            q.pop();
+            sum += 2;
+        }
+    }
+    sum = 0;
+    bool ok = true;
+    for (int i = 1; i &lt;= n; ++i) {
+        if (s[i] == &#39;(&#39;) ++sum;
+        else if (s[i] == &#39;)&#39;) --sum;
+        if (sum &lt; 0) ok = false;
+    }
+    if (sum != 0) ok = false;
+    if (ok) printf(&quot;%lld\n%s\n&quot;, ans, s + 1);    
+    else printf(&quot;-1\n&quot;);
+    return 0;
+}</code></pre>
+<h4 id="mysterious-present">Mysterious Present</h4>
+<p><a href="https://www.luogu.com.cn/problem/CF4D">https://www.luogu.com.cn/problem/CF4D</a></p>
+<p>经典问题，可以把能够嵌套的矩形之间连有向边，然后求 DAG 上的最长路径即可，复杂度$O(n^2)$。</p>
+<p>另一种更好的做法是先把二元组按照第一维排序，然后求最长上升子序列即可，复杂度$O(n\log n)$。</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+
+int n, w[5010], h[5010], dp[5010], ddp[5010], ans, ansx;
+bool vis[5010];
+
+void dfs(int x) {
+    vis[x] = true;
+    if (x == n + 1) return;
+    for (int i = 1; i &lt;= n + 1; ++i)
+        if (w[i] &lt; w[x] &amp;&amp; h[i] &lt; h[x]) {
+            if (!vis[i]) dfs(i);
+            if (dp[x] &lt; dp[i] + 1) dp[x] = dp[i] + 1, ddp[x] = i;
+        }
+}
+void print(int x) {
+    if (x == n + 1 || !x) return;
+    print(ddp[x]);
+    printf(&quot;%d &quot;, x);
+}
+
+int main() {
+    scanf(&quot;%d&quot;, &amp;n); scanf(&quot;%d%d&quot;, &amp;w[n + 1], &amp;h[n + 1]);
+    for (int i = 1; i &lt;= n; ++i) scanf(&quot;%d%d&quot;, &amp;w[i], &amp;h[i]);
+    memset(dp, -0x3f, sizeof(int) * (n + 2));
+    dp[n + 1] = 0;
+    for (int i = 1; i &lt;= n; ++i) if (dp[i] &lt; 0) dfs(i);
+    for (int i = 1; i &lt;= n; ++i)
+        if (ans &lt; dp[i]) ans = dp[i], ansx = i;
+    printf(&quot;%d\n&quot;, ans);
+    print(ansx);
+    return 0;
+}</code></pre>
 <a href="../posts.html" class="link" style="display:block; text-align:center;">return</a>
 </div>
 </body>
