@@ -1,0 +1,181 @@
+Unity学习笔记(2020.2.29)
+2020-02-29
+20200229
+<!--more-->
+Unity 四大类。
+<img src="../source/images/核心类图.png"/>
+
+### Script 脚本 (不属于四大类)
+继承关系：Object -> Component -> Behaviour -> MonoBehaviour
+因此，脚本具有`Component`类的所有方法，在写脚本时可以直接用。
+### Component 组件
+`Component`类提供了**查找组件**的功能。
+
+继承关系：Object -> Component
+
+#### gameObject 属性
+当前物体的对象。
+
+#### tag 属性
+可以在组件的引用中直接访问游戏对象的`tag`。
+
+#### transform 属性
+可以在组件的引用中直接访问游戏对象的`transform`。是`Transform`类的对象引用。
+
+#### GetComponent<type>() 方法
+返回当前物体中`type`类型组件的引用，如果没有则返回空。
+
+#### GetComponents<type>() 方法
+返回当前物体中所有`type`类型组件的引用(`type`类型的数组)，如果没有则返回空。
+
+
+*要找当前物体所有的组件，可以写`GetComponents<Component>()`。
+
+#### GetComponentInChildren<type>() 方法
+返回当前物体及其后代物体中**第一个**找到的`type`类型组件的引用(内部使用`dfs`实现)，如果没有则返回空。
+
+#### GetComponentsInChildren<type>() 方法
+返回当前物体及其后代物体中所有`type`类型组件的引用(`type`类型的数组)，如果没有则返回空。
+
+#### GetComponentInParent<type>() 方法
+返回当前物体及其先 辈物体中`type`类型组件的引用，如果没有则返回空。
+
+#### GetComponentsInParent<type>() 方法
+返回当前物体及其先 辈物体中所有`type`类型组件的引用(`type`类型的数组)，如果没有则返回空。
+
+#### CompareTag(string) 方法
+比较当前物体的`Tag`是否与`string`相同。
+
+### Transform 变换
+`Transform`类提供了**查找变换组件/改变位置、角度、缩放**的功能
+
+继承关系：Object -> Component -> Transform
+
+#### foreach
+使用`foreach`语句可以遍历当前物体所有子物体的变换组件。
+
+#### childCount 属性
+当前物体的子物体个数。
+
+#### position 属性
+物体在世界坐标系的坐标，属于`Vector3`(三维向量)类。
+
+示例：设置当前物体的坐标为`(0, 0, 10)`。
+
+`transform.position = new Vector3(0, 0, 10);`
+
+以下几个`Vector3`类型的属性修改方法与此相同。
+
+#### localPosition 属性
+物体相对于父物体中心点的坐标。在`Inspector`面板中看到的坐标实质上是`localPosition`，而非`position`。
+
+#### rotation 属性
+物体在世界坐标系的旋转角度，属于`Vector3`类。
+
+#### localRotation 属性
+物体相对于父物体的旋转角度。在`Inspector`面板中看到的坐标实质上是`localRotation`，而非`rotation`。
+
+#### localScale 属性
+物体相对于父物体的缩放比例，属于`Vector3`类。在`Inspector`面板中看到的坐标实质上是`localScale`。
+
+#### lossyScale 属性
+物体相对于原模型的缩放比例。**只读。**
+
+#### Translate(float, float, float) 方法
+物体向三个方向分别移动指定距离。默认沿自身坐标轴移动，如果沿世界坐标轴移动可以写`Translate(float, float, float, Space.World)`。
+
+#### Rotate(float, float, float) 方法
+物体沿三个坐标轴分别顺时针旋转指定角度。默认沿自身坐标轴旋转，如果沿世界坐标轴旋转可以写`Rotate(float, float, float, Space.World)`。
+
+#### RotateAround(Vector3 point, Voctor3 axis, float angle) 方法
+物体绕`point`点，沿`axis`轴顺时针旋转`angle`度。
+
+例如：`RotateAround(Vector3.zero, Vector3.up, 1);`绕原点沿y轴顺时针旋转1度。
+
+#### root 属性
+根物体的变换组件。
+
+#### parent 属性
+父物体的变换组件。**只读。**
+
+#### SetParent(Transform parent, bool worldPositionStays) 方法
+设置物体的父物体为指定变换组件的所属物体。`worldPositionStays`不填则默认为`true`。如果为`true`，则物体的`position`保持不变，`localPosition`可能会相应地改变，否则物体的`localPosition`保持不变，`position`可能改变。
+
+#### Find(string name) 方法
+根据名称查找子物体的变换组件。`name`参数类似路径，比如要找孙子可以写`Find("name/name")`。(不建议拿来找孙子)
+
+#### GetChild(int index) 方法
+根据索引获取子物体的变换组件。
+
+#### DetachChildren() 方法
+与所有子物体断绝父子关系。
+
+*如果要和父物体断绝父子关系，使用`SetParent(null)`。
+
+### GameObject 游戏对象(物体)
+`GameObject`类提供了**操作游戏对象**的功能。
+
+继承关系：Object -> GameObject
+
+#### activeInHierarchy 属性
+物体实际是否激活。
+
+#### activeSelf 属性
+物体自身是否激活。**只读。**
+
+#### SetActive(bool) 方法
+激活/停用物体。
+
+#### layer 属性
+物体所在的层。
+
+#### tag 属性
+物体的标签。
+
+#### transform 属性
+物体的变换组件。
+
+#### GameObject() 构造方法
+`new` 出来一个物体。
+
+#### AddComponent<type>() 方法
+给物体添加一个`type`类型的组件，并返回这个组件。
+
+组件不能`new`出来，要想创建新组件只能通过这个方法。
+
+示例：创建一个红色点光源物体。
+```
+GameObject lightObject = new GameObject();
+Light light = lightObject.AddComponent<Light>();
+light.color = Color.red;
+light.type = LightType.Point;
+
+```
+
+#### GetComponent<type>() 方法
+此方法以及`GetComponents<type>()`、`GetComponentInChildren<type>()`等方法和`Component`类中的方法功能相同。
+
+#### Find(string name) 静态方法
+在所有物体中根据名称查找指定物体。性能消耗很大，不建议使用。
+
+#### FindWithTag(string name) 静态方法
+根据标签查找一个带有指定标签的物体。
+
+#### FindObjectsWithTag(string name) 静态方法
+根据标签查找所有带有指定标签的物体。返回`GameObject`数组。
+
+### Object 对象
+#### name 属性
+对象的名称。
+
+#### Destroy(Object) 静态方法
+删除指定`Object`。
+
+#### DontDestroyOnLoad(Object) 静态方法
+在加载新场景时使指定对象不被清除。
+
+#### FindObjectOfType<type>() 静态方法
+在场景中查找一个`type`类型的对象。
+
+#### FindObjectsOfType<type>() 静态方法
+在场景中查找所有`type`类型的对象，返回`type`类型的数组。
